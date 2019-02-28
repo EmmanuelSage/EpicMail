@@ -58,6 +58,20 @@ header a:hover{
   font-weight:bold;
 }
 
+header .current a{
+  color:#f8a929;
+  font-weight:bold;
+  font-size: 1.8rem;
+  text-decoration: underline;
+  text-decoration-color: #f8a929;
+}
+
+header a:hover{
+  color:#f8a929;
+  font-weight:bold;
+}
+
+
 /* Background animation */
 /* ======================================= */
 body ::-webkit-input-placeholder {
@@ -348,7 +362,31 @@ background:#fff;
 box-shadow:0px 2px 10px 5px #97B1BF;
 color:#000;
 }
+form .reset-password a{
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  transition: font-size 0.25s, text-shadow 0.5s;
 
+}
+
+form .reset-password a:hover{
+  color: white;
+  font-size: 1.6rem;
+ text-shadow:1px 1px 1px #eee;
+}
+
+form .reset-password{
+   padding: 1rem;
+   padding-right: 12.5rem;
+   text-align: center;
+}
+
+/* reset password text */
+.reset-info{
+  margin: 2rem 1rem;
+  
+  }
 
 /* Media queries */
 /* ======================================= */
