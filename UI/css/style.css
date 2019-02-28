@@ -382,6 +382,12 @@ form .reset-password{
    text-align: center;
 }
 
+/* reset password text */
+.reset-info{
+  margin: 2rem 1rem;
+  
+  }
+
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
