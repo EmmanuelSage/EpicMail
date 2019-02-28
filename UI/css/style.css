@@ -388,11 +388,66 @@ form .reset-password{
   
   }
 
+
+  /* Dashboard styling */
+.dash-menu{
+  display: none;
+}
+
+.content-menu {
+  background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%);
+  min-width: 32rem;
+  text-align: justify;
+}
+.content-menu div {
+  display: inline-block;
+  padding: 2rem 0.5rem;
+}
+
+#reload-messages{
+  font-size: 2rem;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+#hamburger-link {
+  margin-left: auto;
+  font-size: 3rem;
+  color: #fff;
+  padding: 1rem;
+  
+}
+.single-message span{
+  padding: 1rem;
+}
+
+.single-mesage{
+  padding: 1rem;
+}
+
+.message-from{
+  color: black;
+}
+
+.content-messages ul li{
+  background: #fff;
+  text-align: center;
+  padding: 0.5rem;
+  border-bottom: 3px solid #eee;
+  list-style-type: none;
+  transition: padding 0.15s;
+}
+
+.content-messages ul li:hover{
+  padding: 10px;
+  background: #eee;
+}
+
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
   header{
-    flex-direction: row !important;
+    flex-direction: row;
     align-items: center;
   }
   header nav{
