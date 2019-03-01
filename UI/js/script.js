@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeMobileMenu = document.getElementById("close-mobile-menu");
   const hamburger = document.getElementById("hamburger-link");
   const createGroupForm = document.getElementById("create-group-id");
+  const addUser = document.getElementById("add-user-id");
 
   if (hamburger) {
     hamburger.addEventListener("click", () => {
@@ -12,12 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
         dashMenu.style.display = "block";
         if (createGroupForm) {
           createGroupForm.style.display = "none";
+          addUser.style.display = "none";
         }
       }
       else {
         dashMenu.style.display = "none";
         if (createGroupForm) {
           createGroupForm.style.display = "block";
+          addUser.style.display = "block";
         }
       }
 
@@ -29,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dashMenu.style.display = "none";
       if (createGroupForm) {
         createGroupForm.style.display = "block";
+        addUser.style.display = "block";
       }
     });
   }
