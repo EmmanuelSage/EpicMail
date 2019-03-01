@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../css/style.css">
+  <title>EPIC MAIL | Drafts</title>
+</head>
+
+<body>
+  <header>
+    <div id="branding">
+      <h1> EPIC MAIL</h1>
+
+    </div>
+    <nav>
+      <ul>
+        <li class="current">
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">Log out</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="animation-wrapper dash-margin">
+    <main>
+      <!-- menu section -->
+      <section id="dash-menu-id" class="dash-menu-overlay">
+
+        <div class="dash-menu">
+          <div class="compose close-mobile-menu-x">
+            <button id="close-mobile-menu">
+              <h1>x</h1>
+            </button>
+          </div>
+
+          <div class="compose">
+            <button id="compose-open-modal">Compose</button>
+          </div>
+
+          <div class="options">
+            <a href="dashboard.html">
+              <div class="current-dash">Inbox</div>
+            </a>
+            <a href="sentmessages.html">
+              <div>Sent</div>
+            </a>
+            <a href="#">
+              <div>Draft</div>
+            </a>
+            <a href="group.html">
+              <div>Groups</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- content section -->
+      <section class="content">
+
+        <div class="content-menu">
+
+          <!-- <a href="#" id="reload-messages">
+          <div>Reload</div>
+        </a> -->
+          <span class="page-state">Current View: Drafts</span>
+          <a id="hamburger-link" href="#">
+            <div>Menu &equiv;</div>
+          </a>
+
+        </div>
+
+        <div class="content-messages">
+          <ul>
+            <li>
+              <span class="message-from"> 5/06/2019 : keath </span>
+              <span class="single-message">
+
+                <span class="brief-message"> <a href="viewinbox.html"> i would send this message soon let me just save
+                    it for now.
+                  </a>
+                </span>
+              </span>
+
+
+            </li>
+            <li>
+              <span class="message-from"> 5/06/2019 : keath </span>
+              <span class="single-message">
+
+                <span class="brief-message"> <a href="viewinbox.html"> i would send this message soon let me just save
+                    it for now.
+                  </a>
+                </span>
+              </span>
+
+
+            </li>
+            <li>
+              <span class="message-from"> 5/06/2019 : keath </span>
+              <span class="single-message">
+
+                <span class="brief-message"> <a href="viewinbox.html"> i would send this message soon let me just save
+                    it for now.
+                  </a>
+                </span>
+              </span>
+
+
+            </li>
+            <li>
+              <span class="message-from"> 5/06/2019 : keath </span>
+              <span class="single-message">
+
+                <span class="brief-message"> <a href="viewinbox.html"> i would send this message soon let me just save
+                    it for now.
+                  </a>
+                </span>
+              </span>
+
+
+            </li>
+            <li>
+              <span class="message-from"> 5/06/2019 : keath </span>
+              <span class="single-message">
+
+                <span class="brief-message"> <a href="viewinbox.html"> i would send this message soon let me just save
+                    it for now.
+                  </a>
+                </span>
+              </span>
+
+
+            </li>
+            <li>
+              <span class="message-from"> 5/06/2019 : keath </span>
+              <span class="single-message">
+
+                <span class="brief-message"> <a href="viewinbox.html"> i would send this message soon let me just save
+                    it for now.
+                  </a>
+                </span>
+              </span>
+
+
+            </li>
+
+
+
+
+
+          </ul>
+        </div>
+
+      </section>
+
+    </main>
+
+    <div id="compose-modal-id" class="compose-modal">
+      <div class="compose-modal-header">
+        <h3 class="compose-modal-title">Compose a new email</h3>
+        <span id="modal-close-id" class="modal-close">&times;</span>
+      </div>
+
+      <div class="compose-modal-body">
+        <form>
+          <div class="compose-modal-select">
+            <span>Send Email to : </span>
+            <select>
+              <option>User</option>
+              <option>Group</option>
+            </select>
+          </div>
+          <input type="text" placeholder="To: " required>
+          <input type="text" placeholder="Subject: " required>
+          <textarea name="email-body id=" email-body-id" cols="62" rows="18"></textarea><br>
+          <button type="submit" id="compose-send-button">Send</button>
+          <button type="submit" id="draft-save-button">Save as draft</button>
+          <button type="submit" id="mobile-cancel-button">Cancel</button>
+
+        </form>
+      </div>
+
+    </div>
+
+
+  </div>
+  <footer></footer>
+  <script src="../js/script.js"></script>
+</body>
+
+</html>
