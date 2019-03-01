@@ -692,6 +692,35 @@ color: #f8a929;
 font-weight: bold;
 margin-right: 4rem;
 }
+
+
+/* NEW VIEW MESSAGES THREAD */
+.thread {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .thread:hover {
+  background-color: #ccc; 
+}
+
+.panel {
+  background: #fff;
+}
+
+.panel p{
+  color:black;
+  padding: 4rem;
+}
+
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
