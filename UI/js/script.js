@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const composeModal = document.getElementById("compose-modal-id");
   const modalClose = document.getElementById("modal-close-id");
   const mobileCancelButton = document.getElementById("mobile-cancel-button");
+  const groupDisableInput = document.getElementById("group-disable-input");
+
+
 
 
   if (hamburger) {
@@ -17,9 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
       let displayState = dashMenu.style.display;
       if (displayState === "none") {
         dashMenu.style.display = "block";
+        groupDisableInput.style.display = "none";
       }
       else {
         dashMenu.style.display = "none";
+        groupDisableInput.style.display = "inline-block";
       }
     });
   }
@@ -27,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeMobileMenu) {
     closeMobileMenu.addEventListener("click", () => {
       dashMenu.style.display = "none";
+      groupDisableInput.style.display = "none";
     });
   }
 
@@ -40,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (modalClose) {
     modalClose.onclick = function () {
       composeModal.style.display = "none";
+      groupDisableInput.style.display = "none";
     }
   }
   if (mobileCancelButton) {

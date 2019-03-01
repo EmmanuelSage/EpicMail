@@ -739,7 +739,7 @@ margin-right: 4rem;
   }
 
   .dash-menu-overlay{
-    display: block;
+    display: none;
     height: 100%;
     width: 25%;
     position: fixed;
