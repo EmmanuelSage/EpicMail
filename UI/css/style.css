@@ -731,23 +731,37 @@ margin-right: 4rem;
 /* retract message */
 .retract-message{
   color: #444;
-  margin: 5px;
+  margin: 0.5rem;
 }
 
 span.retract-message:hover{
   color: red;
-  margin: 30px;
+  margin: 3rem;
   font-size: 1.8rem;
   cursor: pointer;
 }
 
 .send-draft-message{
   color: #444;
-  margin: 5px;
+  margin: 0.5rem;
+  color: rgb(3, 80, 3);
 }
-.send-draft-message{
+
+span.send-draft-message:hover{
   color: green;
-  margin: 30px;
+  margin: 3rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.delete-draft-message{
+  color: rgb(148, 12, 12);
+  margin: 0.5rem;
+}
+
+span.delete-draft-message:hover{
+  color: red;
+  margin: 3rem;
   font-size: 1.8rem;
   cursor: pointer;
 }
