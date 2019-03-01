@@ -14,9 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const thread = document.getElementsByClassName("thread");
   const saveAsDraft = document.getElementById("draft-save-button");
 
-
-
-
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       let displayState = dashMenu.style.display;
@@ -37,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
       groupDisableInput.style.display = "none";
     });
   }
-
 
   if (composeButton) {
     composeButton.onclick = function () {
@@ -63,9 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
-
-
   for (let i = 0; i < thread.length; i++) {
     thread[i].addEventListener("click", function () {
       this.classList.toggle("active");
@@ -80,5 +73,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
   }
-
 });
