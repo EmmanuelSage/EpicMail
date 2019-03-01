@@ -550,7 +550,39 @@ margin: auto;
   width: 60%;
 }
 
+/* center align */
+.add-user-style{
+  text-align: center;
+  font-size: 2rem;
+}
 
+
+.add-user-style h3{
+  margin: 3rem;
+}
+
+.select-user-checkbox{
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.select-user-checkbox label{
+  margin: 3rem 1rem;
+}
+
+.select-style{
+  margin-left: 10px;
+  margin-bottom: 15px;
+  width: 30%;
+  height:25px;
+  background: none;
+  outline: 0;
+  border: 1px solid #e0e0e0;
+  transition-duration: 0.25s;
+  color: #444;
+}
 
 /* Media queries */
 /* ======================================= */
@@ -576,7 +608,7 @@ margin: auto;
     padding-top: 16px;
   }
 
-
-
 }
+
+
 
