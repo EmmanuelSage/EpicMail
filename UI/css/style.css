@@ -685,6 +685,13 @@ padding-left: 1em;
   color: #444;
 }
 
+/* page state */
+.page-state{
+font-size: 2rem;
+color: #f8a929;
+font-weight: bold;
+margin-right: 4rem;
+}
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
