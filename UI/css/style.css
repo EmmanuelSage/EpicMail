@@ -388,15 +388,195 @@ form .reset-password{
   
   }
 
+
+  /* Dashboard styling */
+.dash-menu-overlay{
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.5);
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+.dash-menu{
+  position: relative;
+  top: 0%;
+}
+.dash-margin{
+  padding: 5rem;
+}
+
+.content{
+  min-width: 32rem;
+}
+
+.content-menu {
+  background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%);
+  min-width: 32rem;
+  text-align: center;
+}
+.content-menu div {
+  display: inline-block;
+  padding: 2rem 0.5rem;
+}
+
+#reload-messages{
+  font-size: 2rem;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+#hamburger-link {
+  margin-left: auto;
+  font-size: 3rem;
+  color: #fff;
+  padding: 1rem;
+  
+}
+.single-message span{
+  padding: 1rem;
+}
+
+.single-mesage{
+  padding: 1rem;
+}
+
+.message-from{
+  color: black;
+}
+
+.content-messages ul li{
+  background: #fff;
+  text-align: center;
+  padding: 0.5rem;
+  border-bottom: 3px solid #eee;
+  list-style-type: none;
+  transition: padding 0.15s;
+}
+
+.content-messages ul li:hover{
+  padding: 10px;
+  background: #eee;
+}
+
+
+
+
+
+
+/* menu edit */
+.compose{
+  padding: 2rem;
+  text-align: center;
+}
+.compose button{
+  margin-top: 3rem;
+  outline:0;
+  margin-left: 2.7rem;
+  padding: 2rem 7rem;
+  font-size: 1.3rem;
+  border-radius: 30%;
+  border: none;
+  box-shadow:0px 2px 10px 5px #97B1BF;
+  background-color: #f8a929;
+  cursor: pointer;
+  color: #fff;
+}
+
+.close-mobile-menu-x button{
+  padding: 1rem 3rem;
+  background:red;
+}
+
+.compose button:hover {
+  background:#fff;
+   box-shadow:0px 2px 10px 5px #97B1BF;
+   color:#000;
+}
+
+
+.options div{
+  display: block;
+  background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%);
+  text-align: center;
+  margin: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #26D0CE;
+}
+
+.options a{
+text-decoration: none;
+color: #fff;
+}
+
+.options .current-dash{
+  background: #fff;
+  color: black;
+  /* box-shadow:0px 2px 10px 1px #fff; */
+  border: 2px solid #eee;
+}
+
+.options div:hover {
+  background: #fff;
+  color: black;
+  box-shadow:1px 2px 10px 2px #fff;
+}
+
+
+
+
+/* Groups page */
+
+.create-group{
+  background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%);
+}
+.create-group form{
+display: flex;
+flex-flow: row wrap;
+margin: 20px;
+}
+.create-group form button{
+display: inline-block;
+margin: 2rem;
+margin: auto;
+}
+.create-group form input{
+  display: inline-block;
+  margin: 2rem;
+  width: 60%;
+}
+
+
+
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
   header{
-    flex-direction: row !important;
+    flex-direction: row;
     align-items: center;
   }
   header nav{
     margin-left: auto;
   }
+
+  .dash-menu-overlay{
+    display: block;
+    height: 100%;
+    width: 25%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.5);
+    overflow-x: hidden;
+    padding-top: 16px;
+  }
+
+
+
 }
 
