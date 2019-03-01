@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../css/style.css">
+  <title>EPIC MAIL | Inbox</title>
+</head>
+
+<body>
+  <header>
+    <div id="branding">
+      <h1> EPIC MAIL</h1>
+
+    </div>
+    <nav>
+      <ul>
+        <li class="current">
+          <a href="dashboard.html">Home</a>
+        </li>
+        <li>
+          <a href="signin.html">Log out</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="animation-wrapper dash-margin">
+    <main>
+      <!-- menu section -->
+      <section id="dash-menu-id" class="dash-menu-overlay">
+
+        <div class="dash-menu">
+          <div class="compose close-mobile-menu-x">
+            <button id="close-mobile-menu">
+              <h1>x</h1>
+            </button>
+          </div>
+
+          <div class="compose">
+            <button id="compose-open-modal">Compose</button>
+          </div>
+
+          <div class="options">
+            <a href="#">
+              <div class="current-dash">Inbox</div>
+            </a>
+            <a href="#">
+              <div>Sent</div>
+            </a>
+            <a href="#">
+              <div>Draft</div>
+            </a>
+            <a href="group.html">
+              <div>Groups</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- content section -->
+      <section class="content">
+
+        <div class="content-menu">
+
+          <!-- <a href="#" id="reload-messages">
+          <div>Reload</div>
+        </a> -->
+          <span class="page-state">Current View: Inbox messages</span>
+          <a id="hamburger-link" href="#">
+            <div>Menu &equiv;</div>
+          </a>
+
+        </div>
+
+        <div class="content-messsages">
+          <div class="view-message-thread"></div>
+          <button class="thread">Message from james</button>
+          <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia quod, nostrum
+              libero dolore exercitationem delectus natus ex nobis autem atque fugit labore quidem ab error modi laborum
+              accusamus sint alias est eos eum dolorem, illo minima odio. Laborum, modi aliquid.</p>
+          </div>
+
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <div id="compose-modal-id" class="compose-modal">
+      <div class="compose-modal-header">
+        <h3 class="compose-modal-title">Compose a new email</h3>
+        <span id="modal-close-id" class="modal-close">&times;</span>
+      </div>
+
+      <div class="compose-modal-body">
+        <form>
+          <div class="compose-modal-select">
+            <span>Send Email to : </span>
+            <select>
+              <option>User</option>
+              <option>Group</option>
+            </select>
+          </div>
+          <input type="text" placeholder="To: " required>
+          <input type="text" placeholder="Subject: " required>
+          <textarea name="email-body id=" email-body-id" cols="62" rows="18"></textarea><br>
+          <button type="submit" id="compose-send-button">Send</button>
+          <button type="submit" id="draft-save-button">Save as draft</button>
+          <button type="submit" id="mobile-cancel-button">Cancel</button>
+
+        </form>
+      </div>
+
+    </div>
+
+
+  </div>
+  <footer></footer>
+  <script src="../js/script.js"></script>
+</body>
+
+</html>
