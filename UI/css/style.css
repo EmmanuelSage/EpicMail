@@ -721,6 +721,12 @@ margin-right: 4rem;
   padding: 4rem;
 }
 
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
