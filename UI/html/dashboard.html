@@ -147,6 +147,25 @@
 
     </main>
 
+    <div id="compose-modal-id" class="compose-modal">
+      <div class="compose-modal-header">
+        <h3 class="compose-modal-title">Compose a new email</h3>
+        <span id="modal-close-id" class="modal-close">&times;</span>
+      </div>
+
+      <div class="compose-modal-body">
+        <form>
+          <input type="text" placeholder="To: " required>
+          <input type="text" placeholder="Subject: " required>
+          <textarea name="email-body id=" email-body-id" cols="62" rows="18"></textarea><br>
+          <button type="submit" id="compose-send-button">Send</button>
+          <button type="submit" id="draft-save-button">Save as draft</button>
+          <button type="submit" id="mobile-cancel-button">Cancel</button>
+
+        </form>
+      </div>
+
+    </div>
 
 
   </div>
