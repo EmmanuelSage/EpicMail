@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalClose = document.getElementById("modal-close-id");
   const mobileCancelButton = document.getElementById("mobile-cancel-button");
   const groupDisableInput = document.getElementById("group-disable-input");
+  const thread = document.getElementsByClassName("thread");
+  const saveAsDraft = document.getElementById("draft-save-button");
 
 
 
@@ -43,6 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  if (saveAsDraft) {
+    saveAsDraft.onclick = function () {
+      composeModal.style.display = "none";
+    }
+  }
+
   if (modalClose) {
     modalClose.onclick = function () {
       composeModal.style.display = "none";
@@ -56,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  const thread = document.getElementsByClassName("thread");
+
 
   for (let i = 0; i < thread.length; i++) {
     thread[i].addEventListener("click", function () {
