@@ -662,6 +662,29 @@ padding-left: 1em;
 }
 
 
+
+/* compose modal select */
+.compose-modal-select{
+  margin-left: 2em;
+  font-size: 1.6em;
+}
+
+.compose-modal-select select{
+  margin-left: 1em;
+  margin-bottom: 1.5em;
+  width: 58%;
+  height:2.5em;
+  background: none;
+  outline: 0;
+  border: 0.1em solid #e0e0e0;
+  transition-duration: 0.25s;
+  color: #fff;
+}
+
+.compose-modal-select select option{
+  color: #444;
+}
+
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
