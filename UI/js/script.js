@@ -6,35 +6,46 @@ document.addEventListener("DOMContentLoaded", () => {
   const createGroupForm = document.getElementById("create-group-id");
   const addUser = document.getElementById("add-user-id");
 
+  const composeButton = document.getElementById("compose-open-modal");
+  const composeModal = document.getElementById("compose-modal-id");
+  const modalClose = document.getElementById("modal-close-id");
+  const mobileCancelButton = document.getElementById("mobile-cancel-button");
+
+
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       let displayState = dashMenu.style.display;
       if (displayState === "none") {
         dashMenu.style.display = "block";
-        if (createGroupForm) {
-          createGroupForm.style.display = "none";
-          addUser.style.display = "none";
-        }
       }
       else {
         dashMenu.style.display = "none";
-        if (createGroupForm) {
-          createGroupForm.style.display = "block";
-          addUser.style.display = "block";
-        }
       }
-
     });
   }
 
   if (closeMobileMenu) {
     closeMobileMenu.addEventListener("click", () => {
       dashMenu.style.display = "none";
-      if (createGroupForm) {
-        createGroupForm.style.display = "block";
-        addUser.style.display = "block";
-      }
     });
+  }
+
+
+  if (composeButton) {
+    composeButton.onclick = function () {
+      composeModal.style.display = "block";
+    }
+  }
+
+  if (modalClose) {
+    modalClose.onclick = function () {
+      composeModal.style.display = "none";
+    }
+  }
+  if (mobileCancelButton) {
+    mobileCancelButton.onclick = function () {
+      composeModal.style.display = "none";
+    }
   }
 
 
