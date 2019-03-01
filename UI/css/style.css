@@ -727,6 +727,21 @@ margin-right: 4rem;
   background-color: white;
   overflow: hidden;
 }
+
+/* retract message */
+.retract-message{
+  color: #444;
+  margin: 5px;
+}
+
+span.retract-message:hover{
+  color: red;
+  margin: 30px;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+
 /* Media queries */
 /* ======================================= */
 @media screen and (min-width: 768px) {
