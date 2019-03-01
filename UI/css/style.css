@@ -741,6 +741,17 @@ span.retract-message:hover{
   cursor: pointer;
 }
 
+.send-draft-message{
+  color: #444;
+  margin: 5px;
+}
+.send-draft-message{
+  color: green;
+  margin: 30px;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
 
 /* Media queries */
 /* ======================================= */
