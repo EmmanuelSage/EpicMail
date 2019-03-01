@@ -17,29 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
       let displayState = dashMenu.style.display;
       if (displayState === "none") {
         dashMenu.style.display = "block";
-        if (createGroupForm) {
-          createGroupForm.style.display = "none";
-          addUser.style.display = "none";
-        }
       }
       else {
         dashMenu.style.display = "none";
-        if (createGroupForm) {
-          createGroupForm.style.display = "block";
-          addUser.style.display = "block";
-        }
       }
-
     });
   }
 
   if (closeMobileMenu) {
     closeMobileMenu.addEventListener("click", () => {
       dashMenu.style.display = "none";
-      if (createGroupForm) {
-        createGroupForm.style.display = "block";
-        addUser.style.display = "block";
-      }
     });
   }
 
