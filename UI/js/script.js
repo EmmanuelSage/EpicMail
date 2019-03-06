@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       let displayState = dashMenu.style.display;
-      if (displayState === "none") {
+      if (displayState !== "block") {
         dashMenu.style.display = "block";
         if (groupDisableInput) {
           groupDisableInput.style.display = "none";
@@ -32,22 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
       }
-
-      // switch (displayState) {
-      //   case 'none':
-      //     dashMenu.style.display = "block";
-      //     if (groupDisableInput) {
-      //       groupDisableInput.style.display = "none";
-      //     }
-
-      //     break;
-      //   default:
-      //     dashMenu.style.display = "none";
-      //     if (groupDisableInput) {
-      //       groupDisableInput.style.display = "inline-block";
-      //     }
-      // }
-
 
     });
   }
@@ -100,9 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
   }
-
-
-
 
   // media query event handler
   if (matchMedia) {
