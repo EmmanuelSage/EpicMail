@@ -13,25 +13,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const groupDisableInput = document.getElementById("group-disable-input");
   const thread = document.getElementsByClassName("thread");
   const saveAsDraft = document.getElementById("draft-save-button");
+  const mainGrid = document.getElementById("mainGrid");
 
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       let displayState = dashMenu.style.display;
-      if (displayState === "none") {
+      if (displayState !== "block") {
         dashMenu.style.display = "block";
-        groupDisableInput.style.display = "none";
+        if (groupDisableInput) {
+          groupDisableInput.style.display = "none";
+        }
+
       }
       else {
         dashMenu.style.display = "none";
-        groupDisableInput.style.display = "inline-block";
+        if (groupDisableInput) {
+          groupDisableInput.style.display = "inline-block";
+        }
+
       }
+
     });
   }
 
   if (closeMobileMenu) {
     closeMobileMenu.addEventListener("click", () => {
       dashMenu.style.display = "none";
-      groupDisableInput.style.display = "none";
+      if (groupDisableInput) {
+        groupDisableInput.style.display = "none";
+      }
+
     });
   }
 
@@ -50,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (modalClose) {
     modalClose.onclick = function () {
       composeModal.style.display = "none";
-      groupDisableInput.style.display = "none";
+      // groupDisableInput.style.display = "none";
     }
   }
   if (mobileCancelButton) {
@@ -72,5 +83,30 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     });
+  }
+
+  // media query event handler
+  if (matchMedia) {
+    const mq = window.matchMedia("(min-width: 768px)");
+    mq.addListener(WidthChange);
+    WidthChange(mq);
+  }
+
+  // media query change
+  function WidthChange(mq) {
+    if (mq.matches) {
+      // window width is at least 768px desktop
+      dashMenu.style.display = "block";
+      mainGrid.classList.add("main");
+      dashMenu.classList.remove("dash-menu-overlay");
+      dashMenu.classList.add("menu");
+      hamburger.style.visibility = "hidden";
+    } else {
+      // window width is less than 768px mobile
+      dashMenu.classList.add("dash-menu-overlay");
+      mainGrid.classList.remove("main");
+      hamburger.style.visibility = "visible";
+    }
+
   }
 });
