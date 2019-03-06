@@ -781,7 +781,7 @@ span.delete-draft-message:hover{
   header #branding{
     margin-left: 7rem;
   }
-  
+
   .dash-menu-overlay{
     display: none;
     height: 100%;
@@ -822,8 +822,36 @@ span.delete-draft-message:hover{
     background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%);
     box-shadow:0.1em 0.2em 1em 0.2em #444;
   } */
-
+#hide-x-desktop{
+  display: none;
+}
 }
 
+/* Javascript added classes for desktop/mobile */
+
+/* Dashboard Grid */
+.main{
+  display: grid;
+  grid-template-columns: [menu] 2fr [content] 8fr;
+  grid-template-rows: [body] auto [footer] 50px;
+  grid-gap: 2rem;
+  margin: 0px 50px;
+}
+
+.menu{
+  grid-row: body;
+  grid-column: menu;
+  margin-top: -5rem;
+}
+
+.content{
+  grid-row: body;
+  grid-column: content;
+}
+
+footer{
+  grid-row: footer;
+  grid-column: menu/content;
+}
 
 

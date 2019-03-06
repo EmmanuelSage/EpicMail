@@ -27,12 +27,12 @@
     </nav>
   </header>
   <div class="animation-wrapper dash-margin">
-    <main>
+    <main id="mainGrid">
       <!-- menu section -->
       <section id="dash-menu-id" class="dash-menu-overlay">
 
         <div class="dash-menu">
-          <div class="compose close-mobile-menu-x">
+          <div id="hide-x-desktop" class="compose close-mobile-menu-x">
             <button id="close-mobile-menu">
               <h1>x</h1>
             </button>
@@ -44,7 +44,7 @@
 
           <div class="options">
             <a href="viewinbox.html">
-              <div class="current-dash">Inbox</div>
+              <div>Inbox</div>
             </a>
             <a href="sentmessages.html">
               <div>Sent</div>
@@ -53,7 +53,7 @@
               <div>Draft</div>
             </a>
             <a href="group.html">
-              <div>Groups</div>
+              <div class="current-dash">Groups</div>
             </a>
           </div>
         </div>
@@ -64,9 +64,7 @@
 
         <div class="content-menu">
 
-          <!-- <a href="#" id="reload-messages">
-          <div>Reload</div>
-        </a> -->
+          <span class="page-state">Current View: Groups</span>
 
           <a id="hamburger-link" href="#">
             <div>Menu &equiv;</div>

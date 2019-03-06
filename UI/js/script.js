@@ -73,4 +73,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
   }
+
+  // media query event handler
+  if (matchMedia) {
+    const mq = window.matchMedia("(min-width: 768px)");
+    mq.addListener(WidthChange);
+    WidthChange(mq);
+  }
+
+  // media query change
+  function WidthChange(mq) {
+    if (mq.matches) {
+      // window width is at least 768px desktop
+
+      mainGrid.classList.add("main");
+      dashMenu.classList.remove("dash-menu-overlay");
+      dashMenu.classList.add("menu");
+      hamburger.style.visibility = "hidden";
+    } else {
+      // window width is less than 768px mobile
+      dashMenu.classList.add("dash-menu-overlay");
+      mainGrid.classList.remove("main");
+      hamburger.style.visibility = "visible";
+    }
+
+  }
 });
