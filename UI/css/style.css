@@ -408,7 +408,6 @@ form .reset-password{
 }
 
 .content-menu {
-  /* background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%); */
   background: rgba(255,255,255,0.1);
   min-width: 32rem;
   text-align: center;
@@ -460,13 +459,7 @@ form .reset-password{
   /* padding: 10px; */
   box-shadow:2px 2px 10px 2px #97B1BF;
   background: #eee;
-  /* border-bottom: 0px solid #eee; */
 }
-
-
-
-
-
 
 /* menu edit */
 .compose{
@@ -487,11 +480,6 @@ form .reset-password{
   color: #229c69;
   transition-duration: 0.25s;
 }
-
-/* .close-mobile-menu-x button{
-  padding: 1rem 3rem;
-  background:rgba(0,0,0,0);
-} */
 
 .compose button:hover {
   background:#fff;
@@ -533,7 +521,6 @@ color: #fff;
 /* Groups page */
 
 .create-group{
-  /* background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%); */
   background: rgba(255,255,255,0.1);
 }
 .create-group form{
@@ -655,7 +642,7 @@ padding-left: 1em;
 }
 
 #compose-send-button{
-  background: rgba(6, 128, 6, 0.5);
+  background: #fff;
 }
 
 #mobile-cancel-button{
@@ -738,8 +725,7 @@ margin-right: 4rem;
 
 span.retract-message:hover{
   color: red;
-  margin: 3rem;
-  font-size: 1.8rem;
+  text-shadow: 2px 2px #fff;
   cursor: pointer;
 }
 
@@ -751,9 +737,8 @@ span.retract-message:hover{
 
 span.send-draft-message:hover{
   color: green;
-  margin: 3rem;
-  font-size: 1.8rem;
   cursor: pointer;
+  text-shadow: 2px 2px #fff;
 }
 
 .delete-draft-message{
@@ -763,8 +748,7 @@ span.send-draft-message:hover{
 
 span.delete-draft-message:hover{
   color: red;
-  margin: 3rem;
-  font-size: 1.8rem;
+  text-shadow: 2px 2px #fff;
   cursor: pointer;
 }
 
