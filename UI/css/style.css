@@ -22,7 +22,7 @@ header{
   background: linear-gradient(to bottom right, #26D0CE 0%, #687CEB 100%);
   color:#ffffff;
   min-width: 32rem;
-  padding: 2rem;
+  padding: 0.5rem;
   border-bottom:#50a3a2 3px solid;
   align-items: center;
 }
@@ -776,8 +776,12 @@ span.delete-draft-message:hover{
   }
   header nav{
     margin-left: auto;
+    margin-right: 7rem;
   }
-
+  header #branding{
+    margin-left: 7rem;
+  }
+  
   .dash-menu-overlay{
     display: none;
     height: 100%;
