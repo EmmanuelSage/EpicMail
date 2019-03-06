@@ -13,25 +13,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const groupDisableInput = document.getElementById("group-disable-input");
   const thread = document.getElementsByClassName("thread");
   const saveAsDraft = document.getElementById("draft-save-button");
+  const mainGrid = document.getElementById("mainGrid");
 
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       let displayState = dashMenu.style.display;
       if (displayState === "none") {
         dashMenu.style.display = "block";
-        groupDisableInput.style.display = "none";
+        if (groupDisableInput) {
+          groupDisableInput.style.display = "none";
+        }
+
       }
       else {
         dashMenu.style.display = "none";
-        groupDisableInput.style.display = "inline-block";
+        if (groupDisableInput) {
+          groupDisableInput.style.display = "inline-block";
+        }
+
       }
+
+      // switch (displayState) {
+      //   case 'none':
+      //     dashMenu.style.display = "block";
+      //     if (groupDisableInput) {
+      //       groupDisableInput.style.display = "none";
+      //     }
+
+      //     break;
+      //   default:
+      //     dashMenu.style.display = "none";
+      //     if (groupDisableInput) {
+      //       groupDisableInput.style.display = "inline-block";
+      //     }
+      // }
+
+
     });
   }
 
   if (closeMobileMenu) {
     closeMobileMenu.addEventListener("click", () => {
       dashMenu.style.display = "none";
-      groupDisableInput.style.display = "none";
+      if (groupDisableInput) {
+        groupDisableInput.style.display = "none";
+      }
+
     });
   }
 
@@ -50,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (modalClose) {
     modalClose.onclick = function () {
       composeModal.style.display = "none";
-      groupDisableInput.style.display = "none";
+      // groupDisableInput.style.display = "none";
     }
   }
   if (mobileCancelButton) {
@@ -74,6 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
+
+
   // media query event handler
   if (matchMedia) {
     const mq = window.matchMedia("(min-width: 768px)");
@@ -85,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function WidthChange(mq) {
     if (mq.matches) {
       // window width is at least 768px desktop
-
+      dashMenu.style.display = "block";
       mainGrid.classList.add("main");
       dashMenu.classList.remove("dash-menu-overlay");
       dashMenu.classList.add("menu");
