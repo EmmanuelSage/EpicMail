@@ -27,16 +27,15 @@
     </nav>
   </header>
   <div class="animation-wrapper dash-margin">
-    <main>
+    <main id="mainGrid">
       <!-- menu section -->
       <section id="dash-menu-id" class="dash-menu-overlay">
 
         <div class="dash-menu">
-          <div class="compose close-mobile-menu-x">
-            <button id="close-mobile-menu">
-              <h1>x</h1>
-            </button>
+          <div id="hide-x-desktop" class="compose close-mobile-menu-x shift-top">
+            <span id="close-mobile-menu" class="x-close">&times;</span>
           </div>
+
 
           <div class="compose">
             <button id="compose-open-modal">Compose</button>
@@ -44,13 +43,13 @@
 
           <div class="options">
             <a href="dashboard.html">
-              <div class="current-dash">Inbox</div>
+              <div>Inbox</div>
             </a>
             <a href="sentmessages.html">
               <div>Sent</div>
             </a>
             <a href="drafts.html">
-              <div>Draft</div>
+              <div class="current-dash">Draft</div>
             </a>
             <a href="group.html">
               <div>Groups</div>
