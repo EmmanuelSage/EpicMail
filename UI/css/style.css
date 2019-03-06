@@ -855,3 +855,18 @@ footer{
 }
 
 
+/* shift x button */
+.shift-top{
+  margin-left: 40rem;
+  }
+  
+  .x-close{
+    font-size: 3em;
+    transition: font-size 0.25s;
+  }
+  
+  .x-close:hover{
+    font-size: 4em;
+    text-shadow: 0.1em 0.1em 0.1em #000;
+    cursor: pointer;
+  }
