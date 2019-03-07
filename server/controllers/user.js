@@ -23,6 +23,14 @@ const User = {
       }],
     });
   },
+
+  login(req, res) {
+    const token = Helper.generateToken(req.newLogin.id);
+    return res.status(201).send({
+      status: 201,
+      data: [{ token }],
+    });
+  },
 };
 
 export default User;

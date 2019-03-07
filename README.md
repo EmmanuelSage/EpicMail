@@ -3,8 +3,9 @@
 Epic Mail is a web application that helps people exchange
 messages/information over the internet.
 
-Tempate URL
-https://emmanuelsage.github.io/EpicMail/UI/html/signup.html
+
+[![Coverage Status](https://coveralls.io/repos/github/EmmanuelSage/EpicMail/badge.svg?branch=ch-implement-travis-coveralls-164454280)](https://coveralls.io/github/EmmanuelSage/EpicMail?branch=ch-implement-travis-coveralls-164454280)
+[![Build Status](https://travis-ci.org/EmmanuelSage/EpicMail.svg?branch=develop)](https://travis-ci.org/EmmanuelSage/EpicMail)
 
 ## Built with
 * Node Js
