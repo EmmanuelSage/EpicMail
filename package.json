@@ -1,0 +1,20 @@
+{
+  "name": "epicmail",
+  "version": "1.0.0",
+  "description": "This is an email messaging application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emmanuel Oluyale",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EmmanuelSage/EpicMail/issues"
+  },
+  "homepage": "https://github.com/EmmanuelSage/EpicMail#readme",
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
