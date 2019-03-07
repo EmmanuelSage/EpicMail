@@ -1,8 +1,12 @@
 import express from 'express';
+import apiRoutes from './routes/api';
 
 const app = express();
+app.use(express.json());
 
 const PORT = process.env.PORT || 7000;
+
+app.use('/api/v1', apiRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send({
