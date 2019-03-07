@@ -39,17 +39,6 @@ describe('User can send message to individuals ', () => {
       .end((err, res) => {
         expect(res).to.have.status(201);
         expect(res.body.status).to.be.equal(201);
-        // expect(res.body.data).to.deep.equal([
-        //   {
-        //     id: res.body.data[0].id,
-        //     createdOn: res.body.data[0].createdOn,
-        //     subject: 'The Weather',
-        //     message: 'Lagos is very hot this days, like what',
-        //     receiverId: 2,
-        //     parentMessageId: 1,
-        //     status: 'Sent',
-        //   },
-        // ]);
         done(err);
       });
   });
@@ -69,16 +58,6 @@ describe('User can send message to individuals ', () => {
         expect(res).to.have.status(201);
         expect(res.body.status).to.be.equal(201);
         expect(res.body.data[0].parentMessageId).to.be.equal(0);
-        // expect(res.body.data).to.deep.equal([
-        //   {
-        //     id: res.body.data[0].id,
-        //     createdOn: res.body.data[0].createdOn,
-        //     subject: 'The Weather',
-        //     message: 'Lagos is very hot this days, like what',
-        //     receiverId: 2,
-        //     parentMessageId: 0,
-        //   },
-        // ]);
         done(err);
       });
   });
