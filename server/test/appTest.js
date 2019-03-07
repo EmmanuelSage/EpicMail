@@ -10,7 +10,7 @@ describe('Default route', () => {
   it('Should return a 200 status code',
     (done) => {
       chai.request(app)
-        .get('/v2/ersds')
+        .get('/')
         .end((error, res) => {
           expect(res).to.have.status(200);
           expect(res.body.status).to.be.equal(200);
@@ -28,7 +28,7 @@ describe('Invalid Url', () => {
         .end((error, res) => {
           expect(res).to.have.status(404);
           expect(res.body.status).to.be.equal(404);
-          expect(res.body.error).to.equal('This route does not exist');
+          expect(res.body.error).to.equal('This url does not exist');
           done();
         });
     });
