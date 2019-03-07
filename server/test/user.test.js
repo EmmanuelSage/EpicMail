@@ -20,7 +20,7 @@ describe('Create User Post route authentication', () => {
       .end((err, res) => {
         expect(res).to.have.status(201);
         expect(res.body.status).to.be.equal(201);
-        expect(res.body.data.message).to.equal('User sign up was succesfull');
+        expect(res.body.data[0].message).to.equal('User sign up was succesfull');
         done(err);
       });
   });
@@ -38,7 +38,7 @@ describe('Create User Post route authentication', () => {
       .end((err, res) => {
         expect(res).to.have.status(400);
         expect(res.body.status).to.be.equal(400);
-        expect(res.body.error).to.be.equal('Please enter a valid email');
+        expect(res.body.error).to.be.equal('Please enter a valid email address');
         done(err);
       });
   });
@@ -158,10 +158,10 @@ describe('Create User Post route authentication ', () => {
       .request(app)
       .post('/api/v1/auth/signup')
       .send({
-        firstName: 'david',
+        firstName: 'emmanuelder',
         lastName: 'Oluyale',
-        email: 'david@gmail.com',
-        password: 'david1',
+        email: 'emmanuelder@gmail.com',
+        password: 'emmanuelder',
       })
       .end((err) => {
         done(err);

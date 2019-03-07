@@ -14,7 +14,9 @@ const userValidator = {
     if (req.body.password.length < 6) {
       return res.status(400).send({ status: 400, error: 'Please enter a password of at least six characters' });
     }
-
+    if (Helper.isRegisteredEmail(req.body.email)) {
+      return res.status(409).send({ status: 409, error: 'Email has already been registered' });
+    }
     return next();
   },
 };
