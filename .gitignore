@@ -1,1 +1,8 @@
+#node modules
 node_modules
+
+#nyc test coverage
+.nyc_output
+
+#coverage from nyc istanbul
+coverage
