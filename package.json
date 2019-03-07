@@ -7,7 +7,7 @@
     "start": "babel-node ./server/app.js",
     "start-dev": "nodemon ./server/app.js --exec babel-node",
     "test": "nyc mocha --require @babel/register ./server/test/ -c --exit",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov -x *.test.js| coveralls"
   },
   "author": "Emmanuel Oluyale",
   "license": "MIT",
@@ -28,8 +28,11 @@
     "nyc": "^13.3.0"
   },
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-    "express": "^4.16.4"
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.0"
   }
 }
