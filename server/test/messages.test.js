@@ -81,4 +81,42 @@ describe('User can send message to individuals ', () => {
         done(err);
       });
   });
+
+  it('Should return error if token is not provided', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/messages')
+      .set('x-access-token', '')
+      .send({
+        subject: 'The Weather',
+        message: 'Lagos is very hot this days, like what',
+        receiverId: '2',
+        parentMessageId: '1',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.status).to.be.equal(400);
+        expect(res.body.error).to.be.equal('Token is not provided');
+        done(err);
+      });
+  });
+
+  it('Should return error if token is invalid', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/messages')
+      .set('x-access-token', 'efniu&#&*h')
+      .send({
+        subject: 'The Weather',
+        message: 'Lagos is very hot this days, like what',
+        receiverId: '2',
+        parentMessageId: '1',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.status).to.be.equal(400);
+        expect(res.body.error).to.be.equal('The token you provided is invalid');
+        done(err);
+      });
+  });
 });
