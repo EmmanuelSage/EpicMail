@@ -195,7 +195,7 @@ describe('Login User Post route authentication ', () => {
   before((done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/signup')
+      .post('/api/v1/auth/login')
       .send({
         firstName: 'david',
         lastName: 'Oluyale',
@@ -211,7 +211,7 @@ describe('Login User Post route authentication ', () => {
   it('Should login if credentials are correct', (done) => {
     chai
       .request(app)
-      .post('/api/v1/login')
+      .post('/api/v1/auth/login')
       .set('x-access-token', authToken)
       .send({
         email: 'david@gmail.com',
@@ -228,7 +228,7 @@ describe('Login User Post route authentication ', () => {
   it('Should return an error if password is less than six characters', (done) => {
     chai
       .request(app)
-      .post('/api/v1/login')
+      .post('/api/v1/auth/login')
       .set('x-access-token', authToken)
       .send({
         email: 'david@gmail.com',
@@ -245,7 +245,7 @@ describe('Login User Post route authentication ', () => {
   it('Should return an error email is not provided', (done) => {
     chai
       .request(app)
-      .post('/api/v1/login')
+      .post('/api/v1//auth/login')
       .set('x-access-token', authToken)
       .send({
         email: '',
@@ -262,7 +262,7 @@ describe('Login User Post route authentication ', () => {
   it('Should return an error email is not registered', (done) => {
     chai
       .request(app)
-      .post('/api/v1/login')
+      .post('/api/v1/auth/login')
       .set('x-access-token', authToken)
       .send({
         email: 'ferate@gmil.com',
@@ -279,7 +279,7 @@ describe('Login User Post route authentication ', () => {
   it('Should return an error if password is incorrect', (done) => {
     chai
       .request(app)
-      .post('/api/v1/login')
+      .post('/api/v1/auth/login')
       .set('x-access-token', authToken)
       .send({
         email: 'david@gmail.com',
