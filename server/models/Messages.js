@@ -61,6 +61,19 @@ class Messages {
     });
     return allUnread;
   }
+
+  getSentMessages(userId) {
+    const allSent = [];
+    let currentMessage = {};
+    this.messages.forEach((message) => {
+      if (message.senderId === userId) {
+        currentMessage = message;
+        currentMessage.status = 'Sent';
+        allSent.push(currentMessage);
+      }
+    });
+    return allSent;
+  }
 }
 
 export default new Messages();
