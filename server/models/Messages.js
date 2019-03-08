@@ -2,6 +2,7 @@ class Messages {
   constructor() {
     this.messages = [];
     this.logMessages = [[0]];
+    this.deletedMessages = [[0]];
   }
 
   create(data) {
@@ -15,7 +16,7 @@ class Messages {
       senderId: data.senderId,
       receiverId: data.receiverId,
       parentMessageId: data.parentMessageId,
-      status: 'Sent',
+      status: 'Not Assigned',
     };
     this.messages.push(newMessage);
     return newMessage;
@@ -34,12 +35,13 @@ class Messages {
         } else {
           currentMessage.status = 'Unread';
         }
-        allReceived.push(currentMessage);
+        if (!this.isMessageDeleted(userId, currentMessage.id)) {
+          allReceived.push(currentMessage);
+        }
       }
     });
     return allReceived;
   }
-
 
   getUnreadMessages(userId) {
     const allUnread = [];
@@ -50,12 +52,17 @@ class Messages {
         if (this.logMessages[0].indexOf(userId) !== -1) {
           if (this.logMessages[userId].indexOf(currentMessage.id) === -1) {
             currentMessage.status = 'Unread';
-            allUnread.push(currentMessage);
+            // allUnread.push(currentMessage);
+            if (!this.isMessageDeleted(userId, currentMessage.id)) {
+              allUnread.push(currentMessage);
+            }
           }
         } else {
-          currentMessage.status = 'Read';
-
-          allUnread.push(currentMessage);
+          currentMessage.status = 'Unread';
+          if (!this.isMessageDeleted(userId, currentMessage.id)) {
+            allUnread.push(currentMessage);
+          }
+          // allUnread.push(currentMessage);
         }
       }
     });
@@ -69,7 +76,10 @@ class Messages {
       if (message.senderId === userId) {
         currentMessage = message;
         currentMessage.status = 'Sent';
-        allSent.push(currentMessage);
+        if (!this.isMessageDeleted(userId, currentMessage.id)) {
+          allSent.push(currentMessage);
+        }
+        // allSent.push(currentMessage);
       }
     });
     return allSent;
@@ -89,11 +99,49 @@ class Messages {
           this.logMessages[userId].push(foundMessage.id);
         }
         foundMessage.status = 'Read';
-        return foundMessage;
+        if (!this.isMessageDeleted(userId, foundMessage.id)) {
+          return foundMessage;
+        }
+        // return foundMessage;
       }
     }
 
     return 'not Found';
+  }
+
+  deleteSpecificMessage(userId, messageId) {
+    const foundMessage = this.messages
+      .find(message => parseInt(message.id, 10) === parseInt(messageId, 10));
+    let returnMessage = '';
+
+    if (foundMessage) {
+      if (foundMessage.receiverId === userId || foundMessage.senderId === userId) {
+        if (this.deletedMessages[0].indexOf(userId) !== -1) {
+          if (this.deletedMessages[userId].indexOf(foundMessage.id) !== -1) {
+            returnMessage = 'Message does not exist, had already been deleted';
+          } else {
+            this.deletedMessages[userId].push(foundMessage.id);
+            returnMessage = 'Message has been deleted';
+          }
+          // this.deletedMessages[userId].push(foundMessage.id);
+        } else {
+          this.deletedMessages[0].push(userId);
+          this.deletedMessages[userId] = [];
+          this.deletedMessages[userId].push(foundMessage.id);
+          returnMessage = 'Message has been deleted user first time deleting';
+        }
+      }
+    }
+    return returnMessage;
+  }
+
+  isMessageDeleted(userId, messageId) {
+    if (this.deletedMessages[0].indexOf(userId) !== -1) {
+      if (this.deletedMessages[userId].indexOf(messageId) !== -1) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
