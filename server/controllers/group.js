@@ -16,6 +16,9 @@ const Group = {
       }],
     });
   },
+
+  addMember() {
+  },
 };
 
 export default Group;

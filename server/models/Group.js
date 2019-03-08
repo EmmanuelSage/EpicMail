@@ -14,6 +14,10 @@ class Group {
     this.groups.push(newGroup);
     return newGroup;
   }
+
+  addMember() {
+    this.notImplemented = '';
+  }
 }
 
 export default new Group();
