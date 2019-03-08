@@ -42,4 +42,21 @@ describe('Create Group suite', () => {
         done(err);
       });
   });
+
+  it('should add a new member if logged in', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/group/member')
+      .set('x-access-token', authToken)
+      .send({
+        groupId: 1,
+        memberId: 1,
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(res.body.status).to.be.equal(201);
+        expect(res.body.data[0].message).to.equal('Member has been added to group');
+        done(err);
+      });
+  });
 });

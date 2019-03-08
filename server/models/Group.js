@@ -1,6 +1,7 @@
 class Group {
   constructor() {
     this.groups = [];
+    this.members = [];
   }
 
   create(data) {
@@ -13,6 +14,19 @@ class Group {
 
     this.groups.push(newGroup);
     return newGroup;
+  }
+
+  addMember(data) {
+    const numOfMembers = (this.members.length);
+    const countId = (numOfMembers === 0) ? 1 : (this.members[numOfMembers - 1].id + 1);
+    const newMember = {
+      id: countId,
+      groupId: data.groupId,
+      memberId: data.memberId,
+    };
+
+    this.members.push(newMember);
+    return newMember;
   }
 }
 
