@@ -28,7 +28,7 @@ describe('User can send message to individuals ', () => {
   it('Should Post Messages if details are correct', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The Weather',
@@ -46,7 +46,7 @@ describe('User can send message to individuals ', () => {
   it('Should Assign 0 to parentMessageId if not given', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The Weather',
@@ -65,7 +65,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if token is not provided', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', '')
       .send({
         subject: 'The Weather',
@@ -74,8 +74,8 @@ describe('User can send message to individuals ', () => {
         parentMessageId: '1',
       })
       .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.status).to.be.equal(400);
+        expect(res).to.have.status(401);
+        expect(res.body.status).to.be.equal(401);
         expect(res.body.error).to.be.equal('Token is not provided');
         done(err);
       });
@@ -84,7 +84,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if subject is empty', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: '',
@@ -103,7 +103,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if message is empty', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The weather',
@@ -122,7 +122,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if receiverId is empty', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The weather',
@@ -134,6 +134,48 @@ describe('User can send message to individuals ', () => {
         expect(res).to.have.status(400);
         expect(res.body.status).to.be.equal(400);
         expect(res.body.error).to.be.equal('Please enter a receiverId');
+        done(err);
+      });
+  });
+});
+
+// User can Get message tests
+describe('User can get all received messages', () => {
+  before((done) => {
+    chai
+      .request(app)
+      .post('/api/v1/messages')
+      .set('x-access-token', authToken)
+      .send({
+        subject: 'The Weather',
+        message: 'Lagos is very hot this days, like what',
+        receiverId: '2',
+        parentMessageId: '1',
+      })
+      .end((err) => {
+        done(err);
+      });
+  });
+  it('Should return all received messages', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/messages')
+      .set('x-access-token', authToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.status).to.be.equal(200);
+        done(err);
+      });
+  });
+  it('Should return error if token is not provided', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/messages')
+      .set('x-access-token', '')
+      .end((err, res) => {
+        expect(res).to.have.status(401);
+        expect(res.body.status).to.be.equal(401);
+        expect(res.body.error).to.be.equal('Token is not provided');
         done(err);
       });
   });

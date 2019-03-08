@@ -24,6 +24,15 @@ const Messages = {
       }],
     });
   },
+
+  getUserReceivedMessages(req, res) {
+    const currentUserId = req.user.id;
+    const data = db.getReceivedMessages(currentUserId);
+    return res.status(200).send({
+      status: 200,
+      data,
+    });
+  },
 };
 
 export default Messages;
