@@ -28,7 +28,7 @@ describe('User can send message to individuals ', () => {
   it('Should Post Messages if details are correct', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The Weather',
@@ -46,7 +46,7 @@ describe('User can send message to individuals ', () => {
   it('Should Assign 0 to parentMessageId if not given', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The Weather',
@@ -65,7 +65,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if token is not provided', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', '')
       .send({
         subject: 'The Weather',
@@ -84,7 +84,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if subject is empty', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: '',
@@ -103,7 +103,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if message is empty', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The weather',
@@ -122,7 +122,7 @@ describe('User can send message to individuals ', () => {
   it('Should return error if receiverId is empty', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/messages')
+      .post('/api/v1/messages')
       .set('x-access-token', authToken)
       .send({
         subject: 'The weather',

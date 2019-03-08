@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post('/auth/signup', userValidator.verifyUser, user.create);
 router.post('/auth/login', userValidator.verifyLogin, user.login);
-router.post('/auth/messages', Auth.verifyToken, validateMessages.verifyMessage, messages.create);
+router.post('/messages', Auth.verifyToken, validateMessages.verifyMessage, messages.create);
 
 export default router;
