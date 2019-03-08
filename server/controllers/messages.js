@@ -33,6 +33,9 @@ const Messages = {
       data,
     });
   },
+
+  getUserUnreadMessages() {
+  },
 };
 
 export default Messages;
