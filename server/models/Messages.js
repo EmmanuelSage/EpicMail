@@ -62,8 +62,25 @@ class Messages {
     return allUnread;
   }
 
-  getSpecificMessage() {
-    this.notImplemented = '';
+  getSpecificMessage(userId, messageId) {
+    const foundMessage = this.messages
+      .find(message => parseInt(message.id, 10) === parseInt(messageId, 10));
+
+    if (foundMessage) {
+      if (foundMessage.receiverId === userId || foundMessage.senderId === userId) {
+        if (this.logMessages[0].indexOf(userId) !== -1) {
+          this.logMessages[userId].push(foundMessage.id);
+        } else {
+          this.logMessages[0].push(userId);
+          this.logMessages[userId] = [];
+          this.logMessages[userId].push(foundMessage.id);
+        }
+        foundMessage.status = 'Read';
+        return foundMessage;
+      }
+    }
+
+    return 'not Found';
   }
 }
 
