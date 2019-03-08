@@ -39,6 +39,28 @@ class Messages {
     });
     return allReceived;
   }
+
+
+  getUnreadMessages(userId) {
+    const allUnread = [];
+    let currentMessage = {};
+    this.messages.forEach((message) => {
+      if (message.receiverId === userId) {
+        currentMessage = message;
+        if (this.logMessages[0].indexOf(userId) !== -1) {
+          if (this.logMessages[userId].indexOf(currentMessage.id) === -1) {
+            currentMessage.status = 'Unread';
+            allUnread.push(currentMessage);
+          }
+        } else {
+          currentMessage.status = 'Read';
+
+          allUnread.push(currentMessage);
+        }
+      }
+    });
+    return allUnread;
+  }
 }
 
 export default new Messages();
