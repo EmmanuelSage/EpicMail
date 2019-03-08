@@ -62,6 +62,19 @@ class Messages {
     return allUnread;
   }
 
+  getSentMessages(userId) {
+    const allSent = [];
+    let currentMessage = {};
+    this.messages.forEach((message) => {
+      if (message.senderId === userId) {
+        currentMessage = message;
+        currentMessage.status = 'Sent';
+        allSent.push(currentMessage);
+      }
+    });
+    return allSent;
+  }
+
   getSpecificMessage(userId, messageId) {
     const foundMessage = this.messages
       .find(message => parseInt(message.id, 10) === parseInt(messageId, 10));

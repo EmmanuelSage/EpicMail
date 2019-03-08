@@ -43,6 +43,15 @@ const Messages = {
     });
   },
 
+  getUserSentMessages(req, res) {
+    const currentUserId = req.user.id;
+    const data = db.getSentMessages(currentUserId);
+    return res.status(200).send({
+      status: 200,
+      data,
+    });
+  },
+
   getUserSpecificMessage(req, res) {
     const currentUserId = req.user.id;
     const specificMessage = db.getSpecificMessage(currentUserId, req.params.id);

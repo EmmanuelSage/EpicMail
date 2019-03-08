@@ -212,6 +212,37 @@ describe('User can get all unread messages', () => {
 });
 
 // User can Get Sent message tests
+describe('User can get Sent messages', () => {
+  before((done) => {
+    chai
+      .request(app)
+      .post('/api/v1/messages/sent')
+      .set('x-access-token', authToken)
+      .send({
+        subject: 'The Weather',
+        message: 'Lagos is very hot this days, like what',
+        receiverId: '1',
+        parentMessageId: '1',
+      })
+      .end((err) => {
+        done(err);
+      });
+  });
+  it('Should return all Sent messages', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/messages/sent')
+      .set('x-access-token', authToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.status).to.be.equal(200);
+        expect(res.body.data[0].status).to.be.equal('Sent');
+        done(err);
+      });
+  });
+});
+
+// User can Get specific message tests
 describe('User can get Specific message', () => {
   before((done) => {
     chai
