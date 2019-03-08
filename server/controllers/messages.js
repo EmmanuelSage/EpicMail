@@ -42,6 +42,9 @@ const Messages = {
       data,
     });
   },
+
+  getUserSentMessages() {
+  },
 };
 
 export default Messages;

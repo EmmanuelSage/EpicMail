@@ -61,6 +61,10 @@ class Messages {
     });
     return allUnread;
   }
+
+  getSentMessages() {
+    this.notImplemented = '';
+  }
 }
 
 export default new Messages();
