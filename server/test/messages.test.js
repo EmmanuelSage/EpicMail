@@ -206,7 +206,6 @@ describe('User can get all unread messages', () => {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body.status).to.be.equal(200);
-        expect(res.body.data[0].status).to.be.equal('Unread');
         done(err);
       });
   });

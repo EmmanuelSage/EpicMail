@@ -34,7 +34,13 @@ const Messages = {
     });
   },
 
-  getUserUnreadMessages() {
+  getUserUnreadMessages(req, res) {
+    const currentUserId = req.user.id;
+    const data = db.getUnreadMessages(currentUserId);
+    return res.status(200).send({
+      status: 200,
+      data,
+    });
   },
 };
 
