@@ -14,10 +14,10 @@ describe('Create Group suite', () => {
       .request(app)
       .post('/api/v1/auth/signup')
       .send({
-        firstName: 'david',
-        lastName: 'Oluyale',
-        email: 'david@gmail.com',
-        password: 'david1',
+        firstName: 'mark',
+        lastName: 'markert',
+        email: 'marke@gmail.com',
+        password: 'marjerur',
       })
       .end((err, res) => {
         authToken = res.body.data[0].token;
