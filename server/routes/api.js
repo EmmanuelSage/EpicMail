@@ -4,6 +4,7 @@ import userValidator from '../middlewares/validateUser';
 import Auth from '../middlewares/Auth';
 import messages from '../controllers/messages';
 import validateMessages from '../middlewares/validateMessages';
+import group from '../controllers/group';
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.get('/messages/unread', Auth.verifyToken, messages.getUserUnreadMessages)
 router.get('/messages/sent', Auth.verifyToken, messages.getUserSentMessages);
 router.get('/messages/:id', Auth.verifyToken, messages.getUserSpecificMessage);
 router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
+router.post('/group', Auth.verifyToken, group.create);
 
 export default router;
