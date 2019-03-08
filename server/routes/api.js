@@ -12,5 +12,6 @@ router.post('/auth/login', userValidator.verifyLogin, user.login);
 router.post('/messages', Auth.verifyToken, validateMessages.verifyMessage, messages.create);
 router.get('/messages', Auth.verifyToken, messages.getUserReceivedMessages);
 router.get('/messages/unread', Auth.verifyToken, messages.getUserUnreadMessages);
+router.get('/messages/:id', Auth.verifyToken, messages.getUserSpecificMessage);
 
 export default router;

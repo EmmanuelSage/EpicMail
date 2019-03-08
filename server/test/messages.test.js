@@ -210,3 +210,36 @@ describe('User can get all unread messages', () => {
       });
   });
 });
+
+// User can Get Sent message tests
+describe('User can get Specific message', () => {
+  before((done) => {
+    chai
+      .request(app)
+      .post('/api/v1/messages/1')
+      .set('x-access-token', authToken)
+      .send({
+        subject: 'The Weather',
+        message: 'Lagos is very hot this days, like what',
+        receiverId: '1',
+        parentMessageId: '1',
+      })
+      .end((err) => {
+        done(err);
+      });
+  });
+  it('Should return a specific message', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/messages/1')
+      .set('x-access-token', authToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.status).to.be.equal(200);
+        expect(res.body.data[0].status).to.be.equal('Read');
+        expect(res.body.data[0].subject).to.be.equal('The Weather');
+        expect(res.body.data[0].message).to.be.equal('Lagos is very hot this days, like what');
+        done(err);
+      });
+  });
+});

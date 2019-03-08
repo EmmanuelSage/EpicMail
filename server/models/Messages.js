@@ -61,6 +61,10 @@ class Messages {
     });
     return allUnread;
   }
+
+  getSpecificMessage() {
+    this.notImplemented = '';
+  }
 }
 
 export default new Messages();

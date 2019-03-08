@@ -42,6 +42,9 @@ const Messages = {
       data,
     });
   },
+
+  getUserSpecificMessage() {
+  },
 };
 
 export default Messages;
