@@ -61,7 +61,13 @@ const Messages = {
     });
   },
 
-  deleteUserSpecificMessage() {
+  deleteUserSpecificMessage(req, res) {
+    const currentUserId = req.user.id;
+    const deleteMessage = db.deleteSpecificMessage(currentUserId, req.params.id);
+    return res.status(200).send({
+      status: 200,
+      data: [{ message: deleteMessage }],
+    });
   },
 };
 
