@@ -24,6 +24,10 @@ const Messages = {
       }],
     });
   },
+
+  getUserReceivedMessages() {
+
+  },
 };
 
 export default Messages;

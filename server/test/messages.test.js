@@ -138,3 +138,30 @@ describe('User can send message to individuals ', () => {
       });
   });
 });
+
+// User can Get message tests
+describe('User can get all received messages', () => {
+  it('Should return all received messages', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/messages')
+      .set('x-access-token', authToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.status).to.be.equal(200);
+        done(err);
+      });
+  });
+  it('Should return error if token is not provided', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/messages')
+      .set('x-access-token', '')
+      .end((err, res) => {
+        expect(res).to.have.status(401);
+        expect(res.body.status).to.be.equal(401);
+        expect(res.body.error).to.be.equal('Token is not provided');
+        done(err);
+      });
+  });
+});
