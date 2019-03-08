@@ -51,7 +51,7 @@ const Messages = {
       data,
     });
   },
-  
+
   getUserSpecificMessage(req, res) {
     const currentUserId = req.user.id;
     const specificMessage = db.getSpecificMessage(currentUserId, req.params.id);
@@ -59,6 +59,9 @@ const Messages = {
       status: 200,
       data: [specificMessage],
     });
+  },
+
+  deleteUserSpecificMessage() {
   },
 };
 

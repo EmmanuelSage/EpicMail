@@ -14,5 +14,6 @@ router.get('/messages', Auth.verifyToken, messages.getUserReceivedMessages);
 router.get('/messages/unread', Auth.verifyToken, messages.getUserUnreadMessages);
 router.get('/messages/sent', Auth.verifyToken, messages.getUserSentMessages);
 router.get('/messages/:id', Auth.verifyToken, messages.getUserSpecificMessage);
+router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
 
 export default router;

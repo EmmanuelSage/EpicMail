@@ -95,6 +95,10 @@ class Messages {
 
     return 'not Found';
   }
+
+  deleteSpecificMessage() {
+    this.notImplemented = '';
+  }
 }
 
 export default new Messages();

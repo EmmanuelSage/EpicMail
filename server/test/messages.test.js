@@ -274,3 +274,33 @@ describe('User can get Specific message', () => {
       });
   });
 });
+
+// User can Delete Specific message tests
+describe('User can delete Specific message', () => {
+  before((done) => {
+    chai
+      .request(app)
+      .post('/api/v1/messages/1')
+      .set('x-access-token', authToken)
+      .send({
+        subject: 'The Weather',
+        message: 'Lagos is very hot this days, like what',
+        receiverId: '1',
+        parentMessageId: '1',
+      })
+      .end((err) => {
+        done(err);
+      });
+  });
+  it('Should delete a specific message', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/messages/1')
+      .set('x-access-token', authToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.status).to.be.equal(200);
+        done(err);
+      });
+  });
+});
