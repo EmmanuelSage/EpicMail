@@ -5,6 +5,7 @@ import Auth from '../middlewares/Auth';
 import messages from '../controllers/messages';
 import validateMessages from '../middlewares/validateMessages';
 import group from '../controllers/group';
+import contact from '../controllers/contact';
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.get('/messages/:id', Auth.verifyToken, messages.getUserSpecificMessage);
 router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
 router.post('/group', Auth.verifyToken, group.create);
 router.post('/group/member', Auth.verifyToken, group.addMember);
+router.post('/contact', Auth.verifyToken, contact.create);
 
 export default router;
