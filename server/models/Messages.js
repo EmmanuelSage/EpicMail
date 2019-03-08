@@ -1,6 +1,7 @@
 class Messages {
   constructor() {
     this.messages = [];
+    this.logMessages = [[0]];
   }
 
   create(data) {
@@ -18,6 +19,25 @@ class Messages {
     };
     this.messages.push(newMessage);
     return newMessage;
+  }
+
+  getReceivedMessages(userId) {
+    const allReceived = [];
+    let currentMessage = {};
+    this.messages.forEach((message) => {
+      if (message.receiverId === userId) {
+        currentMessage = message;
+        if (this.logMessages[0].indexOf(userId) !== -1) {
+          if (this.logMessages[userId].indexOf(currentMessage.id) !== -1) {
+            currentMessage.status = 'Read';
+          }
+        } else {
+          currentMessage.status = 'Unread';
+        }
+        allReceived.push(currentMessage);
+      }
+    });
+    return allReceived;
   }
 }
 

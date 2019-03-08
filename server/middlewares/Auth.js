@@ -8,7 +8,7 @@ const Auth = {
   verifyToken(req, res, next) {
     const token = req.headers['x-access-token'];
     if (!token) {
-      return res.status(400).send({ status: 400, error: 'Token is not provided' });
+      return res.status(401).send({ status: 401, error: 'Token is not provided' });
     }
 
     const decoded = jwt.verify(token, process.env.SECRET);
