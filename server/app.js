@@ -13,7 +13,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 7000;
 
-app.use('/api/v1', apiRoutes);
+app.use('/', apiRoutes);
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -21,12 +21,12 @@ app.use('/api/v1', apiRoutes);
 //   next();
 // });
 
-app.get('/', (req, res) => {
-  res.status(200).send({
-    status: 200,
-    data: { message: 'Welcome to Epic Mail. visit /api/v1 for api.' },
-  });
-});
+// app.get('/', (req, res) => {
+//   res.status(200).send({
+//     status: 200,
+//     data: { message: 'Welcome to Epic Mail. visit /api/v1 for api.' },
+//   });
+// });
 
 app.get('*', (req, res) => {
   res.status(404).send({
