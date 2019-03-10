@@ -8,12 +8,12 @@ import apiRoutes from './routes/api';
 const app = express();
 
 app.use(cors());
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 
 const PORT = process.env.PORT || 7000;
 
-app.use('/', apiRoutes);
+app.use('/api/v1', apiRoutes);
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
