@@ -324,7 +324,7 @@
         "tags": [
           "Messages"
         ],
-        "summary": "fetch all sent messages",
+        "summary": "fetch specific messages",
         "description": "",
         "consumes": [
           "application/json"
@@ -421,7 +421,7 @@
         }
       }
     },
-    "/auth/group": {
+    "/group": {
       "post": {
         "tags": [
           "Group"
@@ -471,12 +471,12 @@
         }
       }
     },
-    "/auth/group/member": {
+    "/group/member": {
       "post": {
         "tags": [
           "Group"
         ],
-        "summary": "Creates a new group",
+        "summary": "Adds a member to a group",
         "description": "",
         "consumes": [
           "application/json"
@@ -521,7 +521,7 @@
         }
       }
     },
-    "/auth/group/contact": {
+    "/group/contact": {
       "post": {
         "tags": [
           "Contact"
@@ -625,10 +625,10 @@
           "type": "string"
         },
         "receiverId": {
-          "type": "string"
+          "type": "integer"
         },
         "parentMessageId": {
-          "type": "string"
+          "type": "integer"
         }
       }
     },
@@ -761,9 +761,6 @@
     "Group": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "groupName": {
           "type": "string"
         }
@@ -773,10 +770,10 @@
       "type": "object",
       "properties": {
         "groupId": {
-          "type": "string"
+          "type": "integer"
         },
         "memberId": {
-          "type": "string"
+          "type": "integer"
         }
       }
     },
@@ -803,7 +800,7 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "string"
+                "type": "integer"
               },
               "groupName": {
                 "type": "string"
@@ -825,10 +822,10 @@
             "type": "object",
             "properties": {
               "groupId": {
-                "type": "string"
+                "type": "integer"
               },
               "memberId": {
-                "type": "string"
+                "type": "integer"
               }
             }
           },

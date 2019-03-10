@@ -1,4 +1,10 @@
 import express from 'express';
+
+import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../../swagger.json';
+
+
 import user from '../controllers/user';
 import userValidator from '../middlewares/validateUser';
 import Auth from '../middlewares/Auth';
@@ -7,7 +13,12 @@ import validateMessages from '../middlewares/validateMessages';
 import group from '../controllers/group';
 import contact from '../controllers/contact';
 
+
 const router = express.Router();
+
+
+router.use(cors());
+router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 router.post('/auth/signup', userValidator.verifyUser, user.create);
 router.post('/auth/login', userValidator.verifyLogin, user.login);
