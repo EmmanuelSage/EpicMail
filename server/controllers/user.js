@@ -28,7 +28,10 @@ const User = {
     const token = Helper.generateToken(req.newLogin.id);
     return res.status(201).send({
       status: 201,
-      data: [{ token }],
+      data: [{
+        token,
+        message: 'User login was succesfull',
+      }],
     });
   },
 };

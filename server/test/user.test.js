@@ -269,8 +269,8 @@ describe('Login User Post route authentication ', () => {
         password: 'david1',
       })
       .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.status).to.be.equal(400);
+        expect(res).to.have.status(404);
+        expect(res.body.status).to.be.equal(404);
         expect(res.body.error).to.equal('User with the email could not be found');
         done(err);
       });

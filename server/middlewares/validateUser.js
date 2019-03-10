@@ -39,8 +39,8 @@ const userValidator = {
     const newLogin = db.findUser(req.body.email);
 
     if (!newLogin) {
-      return res.status(400).send({
-        status: 400,
+      return res.status(404).send({
+        status: 404,
         error: 'User with the email could not be found',
       });
     }
