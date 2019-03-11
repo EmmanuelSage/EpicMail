@@ -868,3 +868,11 @@ margin-left: 40rem;
   cursor: pointer;
 }
 
+/* index-page css */
+.welcome-message div{
+  background: rgba(255,255,255,0.1);
+}
+.welcome-message{
+  margin-top: 2rem;
+  font-size: 3rem;
+}
