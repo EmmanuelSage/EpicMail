@@ -13,7 +13,7 @@
       "url": "https://github.com/EmmanuelSage/EpicMail/blob/develop/LICENSE"
     }
   },
-  "host": "localhost:7000",
+  "host": "esepicmail.herokuapp.com",
   "basePath": "/api/v1",
   "tags": [
     {
