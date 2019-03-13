@@ -14,7 +14,7 @@ describe('Default route', () => {
         .end((error, res) => {
           expect(res).to.have.status(200);
           expect(res.body.status).to.be.equal(200);
-          expect(res.body.data.message).to.equal('Welcome to Epic Mail. visit /api/v1 for api.');
+          expect(res.body.data.message).to.equal('Welcome to Epic Mail. visit /api-docs for api. documentation');
           done();
         });
     });

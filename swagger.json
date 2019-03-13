@@ -1,0 +1,871 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Epic Mail is a web application that helps people exchange messages/information over the internet. This is the api specification",
+    "version": "1.0.0",
+    "title": "Epic Mail Api",
+    "termsOfService": "https://github.com/EmmanuelSage/EpicMail/blob/develop/LICENSE",
+    "contact": {
+      "email": "xyemmanuel@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/EmmanuelSage/EpicMail/blob/develop/LICENSE"
+    }
+  },
+  "host": "esepicmail.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Sign up and log in user"
+    },
+    {
+      "name": "Messages",
+      "description": "Users can interact with messages, it requires x-access-token be sent in header"
+    },
+    {
+      "name": "Group",
+      "description": "Users can create a group and add a member, it requires x-access-token be sent in header"
+    },
+    {
+      "name": "Contact",
+      "description": "Users can create a contact, it requires x-access-token be sent in header"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Sign up a new user",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User details to be registered as",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User sign up was succesfull",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "$ref": "#/definitions/token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error is returned when any of the request values are invalid"
+          },
+          "409": {
+            "description": "Error is returned if user already exists i.e conflict"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs in a registered user",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Email and password required to login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login was successfull",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error in login details"
+          },
+          "404": {
+            "description": "User could not be found"
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Sends/creates a message",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "message details to send",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendMessage"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Message has been created/sent,",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "$ref": "#/definitions/SentMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error in message details"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Fetch all received emails",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns all messages",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/SentMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not provided"
+          }
+        }
+      }
+    },
+    "/messages/unread": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "fetch all unread messages",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns all messages with status of unread",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/UnreadMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not provided"
+          }
+        }
+      }
+    },
+    "/messages/sent": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "fetch all sent messages",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns all messages with status of sent",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/SentMessageSent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not provided"
+          }
+        }
+      }
+    },
+    "/messages/{id}": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "fetch all sent messages",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of message to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns a specific message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/SentMessageRead"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not provided"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "Delete specific message",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of message to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "delete's a specific message",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/SentMessageReadDelete"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not provided"
+          }
+        }
+      }
+    },
+    "/auth/group": {
+      "post": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Creates a new group",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Group details to be created as",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Group"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Group has been created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "$ref": "#/definitions/GroupResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/group/member": {
+      "post": {
+        "tags": [
+          "Group"
+        ],
+        "summary": "Creates a new group",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Group member details to be created as",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupMember"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Group member has been added",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "$ref": "#/definitions/GroupMemberResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/group/contact": {
+      "post": {
+        "tags": [
+          "Contact"
+        ],
+        "summary": "Creates a new contact",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "type": "string",
+            "description": "Token gotten from login or sign up is placed in x-access-token ",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "contact details to be created as",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Contact"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Contact has been created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "$ref": "#/definitions/ContactResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "token": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UserLogin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "SendMessage": {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "receiverId": {
+          "type": "string"
+        },
+        "parentMessageId": {
+          "type": "string"
+        }
+      }
+    },
+    "SentMessage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "UnreadMessage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "example": "Unread"
+          }
+        }
+      }
+    },
+    "SentMessageSent": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "example": "Sent"
+          }
+        }
+      }
+    },
+    "SentMessageRead": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "parentMessageId": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "example": "Read"
+          }
+        }
+      }
+    },
+    "SentMessageReadDelete": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Group": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "groupName": {
+          "type": "string"
+        }
+      }
+    },
+    "GroupMember": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string"
+        },
+        "memberId": {
+          "type": "string"
+        }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    },
+    "GroupResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "newGroup": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "groupName": {
+                "type": "string"
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GroupMemberResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "newMember": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "string"
+              },
+              "memberId": {
+                "type": "string"
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ContactResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "newContact": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
