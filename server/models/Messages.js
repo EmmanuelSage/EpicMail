@@ -52,7 +52,6 @@ class Messages {
         if (this.logMessages[0].indexOf(userId) !== -1) {
           if (this.logMessages[userId].indexOf(currentMessage.id) === -1) {
             currentMessage.status = 'Unread';
-            // allUnread.push(currentMessage);
             if (!this.isMessageDeleted(userId, currentMessage.id)) {
               allUnread.push(currentMessage);
             }
@@ -62,7 +61,6 @@ class Messages {
           if (!this.isMessageDeleted(userId, currentMessage.id)) {
             allUnread.push(currentMessage);
           }
-          // allUnread.push(currentMessage);
         }
       }
     });
@@ -79,7 +77,6 @@ class Messages {
         if (!this.isMessageDeleted(userId, currentMessage.id)) {
           allSent.push(currentMessage);
         }
-        // allSent.push(currentMessage);
       }
     });
     return allSent;
@@ -102,7 +99,6 @@ class Messages {
         if (!this.isMessageDeleted(userId, foundMessage.id)) {
           return foundMessage;
         }
-        // return foundMessage;
       }
     }
 
@@ -123,7 +119,6 @@ class Messages {
             this.deletedMessages[userId].push(foundMessage.id);
             returnMessage = 'Message has been deleted';
           }
-          // this.deletedMessages[userId].push(foundMessage.id);
         } else {
           this.deletedMessages[0].push(userId);
           this.deletedMessages[userId] = [];
