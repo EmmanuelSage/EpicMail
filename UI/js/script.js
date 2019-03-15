@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileCancelButton = document.getElementById('mobile-cancel-button');
   const groupDisableInput = document.getElementById('group-disable-input');
   const thread = document.getElementsByClassName('thread');
+  const hashlink = document.getElementById("hashlinkId");
   const saveAsDraft = document.getElementById('draft-save-button');
   const mainGrid = document.getElementById('mainGrid');
 
@@ -80,6 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
   }
+
+  // for (let i = 0; i < hashlink.length; i++) {
+  //   hashlink[i].addEventListener('click', function () {
+
+  //     window.location.href = './index.html';
+  //   });
+  // }
 
   // media query event handler
   if (matchMedia) {
