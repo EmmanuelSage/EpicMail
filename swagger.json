@@ -324,7 +324,7 @@
         "tags": [
           "Messages"
         ],
-        "summary": "fetch all sent messages",
+        "summary": "fetch a specific message",
         "description": "",
         "consumes": [
           "application/json"
@@ -421,7 +421,7 @@
         }
       }
     },
-    "/auth/group": {
+    "/group": {
       "post": {
         "tags": [
           "Group"
@@ -471,7 +471,7 @@
         }
       }
     },
-    "/auth/group/member": {
+    "/group/member": {
       "post": {
         "tags": [
           "Group"
@@ -521,7 +521,7 @@
         }
       }
     },
-    "/auth/group/contact": {
+    "/contact": {
       "post": {
         "tags": [
           "Contact"

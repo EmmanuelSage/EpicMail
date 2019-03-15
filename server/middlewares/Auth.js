@@ -10,10 +10,13 @@ const Auth = {
     if (!token) {
       return res.status(401).send({ status: 401, error: 'Token is not provided' });
     }
-
-    const decoded = jwt.verify(token, process.env.SECRET);
-    req.user = { id: decoded.userId };
-    return next();
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET);
+      req.user = { id: decoded.userId };
+      return next();
+    } catch (error) {
+      return res.status(401).send({ status: 401, error: 'Token is incorrect' });
+    }
   },
 };
 
