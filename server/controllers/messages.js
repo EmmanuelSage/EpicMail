@@ -54,6 +54,10 @@ const Messages = {
 
   getUserSpecificMessage(req, res) {
     const currentUserId = req.user.id;
+    const paramsId = req.params.id;
+    if (!Number(paramsId)) {
+      return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
+    }
     const specificMessage = db.getSpecificMessage(currentUserId, req.params.id);
     return res.status(200).send({
       status: 200,
@@ -63,6 +67,10 @@ const Messages = {
 
   deleteUserSpecificMessage(req, res) {
     const currentUserId = req.user.id;
+    const paramsId = req.params.id;
+    if (!Number(paramsId)) {
+      return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
+    }
     const deleteMessage = db.deleteSpecificMessage(currentUserId, req.params.id);
     return res.status(200).send({
       status: 200,
