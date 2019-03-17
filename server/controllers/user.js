@@ -19,6 +19,7 @@ const User = {
       status: 201,
       data: [{
         token,
+        newUser,
         message: 'User sign up was succesfull',
       }],
     });

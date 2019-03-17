@@ -20,6 +20,10 @@ class User {
   findUser(email) {
     return this.users.find(user => user.email === email);
   }
+
+  findUserId(id) {
+    return this.users.find(user => parseInt(user.id, 10) === parseInt(id, 10));
+  }
 }
 
 export default new User();
