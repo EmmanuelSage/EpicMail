@@ -2,7 +2,7 @@ import Helper from '../utilities/helper';
 import db from '../models/User';
 
 const userValidator = {
-  verifyUser(req, res, next) {
+  async verifyUser(req, res, next) {
     if (!Helper.isValidEmail(req.body.email)) {
       return res.status(400).send({ status: 400, error: 'Please enter a valid email address' });
     }
@@ -13,44 +13,48 @@ const userValidator = {
       return res.status(400).send({ status: 400, error: 'Please enter a valid lastName' });
     }
     if (req.body.password.length < 6) {
-      return res.status(400).send({ status: 400, error: 'Please enter a password of at least six characters' });
+      return res.status(400)
+        .send({ status: 400, error: 'Please enter a password of at least six characters' });
     }
-    if (Helper.isRegisteredEmail(req.body.email)) {
+    const receiverEmail = await db.getEmail(req.body.email);
+    if (receiverEmail) {
       return res.status(409).send({ status: 409, error: 'Email has already been registered' });
     }
+
     return next();
   },
 
-  verifyLogin(req, res, next) {
-    if (req.body.password.length < 6) {
+  async verifyLogin(req, res, next) {
+    if (!req.body.password) {
       return res.status(400).send({
         status: 400,
-        error: 'Please enter a password of at least six characters',
+        error: 'Password is required',
       });
     }
 
-    if (!Helper.isValidEmail(req.body.email)) {
+    if (!req.body.email) {
       return res.status(400).send({
         status: 400,
-        error: 'Please enter a valid email address',
+        error: 'Email is empty',
       });
     }
 
-    const newLogin = db.findUser(req.body.email);
+    const userEmail = await db.getEmail(req.body.email);
 
-    if (!newLogin) {
+    if (!userEmail) {
       return res.status(404).send({
         status: 404,
-        error: 'User with the email could not be found',
+        error: 'Email not found',
       });
     }
-    if (!Helper.comparePassword(newLogin.password, req.body.password)) {
+    const user = await db.getUserByEmail(req.body.email);
+    if (!Helper.comparePassword(user.password, req.body.password)) {
       return res.status(400).send({
         status: 400,
-        error: 'The pasword you provided is incorrect',
+        error: 'email or pasword is incorrect',
       });
     }
-    req.newLogin = newLogin;
+    req.user = user;
     return next();
   },
 };

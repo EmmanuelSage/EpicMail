@@ -38,7 +38,7 @@ $ npm test
 
 
 ## Template for the ui is hosted at
-[https://emmanuelsage.github.io/EpicMail/UI/html/signup.html](https://emmanuelsage.github.io/EpicMail/UI/html/signup.html)
+[https://emmanuelsage.github.io/EpicMail/UI](https://emmanuelsage.github.io/EpicMail/UI)
 
 ## Api Documentation link
 [https://esepicmail.herokuapp.com/api-docs](https://esepicmail.herokuapp.com/api-docs)

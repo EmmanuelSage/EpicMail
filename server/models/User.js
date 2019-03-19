@@ -1,29 +1,40 @@
-class User {
-  constructor() {
-    this.users = [];
-  }
+import dbQuery from '../services/query';
 
-  create(data) {
-    const numOfUsers = (this.users.length);
-    const countId = (numOfUsers === 0) ? 1 : (this.users[numOfUsers - 1].id + 1);
-    const newUser = {
-      id: countId,
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      password: data.password,
-    };
-    this.users.push(newUser);
-    return newUser;
-  }
+const User = {
+  async create(data) {
+    const createQuery = `INSERT INTO
+      users(email, firstName, lastName, password)
+      VALUES($1, $2, $3, $4)
+      returning *`;
+    const values = [
+      data.email,
+      data.firstName,
+      data.lastName,
+      data.password,
+    ];
+    const rows = await dbQuery.query(createQuery, values);
+    return rows;
+  },
 
-  findUser(email) {
-    return this.users.find(user => user.email === email);
-  }
+  async getEmail(email) {
+    const createQuery = `SELECT 
+    (SELECT email FROM users WHERE email = $1) AS email;`;
+    const rows = await dbQuery.query(createQuery, [email]);
+    return rows.email;
+  },
 
-  findUserId(id) {
-    return this.users.find(user => parseInt(user.id, 10) === parseInt(id, 10));
-  }
-}
+  async getUserByEmail(email) {
+    const createQuery = 'SELECT * FROM users WHERE email = $1;';
+    const rows = await dbQuery.query(createQuery, [email]);
+    return rows;
+  },
 
-export default new User();
+  async findUserId(id) {
+    const createQuery = `SELECT 
+    (SELECT id FROM users WHERE id = $1) AS id;`;
+    const rows = await dbQuery.query(createQuery, [id]);
+    return rows.id;
+  },
+};
+
+export default User;
