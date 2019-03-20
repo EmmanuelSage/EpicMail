@@ -18,7 +18,7 @@ router.get('/messages/sent', Auth.verifyToken, messages.getUserSentMessages);
 router.get('/messages/:id', Auth.verifyToken, messages.getUserSpecificMessage);
 router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
 router.post('/group', Auth.verifyToken, group.create);
-router.post('/group/member', Auth.verifyToken, group.addMember);
+router.post('/group/:groupid/users', Auth.verifyToken, group.addMember);
 router.post('/contact', Auth.verifyToken, contact.create);
 
 export default router;

@@ -105,6 +105,50 @@ const createInboxTable = () => {
     });
 };
 
+// Create User Table
+const createGroupTable = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+  groups(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(128) NOT NULL,
+    adminId INT NOT NULL,
+    FOREIGN KEY (adminId) REFERENCES users (id) ON DELETE CASCADE
+  )`;
+
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+
+const createGroupUsersTable = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+      groupUsers(
+        id SERIAL PRIMARY KEY,
+        groupId INT NOT NULL,
+        groupUsers INT NOT NULL,
+        role VARCHAR(128) NOT NULL,
+        FOREIGN KEY (groupId) REFERENCES groups (id) ON DELETE CASCADE,
+        FOREIGN KEY (groupUsers) REFERENCES users (id) ON DELETE CASCADE
+      )`;
+
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+
+
 const dropUserTable = () => {
   const queryText = 'DROP TABLE IF EXISTS users returning *';
   pool.query(queryText)
@@ -182,6 +226,8 @@ module.exports = {
   createMessageTable,
   createOutboxTable,
   createInboxTable,
+  createGroupTable,
+  createGroupUsersTable,
   createAllTables,
   dropUserTable,
   dropAllTables,
