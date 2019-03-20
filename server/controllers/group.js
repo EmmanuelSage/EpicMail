@@ -42,6 +42,17 @@ const Group = {
       data,
     });
   },
+
+  async updateName(req, res) {
+    const currentUserId = req.user.id;
+    const groupId = req.params.id;
+    const newName = req.params.name;
+    const data = await db.updateGroupName(currentUserId, groupId, newName);
+    return res.status(200).send({
+      status: 200,
+      data,
+    });
+  },
 };
 
 export default Group;

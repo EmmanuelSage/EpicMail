@@ -20,6 +20,7 @@ router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMess
 router.post('/group', Auth.verifyToken, group.create);
 router.post('/group/:groupid/users', Auth.verifyToken, group.addMember);
 router.get('/group', Auth.verifyToken, group.getGroups);
+router.patch('/group/:id/:name', Auth.verifyToken, group.updateName);
 router.post('/contact', Auth.verifyToken, contact.create);
 
 export default router;
