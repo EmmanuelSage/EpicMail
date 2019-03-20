@@ -8,7 +8,7 @@
     "start-dev": "nodemon ./server/app.js --exec babel-node",
     "test": "nyc mocha --require @babel/register ./server/test/ -c --timeout 10000 --exit",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov -x *.test.js| coveralls",
-    "create-tables": "node ./server/services/schema createUserTable"
+    "create-tables": "node ./server/services/schema createGroupUsersTable"
   },
   "author": "Emmanuel Oluyale",
   "license": "MIT",

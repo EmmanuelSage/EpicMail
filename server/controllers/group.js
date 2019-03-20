@@ -1,37 +1,37 @@
 import db from '../models/Group';
 
 const Group = {
-  create(req, res) {
+  async create(req, res) {
     const reqGroup = {
-      groupName: req.body.groupName,
+      name: req.body.name,
+      adminid: req.user.id,
     };
 
-    const newGroup = db.create(reqGroup);
+    const newGroup = await db.create(reqGroup);
 
     return res.status(201).send({
       status: 201,
       data: [{
         newGroup,
-        message: `Group ${newGroup.groupName} has been created.`,
+        message: `Group ${newGroup.name} has been created.`,
       }],
     });
   },
 
-  addMember(req, res) {
-    const reqMember = {
-      groupId: req.body.groupId,
-      memberId: req.body.memberId,
-    };
+  async addMember(req, res) {
+    const usersString = (req.body.users);
+    const users = usersString.map(ele => parseInt(ele, 10));
 
-    const newMember = db.addMember(reqMember);
+    const newMember = await db.addMember(req.params.groupid, users);
 
     return res.status(201).send({
       status: 201,
       data: [{
         newMember,
-        message: 'Member has been added to group',
+        message: 'Members have been added to group',
       }],
     });
+    // console.log(users);
   },
 };
 
