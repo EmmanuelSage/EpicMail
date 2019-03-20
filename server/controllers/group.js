@@ -33,6 +33,15 @@ const Group = {
     });
     // console.log(users);
   },
+
+  async getGroups(req, res) {
+    const currentUserId = req.user.id;
+    const data = await db.getAllGroups(currentUserId);
+    return res.status(200).send({
+      status: 200,
+      data,
+    });
+  },
 };
 
 export default Group;
