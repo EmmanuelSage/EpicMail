@@ -60,6 +60,32 @@ const Group = {
     const rows = await dbQuery.queryAll(findAllQuery, [userId]);
     return rows;
   },
+
+  async updateGroupName(userId, groupId, newName) {
+    const findAllQuery = `UPDATE groups
+    SET name = $1
+    WHERE
+     adminid = $2 AND groups.id = $3`;
+    const returnQuery = `SELECT * FROM groups 
+      INNER JOIN groupusers ON groupusers.groupid = groups.id 
+      WHERE groupUsers = $1`;
+
+    const values = [
+      newName,
+      userId,
+      groupId,
+    ];
+
+    await dbQuery.query(findAllQuery, values);
+
+    const returnValues = [
+      userId,
+    ];
+
+    const returnData = await dbQuery.query(returnQuery, returnValues);
+
+    return returnData;
+  },
 };
 
 export default Group;
