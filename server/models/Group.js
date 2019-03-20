@@ -52,6 +52,14 @@ const Group = {
     const rows = await dbQuery.queryAll(findAllQuery, [groupId]);
     return rows;
   },
+
+  async getAllGroups(userId) {
+    const findAllQuery = `SELECT * FROM groupusers 
+    INNER JOIN groups ON groups.id = groupusers.groupId 
+    WHERE groupUsers = $1`;
+    const rows = await dbQuery.queryAll(findAllQuery, [userId]);
+    return rows;
+  },
 };
 
 export default Group;
