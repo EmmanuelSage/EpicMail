@@ -1,64 +1,55 @@
 import db from '../models/Messages';
 
 const Messages = {
-  create(req, res) {
+  async create(req, res) {
     const reqMessage = {
       subject: req.body.subject,
       message: req.body.message,
       senderId: parseInt(req.user.id, 10),
       receiverId: parseInt(req.body.receiverId, 10),
-      parentMessageId: parseInt(req.body.parentMessageId, 10) || 0,
+      parentMessageId: parseInt(req.body.parentMessageId, 10) || -1,
     };
-
-    const newMessage = db.create(reqMessage);
-
+    const newMessage = await db.create(reqMessage);
     return res.status(201).send({
       status: 201,
-      data: [{
-        id: newMessage.id,
-        createdOn: newMessage.createdOn,
-        subject: newMessage.subject,
-        message: newMessage.message,
-        parentMessageId: newMessage.parentMessageId,
-        status: newMessage.status,
-      }],
+      data: [newMessage],
     });
   },
 
-  getUserReceivedMessages(req, res) {
+  async getUserReceivedMessages(req, res) {
     const currentUserId = req.user.id;
-    const data = db.getReceivedMessages(currentUserId);
+    const data = await db.getReceivedMessages(currentUserId);
     return res.status(200).send({
       status: 200,
       data,
     });
   },
 
-  getUserUnreadMessages(req, res) {
+  async getUserUnreadMessages(req, res) {
     const currentUserId = req.user.id;
-    const data = db.getUnreadMessages(currentUserId);
+    const data = await db.getUnreadMessages(currentUserId);
     return res.status(200).send({
       status: 200,
       data,
     });
   },
 
-  getUserSentMessages(req, res) {
+  async getUserSentMessages(req, res) {
     const currentUserId = req.user.id;
-    const data = db.getSentMessages(currentUserId);
+    const data = await db.getSentMessages(currentUserId);
     return res.status(200).send({
       status: 200,
       data,
     });
   },
 
-  getUserSpecificMessage(req, res) {
+  async getUserSpecificMessage(req, res) {
     const currentUserId = req.user.id;
     const paramsId = req.params.id;
     if (!Number(paramsId)) {
       return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
     }
-    const specificMessage = db.getSpecificMessage(currentUserId, req.params.id);
+    const specificMessage = await db.getSpecificMessage(currentUserId, req.params.id);
     return res.status(200).send({
       status: 200,
       data: [specificMessage],
@@ -71,10 +62,10 @@ const Messages = {
     if (!Number(paramsId)) {
       return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
     }
-    const deleteMessage = db.deleteSpecificMessage(currentUserId, req.params.id);
+    db.deleteSpecificMessage(currentUserId, req.params.id);
     return res.status(200).send({
       status: 200,
-      data: [{ message: deleteMessage }],
+      data: [{ message: 'Message has deleted' }],
     });
   },
 };

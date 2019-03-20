@@ -35,6 +35,75 @@ const createUserTable = () => {
     });
 };
 
+const createMessageTable = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+      messages(
+        id SERIAL PRIMARY KEY,
+        subject TEXT NOT NULL,
+        message TEXT NOT NULL,
+        createdOn TIMESTAMP,
+        userId INT NOT NULL,
+        FOREIGN KEY (userId) REFERENCES users (id) ON DELETE CASCADE
+      )`;
+
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+
+const createOutboxTable = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+      outbox(
+        id SERIAL PRIMARY KEY,
+        status TEXT NOT NULL,
+        parentMessageId INT NOT NULL,
+        senderId INT NOT NULL,
+        messageId INT NOT NULL,
+        FOREIGN KEY (messageId) REFERENCES messages (id) ON DELETE CASCADE,
+        FOREIGN KEY (senderId) REFERENCES users (id) ON DELETE CASCADE,
+        FOREIGN KEY (parentMessageId) REFERENCES messages (id) ON DELETE CASCADE
+      )`;
+
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+
+const createInboxTable = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+      inbox(
+        id SERIAL PRIMARY KEY,
+        status TEXT NOT NULL,
+        parentMessageId INT NOT NULL,
+        receiverId INT NOT NULL,
+        messageId INT NOT NULL,
+        FOREIGN KEY (messageId) REFERENCES messages (id) ON DELETE CASCADE,
+        FOREIGN KEY (receiverId) REFERENCES users (id) ON DELETE CASCADE,
+        FOREIGN KEY (parentMessageId) REFERENCES messages (id) ON DELETE CASCADE
+      )`;
+
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
 
 const dropUserTable = () => {
   const queryText = 'DROP TABLE IF EXISTS users returning *';
@@ -49,14 +118,57 @@ const dropUserTable = () => {
     });
 };
 
+const dropMessagesTable = () => {
+  const queryText = 'DROP TABLE IF EXISTS messages returning *';
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+const dropOutboxTable = () => {
+  const queryText = 'DROP TABLE IF EXISTS outbox returning *';
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+const dropInboxTable = () => {
+  const queryText = 'DROP TABLE IF EXISTS inbox returning *';
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+
 // Create All Tables
 const createAllTables = () => {
   createUserTable();
+  createMessageTable();
+  createOutboxTable();
+  createInboxTable();
 };
 
 
 const dropAllTables = () => {
   dropUserTable();
+  dropMessagesTable();
+  dropOutboxTable();
+  dropInboxTable();
 };
 
 pool.on('remove', () => {
@@ -67,6 +179,9 @@ pool.on('remove', () => {
 
 module.exports = {
   createUserTable,
+  createMessageTable,
+  createOutboxTable,
+  createInboxTable,
   createAllTables,
   dropUserTable,
   dropAllTables,

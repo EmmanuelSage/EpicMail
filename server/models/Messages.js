@@ -1,143 +1,115 @@
-class Messages {
-  constructor() {
-    this.messages = [];
-    this.logMessages = [[0]];
-    this.deletedMessages = [[0]];
-  }
+import moment from 'moment';
+import dbQuery from '../services/query';
 
-  create(data) {
-    const numOfMessages = (this.messages.length);
-    const messageId = (numOfMessages === 0) ? 1 : (this.messages[numOfMessages - 1].id + 1);
-    const newMessage = {
-      id: messageId,
-      createdOn: new Date(),
-      subject: data.subject,
-      message: data.message,
-      senderId: data.senderId,
-      receiverId: data.receiverId,
-      parentMessageId: data.parentMessageId,
-      status: 'Not Assigned',
-    };
-    this.messages.push(newMessage);
-    return newMessage;
-  }
+const Messages = {
+  async create(data) {
+    const createQuery = `INSERT INTO
+      messages(subject, message, createdOn, userId)
+      VALUES($1, $2, $3, $4)
+      returning *`;
+    const createQueryInbox = `INSERT INTO
+    inbox(status, parentMessageId, receiverId, messageId )
+      VALUES($1, $2, $3, $4)`;
+    const createQueryOutbox = `INSERT INTO
+    outbox(status, parentMessageId, senderId, messageId )
+      VALUES($1, $2, $3, $4)`;
 
-  getReceivedMessages(userId) {
-    const allReceived = [];
-    let currentMessage = {};
-    this.messages.forEach((message) => {
-      if (message.receiverId === userId) {
-        currentMessage = message;
-        if (this.logMessages[0].indexOf(userId) !== -1) {
-          if (this.logMessages[userId].indexOf(currentMessage.id) !== -1) {
-            currentMessage.status = 'Read';
-          }
-        } else {
-          currentMessage.status = 'Unread';
-        }
-        if (!this.isMessageDeleted(userId, currentMessage.id)) {
-          allReceived.push(currentMessage);
-        }
+    const values = [
+      data.subject,
+      data.message,
+      moment(new Date()),
+      data.senderId,
+    ];
+    const lastMsgIdreturn = await dbQuery.query(createQuery, values);
+
+    const lastMsgId = lastMsgIdreturn.id;
+    let setId;
+
+    if (data.parentMessageId === -1) {
+      setId = lastMsgId;
+    } else {
+      setId = data.parentMessageId;
+    }
+    const valuesInbox = [
+      'Unread',
+      setId,
+      data.receiverId,
+      lastMsgId,
+    ];
+
+    await dbQuery.query(createQueryInbox, valuesInbox);
+
+    const valuesOutbox = [
+      'Sent',
+      setId,
+      data.senderId,
+      lastMsgId,
+    ];
+
+    await dbQuery.query(createQueryOutbox, valuesOutbox);
+
+    return lastMsgIdreturn;
+  },
+
+  async getReceivedMessages(userId) {
+    const findAllQuery = `SELECT * FROM inbox 
+    INNER JOIN messages ON messages.id = inbox.messageid 
+     WHERE receiverid = $1`;
+    const rows = await dbQuery.queryAll(findAllQuery, [userId]);
+    return rows;
+  },
+
+  async getUnreadMessages(userId) {
+    const findAllQuery = `SELECT * FROM inbox 
+    INNER JOIN messages ON messages.id = inbox.messageid 
+     WHERE receiverid = $1 AND status = $2`;
+    const rows = await dbQuery.queryAll(findAllQuery, [userId, 'Unread']);
+    return rows;
+  },
+
+  async getSentMessages(userId) {
+    const findAllQuery = `SELECT * FROM outbox 
+    INNER JOIN messages ON messages.id = outbox.messageid 
+     WHERE senderid = $1 AND status = $2`;
+    const rows = await dbQuery.queryAll(findAllQuery, [userId, 'Sent']);
+    return rows;
+  },
+
+  async getSpecificMessage(userId, messageId) {
+    const findAllQuery = `SELECT * FROM messages 
+    RIGHT JOIN inbox ON inbox.messageid = messages.id
+    WHERE userid = $1 AND messages.id = $2`;
+    // const findAllQuery = 'SELECT * FROM messages WHERE userid = $1 AND id = $2';
+    const updateQuery = `UPDATE inbox
+    SET status = 'Read'
+    WHERE
+     receiverid = $1 AND messageid = $2`;
+    await dbQuery.query(updateQuery, [userId, messageId]);
+    const rows = await dbQuery.query(findAllQuery, [userId, messageId]);
+    return rows;
+  },
+
+  async deleteSpecificMessage(userId, messageId) {
+    const findAllQuery = `DELETE FROM inbox
+    WHERE receiverid = $1 AND messageid = $2;`;
+    const rows = await dbQuery.query(findAllQuery, [userId, messageId]);
+    return rows;
+  },
+
+  async getEmail(email) {
+    let rows;
+    try {
+      const text = 'SELECT * FROM users WHERE email = $1';
+      rows = await dbQuery.query(text, [email]);
+      if (rows) {
+        return rows;
       }
-    });
-    return allReceived;
-  }
-
-  getUnreadMessages(userId) {
-    const allUnread = [];
-    let currentMessage = {};
-    this.messages.forEach((message) => {
-      if (message.receiverId === userId) {
-        currentMessage = message;
-        if (this.logMessages[0].indexOf(userId) !== -1) {
-          if (this.logMessages[userId].indexOf(currentMessage.id) === -1) {
-            currentMessage.status = 'Unread';
-            if (!this.isMessageDeleted(userId, currentMessage.id)) {
-              allUnread.push(currentMessage);
-            }
-          }
-        } else {
-          currentMessage.status = 'Unread';
-          if (!this.isMessageDeleted(userId, currentMessage.id)) {
-            allUnread.push(currentMessage);
-          }
-        }
-      }
-    });
-    return allUnread;
-  }
-
-  getSentMessages(userId) {
-    const allSent = [];
-    let currentMessage = {};
-    this.messages.forEach((message) => {
-      if (message.senderId === userId) {
-        currentMessage = message;
-        currentMessage.status = 'Sent';
-        if (!this.isMessageDeleted(userId, currentMessage.id)) {
-          allSent.push(currentMessage);
-        }
-      }
-    });
-    return allSent;
-  }
-
-  getSpecificMessage(userId, messageId) {
-    const foundMessage = this.messages
-      .find(message => parseInt(message.id, 10) === parseInt(messageId, 10));
-
-    if (foundMessage) {
-      if (foundMessage.receiverId === userId || foundMessage.senderId === userId) {
-        if (this.logMessages[0].indexOf(userId) !== -1) {
-          this.logMessages[userId].push(foundMessage.id);
-        } else {
-          this.logMessages[0].push(userId);
-          this.logMessages[userId] = [];
-          this.logMessages[userId].push(foundMessage.id);
-        }
-        foundMessage.status = 'Read';
-        if (!this.isMessageDeleted(userId, foundMessage.id)) {
-          return foundMessage;
-        }
-      }
+    } catch (err) {
+      return err;
     }
 
-    return 'not Found';
-  }
+    return -1;
+  },
+};
 
-  deleteSpecificMessage(userId, messageId) {
-    const foundMessage = this.messages
-      .find(message => parseInt(message.id, 10) === parseInt(messageId, 10));
-    let returnMessage = '';
-
-    if (foundMessage) {
-      if (foundMessage.receiverId === userId || foundMessage.senderId === userId) {
-        if (this.deletedMessages[0].indexOf(userId) !== -1) {
-          if (this.deletedMessages[userId].indexOf(foundMessage.id) !== -1) {
-            returnMessage = 'Message does not exist, had already been deleted';
-          } else {
-            this.deletedMessages[userId].push(foundMessage.id);
-            returnMessage = 'Message has been deleted';
-          }
-        } else {
-          this.deletedMessages[0].push(userId);
-          this.deletedMessages[userId] = [];
-          this.deletedMessages[userId].push(foundMessage.id);
-          returnMessage = 'Message has been deleted user first time deleting';
-        }
-      }
-    }
-    return returnMessage;
-  }
-
-  isMessageDeleted(userId, messageId) {
-    if (this.deletedMessages[0].indexOf(userId) !== -1) {
-      if (this.deletedMessages[userId].indexOf(messageId) !== -1) {
-        return true;
-      }
-    }
-    return false;
-  }
-}
-
-export default new Messages();
+export default Messages;
