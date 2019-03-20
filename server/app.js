@@ -3,6 +3,7 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 import apiRoutes from './routes/api';
+import validate from './utilities/routeValidation';
 
 
 const app = express();
@@ -23,12 +24,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
-  res.status(404).send({
-    status: 404,
-    error: 'This url does not exist',
-  });
-});
+app.use(validate.route);
 
 app.listen(PORT);
 
