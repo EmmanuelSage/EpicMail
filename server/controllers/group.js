@@ -31,7 +31,6 @@ const Group = {
         message: 'Members have been added to group',
       }],
     });
-    // console.log(users);
   },
 
   async getGroups(req, res) {
@@ -53,6 +52,43 @@ const Group = {
       data,
     });
   },
+
+  async deleteGroup(req, res) {
+    const currentUserId = req.user.id;
+    const groupId = req.params.id;
+    await db.deleteGroup(currentUserId, groupId);
+    return res.status(200).send({
+      status: 200,
+      data: [{ message: 'Group has been deleted' }],
+    });
+  },
+
+  async deleteGroupMember(req, res) {
+    const currentUserId = req.user.id;
+    const groupId = req.params.groupid;
+    const userId = req.params.userid;
+    await db.deleteGroupMember(currentUserId, groupId, userId);
+    return res.status(200).send({
+      status: 200,
+      data: [{ message: 'Group Member has been deleted' }],
+    });
+  },
+
+  async SendMessageGroup(req, res) {
+    const reqMessage = {
+      subject: req.body.subject,
+      message: req.body.message,
+      senderId: parseInt(req.user.id, 10),
+      groupId: req.params.id,
+      parentMessageId: parseInt(req.body.parentMessageId, 10) || -1,
+    };
+    const newMessage = await db.SendMessageGroup(reqMessage);
+    return res.status(201).send({
+      status: 201,
+      data: [newMessage],
+    });
+  },
+
 };
 
 export default Group;
