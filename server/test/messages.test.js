@@ -242,7 +242,7 @@ describe('Tests for messsages route', () => {
     it('Should return a specific message', (done) => {
       chai
         .request(app)
-        .get('/api/v1/messages/4')
+        .get('/api/v1/messages/5')
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res).to.have.status(200);

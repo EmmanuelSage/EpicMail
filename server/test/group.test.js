@@ -127,5 +127,173 @@ describe('Tests for group route', () => {
           done(err);
         });
     });
+
+    it('should send email to group with parentid', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/messages')
+        .set('x-access-token', authToken)
+        .send({
+          subject: 'This is awesome',
+          message: 'I can code all day',
+          parentMessageId: '1',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res.body.status).to.be.equal(201);
+          done(err);
+        });
+    });
+  });
+
+  describe('Group validations', () => {
+    it('should return error if group name in create group is absent', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups')
+        .set('x-access-token', authToken)
+        .send({
+          name: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter a group name');
+          done(err);
+        });
+    });
+
+    it('should add a new user to a group', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/users')
+        .set('x-access-token', authToken)
+        .send({
+          users: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please pass an Array');
+          done(err);
+        });
+    });
+
+    it('should add a new user to a group', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/users')
+        .set('x-access-token', authToken)
+        .send({
+          users: ['2ert', 'as'],
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter valid Ids in Array');
+          done(err);
+        });
+    });
+
+    it('should return error if new group name is empty', (done) => {
+      chai
+        .request(app)
+        .patch('/api/v1/groups/1/name')
+        .set('x-access-token', authToken)
+        .send({
+          name: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter a new group name');
+          done(err);
+        });
+    });
+
+    it('should update group name', (done) => {
+      chai
+        .request(app)
+        .patch('/api/v1/groups/hey/name')
+        .set('x-access-token', authToken)
+        .send({
+          name: 'Andela',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter a valid group Id');
+          done(err);
+        });
+    });
+
+    it('should return error if send email to group subject is empty', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/messages')
+        .set('x-access-token', authToken)
+        .send({
+          subject: '',
+          message: 'I can code all day',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter a subject');
+          done(err);
+        });
+    });
+
+    it('should return error if send email to group message is empty', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/messages')
+        .set('x-access-token', authToken)
+        .send({
+          subject: 'Hello world',
+          message: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter a message');
+          done(err);
+        });
+    });
+
+    it('should return error if group is for send mail to group is invalid', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/hey/messages')
+        .set('x-access-token', authToken)
+        .send({
+          subject: 'Hello world',
+          message: 'Let us code Javascript',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter a valid group Id');
+          done(err);
+        });
+    });
+
+    it('should return error if group is for send mail to group is invalid', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/hey/messages')
+        .set('x-access-token', authToken)
+        .send({
+          subject: 'Hello world',
+          message: 'Let us code Javascript',
+          parentMessageId: 'hello',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.equal('Please enter a Valid parentMessageId');
+          done(err);
+        });
+    });
   });
 });
