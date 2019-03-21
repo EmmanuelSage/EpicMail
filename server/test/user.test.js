@@ -1,7 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../app';
-import testHelper from '../utilities/testHelper';
+import app from '../../app';
 
 chai.use(chaiHttp);
 
@@ -9,20 +8,6 @@ const { expect } = chai;
 
 let authToken;
 describe('Tests for users route', () => {
-  before((done) => {
-    chai
-      .request(app)
-      .post('/api/v1/auth/signup')
-      .send({
-        firstName: 'Emmanuel',
-        lastName: 'Oluyale',
-        email: 'xyemmanuel@gmail.com',
-        password: '1a2b3c',
-      })
-      .end((err) => {
-        done(err);
-      });
-  });
   describe('Create User Post route authentication', () => {
     it('should signup a new user if the details are correct', (done) => {
       chai
@@ -167,37 +152,18 @@ describe('Tests for users route', () => {
           done(err);
         });
     });
-
-    after(() => {
-      testHelper.clearEmailFromDb('david@gmail.com');
-    });
   });
 
   // Create
   describe('Create User Post route authentication ', () => {
-    before((done) => {
-      chai
-        .request(app)
-        .post('/api/v1/auth/signup')
-        .send({
-          firstName: 'emmanuelder',
-          lastName: 'Oluyale',
-          email: 'emmanuelder@gmail.com',
-          password: 'emmanuelder',
-        })
-        .end((err) => {
-          done(err);
-        });
-    });
-
     it('Should return an error if email is already registered', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'david',
+          firstName: 'David',
           lastName: 'Oluyale',
-          email: 'emmanuelder@gmail.com',
+          email: 'sagewills@gmail.com',
           password: 'david1',
         })
         .end((err, res) => {
@@ -206,9 +172,6 @@ describe('Tests for users route', () => {
           expect(res.body.error).to.equal('Email has already been registered');
           done(err);
         });
-    });
-    after(() => {
-      testHelper.clearEmailFromDb('emmanuelder@gmail.com');
     });
   });
 
@@ -220,8 +183,8 @@ describe('Tests for users route', () => {
         .request(app)
         .post('/api/v1/auth/login')
         .send({
-          email: 'xyemmanuel@gmail.com',
-          password: '1a2b3c',
+          email: 'david@gmail.com',
+          password: 'david1',
         })
         .end((err, res) => {
           authToken = res.body.data[0].token;
@@ -235,8 +198,8 @@ describe('Tests for users route', () => {
         .post('/api/v1/auth/login')
         .set('x-access-token', authToken)
         .send({
-          email: 'xyemmanuel@gmail.com',
-          password: '1a2b3c',
+          email: 'david@gmail.com',
+          password: 'david1',
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
@@ -252,7 +215,7 @@ describe('Tests for users route', () => {
         .post('/api/v1/auth/login')
         .set('x-access-token', authToken)
         .send({
-          email: 'xyemmanuel@gmail.com',
+          email: 'david@gmail.com',
           password: '1a2b3',
         })
         .end((err, res) => {
@@ -270,7 +233,7 @@ describe('Tests for users route', () => {
         .set('x-access-token', authToken)
         .send({
           email: '',
-          password: '1a2b3c',
+          password: 'david1',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -280,7 +243,7 @@ describe('Tests for users route', () => {
         });
     });
 
-    it('Should return an error email is not registered', (done) => {
+    it('Should return an error if email is not registered', (done) => {
       chai
         .request(app)
         .post('/api/v1/auth/login')
@@ -303,7 +266,7 @@ describe('Tests for users route', () => {
         .post('/api/v1/auth/login')
         .set('x-access-token', authToken)
         .send({
-          email: 'xyemmanuel@gmail.com',
+          email: 'david@gmail.com',
           password: '1a2b3e32',
         })
         .end((err, res) => {
@@ -313,9 +276,5 @@ describe('Tests for users route', () => {
           done(err);
         });
     });
-  });
-
-  after(() => {
-    testHelper.clearUsersTable();
   });
 });

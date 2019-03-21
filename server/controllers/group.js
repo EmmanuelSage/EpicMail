@@ -45,10 +45,10 @@ const Group = {
   async updateName(req, res) {
     const currentUserId = req.user.id;
     const groupId = req.params.id;
-    const newName = req.params.name;
+    const newName = req.body.name;
     const data = await db.updateGroupName(currentUserId, groupId, newName);
-    return res.status(200).send({
-      status: 200,
+    return res.status(201).send({
+      status: 201,
       data,
     });
   },

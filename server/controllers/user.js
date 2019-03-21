@@ -13,7 +13,6 @@ const User = {
     };
 
     const newUser = await db.create(reqUser);
-    console.log(newUser);
 
     const token = Helper.generateToken(newUser.id);
     return res.status(201).send({
