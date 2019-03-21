@@ -19,13 +19,6 @@ const Helper = {
     return /^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/.test(email);
   },
 
-  isRegisteredEmail(email) {
-    const regUser = userDb.findUser(email);
-    if (regUser) {
-      return true;
-    }
-    return false;
-  },
 
   isValidName(name) {
     return /^[a-zA-Z]+$/.test(name);

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import dbQuery from '../services/query';
+import dbQuery from '../services/query.test';
 
 const Messages = {
   async create(data) {
@@ -94,21 +94,6 @@ const Messages = {
     WHERE receiverid = $1 AND messageid = $2;`;
     const rows = await dbQuery.query(findAllQuery, [userId, messageId]);
     return rows;
-  },
-
-  async getEmail(email) {
-    let rows;
-    try {
-      const text = 'SELECT * FROM users WHERE email = $1';
-      rows = await dbQuery.query(text, [email]);
-      if (rows) {
-        return rows;
-      }
-    } catch (err) {
-      return err;
-    }
-
-    return -1;
   },
 };
 

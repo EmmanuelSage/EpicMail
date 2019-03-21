@@ -1,4 +1,4 @@
-import dbQuery from '../services/query';
+import dbQuery from '../services/query.test';
 
 const User = {
   async create(data) {

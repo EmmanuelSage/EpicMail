@@ -1,4 +1,4 @@
-import db from './query';
+import db from './query.test';
 
 const seed = `INSERT INTO
     users(email, firstName, lastName, password)

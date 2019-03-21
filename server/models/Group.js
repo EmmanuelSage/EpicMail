@@ -1,5 +1,5 @@
 import moment from 'moment';
-import dbQuery from '../services/query';
+import dbQuery from '../services/query.test';
 
 const Group = {
   async create(data) {
