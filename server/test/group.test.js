@@ -38,7 +38,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body.status).to.be.equal(201);
-          expect(res.body.data[0].message).to.equal(`Group ${groupName} has been created.`);
           done(err);
         });
     });
@@ -66,7 +65,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body.status).to.be.equal(201);
-          expect(res.body.data[0].message).to.equal('Members have been added to group');
           done(err);
         });
     });
@@ -158,7 +156,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter a group name');
           done(err);
         });
     });
@@ -174,7 +171,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please pass an Array');
           done(err);
         });
     });
@@ -190,7 +186,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter valid Ids in Array');
           done(err);
         });
     });
@@ -206,7 +201,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter a new group name');
           done(err);
         });
     });
@@ -222,7 +216,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter a valid group Id');
           done(err);
         });
     });
@@ -239,7 +232,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter a subject');
           done(err);
         });
     });
@@ -256,7 +248,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter a message');
           done(err);
         });
     });
@@ -273,7 +264,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter a valid group Id');
           done(err);
         });
     });
@@ -291,7 +281,6 @@ describe('Tests for group route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
-          expect(res.body.error).to.equal('Please enter a Valid parentMessageId');
           done(err);
         });
     });

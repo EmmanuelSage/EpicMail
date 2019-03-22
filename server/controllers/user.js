@@ -19,7 +19,13 @@ const User = {
       status: 201,
       data: [{
         token,
-        newUser,
+        newUser: {
+          id: newUser.id,
+          firstName: newUser.firstname,
+          lastName: newUser.lastname,
+          email: newUser.email,
+
+        },
         message: 'User sign up was succesfull',
       }],
     });

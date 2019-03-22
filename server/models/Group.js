@@ -13,7 +13,7 @@ const Group = {
         VALUES($1, $2, $3)
         returning *`;
 
-    const returnQuery = `SELECT * FROM groups 
+    const returnQuery = `SELECT groups.id, groups.name, groups.adminid FROM groups 
       INNER JOIN groupusers ON groupusers.groupid = groups.id 
       WHERE adminid = $1 AND groups.id = $2`;
 
@@ -157,6 +157,20 @@ const Group = {
     await dbQuery.query(createQueryOutbox, valuesOutbox);
 
     return allSent;
+  },
+
+  async checkgroupName(groupName, adminid) {
+    console.log(adminid);
+    const findAllQuery = 'select name from groups where adminid = $1;';
+    const rows = await dbQuery.queryAll(findAllQuery, [adminid]);
+    console.log(rows);
+
+    const found = rows.some(ele => ele.name === groupName);
+    if (found) {
+      return 'duplicate';
+    }
+
+    return 'safe';
   },
 };
 

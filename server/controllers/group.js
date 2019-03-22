@@ -7,14 +7,21 @@ const Group = {
       adminid: req.user.id,
     };
 
-    const newGroup = await db.create(reqGroup);
+    const nameCheck = await db.checkgroupName(req.body.name, req.user.id);
 
+    if (nameCheck === 'duplicate') {
+      return res.status(400).send({ status: 400, error: `Sorry Group name ${req.body.name} already exists ` });
+    }
+
+    const newGroup = await db.create(reqGroup);
     return res.status(201).send({
       status: 201,
-      data: [{
-        newGroup,
-        message: `Group ${newGroup.name} has been created.`,
-      }],
+      message: `Group ${newGroup.name} has been created.`,
+      data: {
+        id: newGroup.id,
+        name: newGroup.name,
+        userId: newGroup.adminid,
+      },
     });
   },
 

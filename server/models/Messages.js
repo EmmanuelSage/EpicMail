@@ -14,6 +14,10 @@ const Messages = {
     outbox(status, parentMessageId, senderId, messageId )
       VALUES($1, $2, $3, $4)`;
 
+    const returnMessageQuery = `SELECT * FROM outbox 
+    INNER JOIN messages ON messages.id = outbox.messageid 
+     WHERE senderid = $1 AND messages.id = $2`;
+
     const values = [
       data.subject,
       data.message,
@@ -48,11 +52,15 @@ const Messages = {
 
     await dbQuery.query(createQueryOutbox, valuesOutbox);
 
-    return lastMsgIdreturn;
+    // return lastMsgIdreturn;
+    const rows = await dbQuery.queryAll(returnMessageQuery, [data.senderId, lastMsgIdreturn.id]);
+    return rows;
   },
 
   async getReceivedMessages(userId) {
-    const findAllQuery = `SELECT * FROM inbox 
+    const findAllQuery = `SELECT messages.id, status, parentmessageid, receiverid, 
+    subject, message, createdon,
+    userid as senderid FROM inbox 
     INNER JOIN messages ON messages.id = inbox.messageid 
      WHERE receiverid = $1`;
     const rows = await dbQuery.queryAll(findAllQuery, [userId]);
@@ -60,7 +68,9 @@ const Messages = {
   },
 
   async getUnreadMessages(userId) {
-    const findAllQuery = `SELECT * FROM inbox 
+    const findAllQuery = `SELECT messages.id, status, parentmessageid, receiverid, 
+    subject, message, createdon,
+    userid as senderid FROM inbox 
     INNER JOIN messages ON messages.id = inbox.messageid 
      WHERE receiverid = $1 AND status = $2`;
     const rows = await dbQuery.queryAll(findAllQuery, [userId, 'Unread']);
@@ -68,7 +78,8 @@ const Messages = {
   },
 
   async getSentMessages(userId) {
-    const findAllQuery = `SELECT * FROM outbox 
+    const findAllQuery = `SELECT messages.id, status, parentmessageid, 
+    subject, message, createdon, senderid FROM outbox 
     INNER JOIN messages ON messages.id = outbox.messageid 
      WHERE senderid = $1 AND status = $2`;
     const rows = await dbQuery.queryAll(findAllQuery, [userId, 'Sent']);
@@ -77,8 +88,9 @@ const Messages = {
 
   async getSpecificMessage(userId, messageId) {
     const findAllQuery = `SELECT * FROM messages 
-    RIGHT JOIN inbox ON inbox.messageid = messages.id
-    WHERE userid = $1 AND messages.id = $2`;
+        RIGHT JOIN inbox ON inbox.messageid = messages.id
+        JOIN outbox ON outbox.messageid = messages.id
+        WHERE senderid = $1 OR receiverid = $1 AND messages.id = $2;`;
     // const findAllQuery = 'SELECT * FROM messages WHERE userid = $1 AND id = $2';
     const updateQuery = `UPDATE inbox
     SET status = 'Read'
@@ -93,6 +105,9 @@ const Messages = {
     const findAllQuery = `DELETE FROM inbox
     WHERE receiverid = $1 AND messageid = $2;`;
     const rows = await dbQuery.query(findAllQuery, [userId, messageId]);
+    const delOutboxQuery = `DELETE FROM outbox
+    WHERE senderid = $1 AND messageid = $2;`;
+    await dbQuery.query(delOutboxQuery, [userId, messageId]);
     return rows;
   },
 };
