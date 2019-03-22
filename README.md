@@ -54,10 +54,13 @@ $ npm test
 | GET /messages/sent                               | Fetch all sent messages                  |
 | GET /messages/{id}                               | Fetch a specific message                 |
 | DELETE /messages/{id}                            | Delete a specific message                |
-| POST /auth/group                                 | Creates a new group                      |
-| POST /auth/group/member                          | Adds a new member to a group             |
-| POST /contact                                    | Creates a new contact                    |
-
+| POST /groups                                     | Create a Group                           |
+| GET /groups                                      | Get all created groups                   |
+| PATCH /groups/:id/name                           | Edit group name                          |
+| DELETE /groups/:id                               | Delete a specific group                  |
+| POST /groups/:groupid/users                      | Add a user to a group                    |
+| DELETE /groups/:groupid/users/:userid            | Delete a user from a group               |
+| POST /groups/:id/messages                        | Post a message to a group                |
 
 ## Author
 Emmanuel Oluyale

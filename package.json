@@ -6,9 +6,9 @@
   "scripts": {
     "start": "babel-node ./server/app.js",
     "start-dev": "nodemon ./server/app.js --exec babel-node",
-    "test": "nyc mocha --require @babel/register ./server/test/ -c --timeout 10000 --exit",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov -x *.test.js| coveralls",
-    "create-tables": "node ./server/services/schema createGroupUsersTable"
+    "create-tables": "babel-node ./server/services/createTables.js",
+    "test": "npm run create-tables && nyc mocha --require @babel/register ./server/test/ -c --timeout 10000 --exit",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov -x *.test.js| coveralls"
   },
   "author": "Emmanuel Oluyale",
   "license": "MIT",

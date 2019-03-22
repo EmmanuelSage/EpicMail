@@ -5,7 +5,7 @@ import Auth from '../middlewares/Auth';
 import messages from '../controllers/messages';
 import validateMessages from '../middlewares/validateMessages';
 import group from '../controllers/group';
-import contact from '../controllers/contact';
+import Gvalidate from '../middlewares/validateGroups';
 
 const router = express.Router();
 
@@ -17,13 +17,12 @@ router.get('/messages/unread', Auth.verifyToken, messages.getUserUnreadMessages)
 router.get('/messages/sent', Auth.verifyToken, messages.getUserSentMessages);
 router.get('/messages/:id', Auth.verifyToken, messages.getUserSpecificMessage);
 router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
-router.post('/group', Auth.verifyToken, group.create);
-router.get('/group', Auth.verifyToken, group.getGroups);
-router.patch('/group/:id/:name', Auth.verifyToken, group.updateName);
-router.delete('/group/:id', Auth.verifyToken, group.deleteGroup);
-router.post('/group/:groupid/users', Auth.verifyToken, group.addMember);
-router.delete('/group/:groupid/users/:userid', Auth.verifyToken, group.deleteGroupMember);
-router.post('/group/:id/messages', Auth.verifyToken, group.SendMessageGroup);
-router.post('/contact', Auth.verifyToken, contact.create);
+router.post('/groups', Auth.verifyToken, Gvalidate.createGroup, group.create);
+router.get('/groups', Auth.verifyToken, group.getGroups);
+router.patch('/groups/:id/name', Auth.verifyToken, Gvalidate.updateName, group.updateName);
+router.delete('/groups/:id', Auth.verifyToken, group.deleteGroup);
+router.post('/groups/:groupid/users', Auth.verifyToken, Gvalidate.addMember, group.addMember);
+router.delete('/groups/:groupid/users/:userid', Auth.verifyToken, group.deleteGroupMember);
+router.post('/groups/:id/messages', Auth.verifyToken, Gvalidate.sendMessageToGroup, group.SendMessageGroup);
 
 export default router;

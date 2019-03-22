@@ -13,14 +13,19 @@ const User = {
     };
 
     const newUser = await db.create(reqUser);
-    console.log(newUser);
 
     const token = Helper.generateToken(newUser.id);
     return res.status(201).send({
       status: 201,
       data: [{
         token,
-        newUser,
+        newUser: {
+          id: newUser.id,
+          firstName: newUser.firstname,
+          lastName: newUser.lastname,
+          email: newUser.email,
+
+        },
         message: 'User sign up was succesfull',
       }],
     });

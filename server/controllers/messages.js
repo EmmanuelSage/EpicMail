@@ -12,7 +12,14 @@ const Messages = {
     const newMessage = await db.create(reqMessage);
     return res.status(201).send({
       status: 201,
-      data: [newMessage],
+      data: {
+        id: newMessage[0].id,
+        createdon: newMessage[0].createdon,
+        subject: newMessage[0].subject,
+        message: newMessage[0].message,
+        parentmessageid: newMessage[0].parentmessageid,
+        status: newMessage[0].status,
+      },
     });
   },
 
@@ -50,22 +57,35 @@ const Messages = {
       return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
     }
     const specificMessage = await db.getSpecificMessage(currentUserId, req.params.id);
+    if (!specificMessage) {
+      return res.status(404).send({
+        status: 404,
+        error: 'Message not found',
+      });
+    }
     return res.status(200).send({
       status: 200,
-      data: [specificMessage],
+      data: specificMessage,
     });
   },
 
-  deleteUserSpecificMessage(req, res) {
+  async deleteUserSpecificMessage(req, res) {
     const currentUserId = req.user.id;
     const paramsId = req.params.id;
     if (!Number(paramsId)) {
       return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
     }
+    const specificMessage = await db.getSpecificMessage(currentUserId, req.params.id);
+    if (!specificMessage) {
+      return res.status(404).send({
+        status: 404,
+        error: 'Message not found',
+      });
+    }
     db.deleteSpecificMessage(currentUserId, req.params.id);
     return res.status(200).send({
       status: 200,
-      data: [{ message: 'Message has deleted' }],
+      data: [{ message: 'Message has been deleted' }],
     });
   },
 };

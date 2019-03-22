@@ -32,4 +32,11 @@ export default {
     }
     return res.rows;
   },
+  async dbquery(text) {
+    try {
+      await pool.query(text);
+    } catch (err) {
+      console.log(`\n\n\nError\n + ${err} \nError end\n`);
+    }
+  },
 };
