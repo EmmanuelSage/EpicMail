@@ -58,12 +58,42 @@ describe('Tests for group route', () => {
     it('should delete a group if authenticated', (done) => {
       chai
         .request(app)
-        .delete('/api/v1/groups/3')
+        .delete('/api/v1/groups/2')
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.status).to.be.equal(200);
           expect(res.body.data.message).to.be.equal('Group has been deleted');
+          done(err);
+        });
+    });
+
+    it('should return error if group id to delete is not found', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/groups/298')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('group not found');
+          done(err);
+        });
+    });
+
+    it('should return an error if one tries to rename an group with not found id', (done) => {
+      const groupName = 'Collegues over';
+      chai
+        .request(app)
+        .patch('/api/v1/groups/453/name')
+        .set('x-access-token', authToken)
+        .send({
+          name: groupName,
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('Group id 453 was not found');
           done(err);
         });
     });

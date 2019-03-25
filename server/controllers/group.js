@@ -63,6 +63,13 @@ const Group = {
   async deleteGroup(req, res) {
     const currentUserId = req.user.id;
     const groupId = req.params.id;
+    const group = await db.checkgroupId(groupId, currentUserId);
+    if (group.length < 1) {
+      return res.status(404).send({
+        status: 404,
+        error: 'group not found',
+      });
+    }
     await db.deleteGroup(currentUserId, groupId);
     return res.status(200).send({
       status: 200,

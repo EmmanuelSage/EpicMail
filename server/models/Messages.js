@@ -91,7 +91,6 @@ const Messages = {
         RIGHT JOIN inbox ON inbox.messageid = messages.id
         JOIN outbox ON outbox.messageid = messages.id
         WHERE (senderid = $1 OR receiverid = $1) AND (messages.id = $2);`;
-    // const findAllQuery = 'SELECT * FROM messages WHERE userid = $1 AND id = $2';
     const updateQuery = `UPDATE inbox
     SET status = 'Read'
     WHERE

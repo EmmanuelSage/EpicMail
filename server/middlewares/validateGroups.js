@@ -1,3 +1,4 @@
+import db from '../models/Group';
 
 const GroupValidations = {
   async createGroup(req, res, next) {
@@ -31,6 +32,10 @@ const GroupValidations = {
         status: 400,
         errors,
       });
+    }
+    const groupId = await db.checkgroupId(req.params.id, req.user.id);
+    if (groupId.length < 1) {
+      return res.status(404).send({ status: 404, error: `Group id ${req.params.id} was not found` });
     }
     return next();
   },

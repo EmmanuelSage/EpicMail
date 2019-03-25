@@ -160,17 +160,20 @@ const Group = {
   },
 
   async checkgroupName(groupName, adminid) {
-    console.log(adminid);
     const findAllQuery = 'select name from groups where adminid = $1;';
     const rows = await dbQuery.queryAll(findAllQuery, [adminid]);
-    console.log(rows);
-
     const found = rows.some(ele => ele.name === groupName);
     if (found) {
       return 'duplicate';
     }
 
     return 'safe';
+  },
+
+  async checkgroupId(groupId, adminid) {
+    const findAllQuery = 'select * from groups where id = $1 AND adminid = $2;';
+    const rows = await dbQuery.queryAll(findAllQuery, [groupId, adminid]);
+    return rows;
   },
 };
 
