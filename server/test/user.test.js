@@ -201,6 +201,22 @@ describe('Tests for users route', () => {
         });
     });
 
+    it('Should return error if password is not provided', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/login')
+        .set('x-access-token', authToken)
+        .send({
+          email: 'david@gmail.com',
+          password: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
     it('Should return an error if password is incorrect', (done) => {
       chai
         .request(app)
@@ -257,6 +273,57 @@ describe('Tests for users route', () => {
         .send({
           email: 'david@gmail.com',
           password: '1a2b3e32',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
+    it('should return error if password is not provided ', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'hezebah',
+          lastName: 'newking',
+          email: 'hezebahNK@gmail.com',
+          password: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
+    it('should return error if password is less than six characters', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'hezebah',
+          lastName: 'newking',
+          email: 'hezebahNK@gmail.com',
+          password: 'dd',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
+    it('should return error if email has already been registered', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstName: 'hezebah',
+          lastName: 'newking',
+          email: 'sagewills@gmail.com',
+          password: 'dddfres',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);

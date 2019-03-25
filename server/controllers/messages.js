@@ -56,7 +56,7 @@ const Messages = {
     if (!Number(paramsId)) {
       return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
     }
-    const specificMessage = await db.getSpecificMessage(currentUserId, req.params.id);
+    const specificMessage = await db.getSpecificMessage(currentUserId, paramsId);
     if (!specificMessage) {
       return res.status(404).send({
         status: 404,

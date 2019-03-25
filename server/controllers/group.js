@@ -10,7 +10,7 @@ const Group = {
     const nameCheck = await db.checkgroupName(req.body.name, req.user.id);
 
     if (nameCheck === 'duplicate') {
-      return res.status(400).send({ status: 400, error: `Sorry Group name ${req.body.name} already exists ` });
+      return res.status(400).send({ status: 400, error: `Sorry Group name ${req.body.name} already exists.` });
     }
 
     const newGroup = await db.create(reqGroup);
@@ -66,7 +66,7 @@ const Group = {
     await db.deleteGroup(currentUserId, groupId);
     return res.status(200).send({
       status: 200,
-      data: [{ message: 'Group has been deleted' }],
+      data: { message: 'Group has been deleted' },
     });
   },
 
