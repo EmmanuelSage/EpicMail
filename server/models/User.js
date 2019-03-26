@@ -29,11 +29,24 @@ const User = {
     return rows;
   },
 
-  async findUserId(id) {
+  // async findUserId(id) {
+  //   const createQuery = `SELECT
+  //   (SELECT id FROM users WHERE id = $1) AS id;`;
+  //   const rows = await dbQuery.query(createQuery, [id]);
+  //   return rows.id;
+  // },
+
+  async findUserEmail(email) {
     const createQuery = `SELECT 
-    (SELECT id FROM users WHERE id = $1) AS id;`;
+    (SELECT email FROM users WHERE email = $1) AS email;`;
+    const rows = await dbQuery.query(createQuery, [email]);
+    return rows.email;
+  },
+
+  async getUserEmailById(id) {
+    const createQuery = 'SELECT email FROM users WHERE id = $1;';
     const rows = await dbQuery.query(createQuery, [id]);
-    return rows.id;
+    return rows;
   },
 };
 

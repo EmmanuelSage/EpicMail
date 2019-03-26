@@ -97,5 +97,20 @@ describe('Tests for group route', () => {
           done(err);
         });
     });
+
+    it('should return error if no users in array to add users to group', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/users')
+        .set('x-access-token', authToken)
+        .send({
+          users: [],
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
   });
 });

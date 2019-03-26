@@ -28,8 +28,8 @@ const createTable = `
         subject TEXT NOT NULL,
         message TEXT NOT NULL,
         createdOn TIMESTAMP,
-        userId INT NOT NULL,
-        FOREIGN KEY (userId) REFERENCES users (id) ON DELETE CASCADE
+        userId VARCHAR(128) NOT NULL,
+        FOREIGN KEY (userId) REFERENCES users (email) ON DELETE CASCADE
       );
       
       CREATE TABLE IF NOT EXISTS
@@ -37,10 +37,10 @@ const createTable = `
         id SERIAL PRIMARY KEY,
         status TEXT NOT NULL,
         parentMessageId INT NOT NULL,
-        senderId INT NOT NULL,
+        senderId VARCHAR(128) NOT NULL,
         messageId INT NOT NULL,
         FOREIGN KEY (messageId) REFERENCES messages (id) ON DELETE CASCADE,
-        FOREIGN KEY (senderId) REFERENCES users (id) ON DELETE CASCADE,
+        FOREIGN KEY (senderId) REFERENCES users (email) ON DELETE CASCADE,
         FOREIGN KEY (parentMessageId) REFERENCES messages (id) ON DELETE CASCADE
       );
         
@@ -49,10 +49,10 @@ const createTable = `
         id SERIAL PRIMARY KEY,
         status TEXT NOT NULL,
         parentMessageId INT NOT NULL,
-        receiverId INT NOT NULL,
+        receiverId VARCHAR(128) NOT NULL,
         messageId INT NOT NULL,
         FOREIGN KEY (messageId) REFERENCES messages (id) ON DELETE CASCADE,
-        FOREIGN KEY (receiverId) REFERENCES users (id) ON DELETE CASCADE,
+        FOREIGN KEY (receiverId) REFERENCES users (email) ON DELETE CASCADE,
         FOREIGN KEY (parentMessageId) REFERENCES messages (id) ON DELETE CASCADE
       );
         
@@ -60,18 +60,18 @@ const createTable = `
       groups(
         id SERIAL PRIMARY KEY,
         name VARCHAR(128) NOT NULL,
-        adminId INT NOT NULL,
-        FOREIGN KEY (adminId) REFERENCES users (id) ON DELETE CASCADE
+        adminId VARCHAR(128) NOT NULL,
+        FOREIGN KEY (adminId) REFERENCES users (email) ON DELETE CASCADE
       );
       
       CREATE TABLE IF NOT EXISTS
       groupusers(
         id SERIAL PRIMARY KEY,
         groupId INT NOT NULL,
-        groupUsers INT NOT NULL,
+        groupUsers VARCHAR(128) NOT NULL,
         role VARCHAR(128) NOT NULL,
         FOREIGN KEY (groupId) REFERENCES groups (id) ON DELETE CASCADE,
-        FOREIGN KEY (groupUsers) REFERENCES users (id) ON DELETE CASCADE
+        FOREIGN KEY (groupUsers) REFERENCES users (email) ON DELETE CASCADE
       );
         `;
 

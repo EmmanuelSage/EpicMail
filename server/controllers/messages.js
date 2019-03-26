@@ -5,8 +5,8 @@ const Messages = {
     const reqMessage = {
       subject: req.body.subject,
       message: req.body.message,
-      senderId: parseInt(req.user.id, 10),
-      receiverId: parseInt(req.body.receiverId, 10),
+      senderId: req.user.id,
+      receiverId: req.body.receiverId,
       parentMessageId: parseInt(req.body.parentMessageId, 10) || -1,
     };
     const newMessage = await db.create(reqMessage);

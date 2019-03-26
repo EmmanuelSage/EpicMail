@@ -5,6 +5,7 @@ dotenv.config();
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: true,
 });
 
 export default {
@@ -13,7 +14,6 @@ export default {
     let res;
     try {
       res = await pool.query(text, params);
-      // console.log(res.rows[0]);
       return res.rows[0];
     } catch (err) {
       console.log(`\n\n\nError\n + ${err.stack} \nError end\n`);
@@ -24,7 +24,6 @@ export default {
     let res;
     try {
       res = await pool.query(text, params);
-      // console.log(res.rows[0]);
       return res.rows;
     } catch (err) {
       console.log(`\n\n\nError\n + ${err.stack} \nError end\n`);

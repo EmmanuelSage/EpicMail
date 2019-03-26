@@ -84,9 +84,16 @@ const Group = {
   },
 
   async addMember(groupId, usersArray) {
-    const addUserQuery = `INSERT INTO
+    let addUserQuery = `INSERT INTO
     groupusers(groupid, groupusers, role)
-    values(${groupId}, unnest(array[${usersArray}]), 'User')`;
+    values`;
+    usersArray.forEach((ele, idx) => {
+      if (idx === usersArray.length - 1) {
+        addUserQuery += `(${groupId}, '${ele}', 'User' );`;
+      } else {
+        addUserQuery += `(${groupId}, '${ele}', 'User' ),`;
+      }
+    });
     await dbQuery.queryAll(addUserQuery);
 
     const findAllQuery = ` SELECT * FROM groups 
@@ -142,9 +149,16 @@ const Group = {
     allGroupUsers.forEach((ele) => {
       groupUsersarray.push(ele.groupusers);
     });
-    const createQueryInbox = `INSERT INTO
+    let createQueryInbox = `INSERT INTO
     inbox(status, parentMessageid, receiverid, messageid)
-    values('Unread', ${setId}, unnest(array[${groupUsersarray}]), ${lastMsgId})`;
+    values`;
+    groupUsersarray.forEach((ele, idx) => {
+      if (idx === groupUsersarray.length - 1) {
+        createQueryInbox += `('Unread', ${setId}, '${ele}', ${lastMsgId} );`;
+      } else {
+        createQueryInbox += `('Unread', ${setId}, '${ele}', ${lastMsgId} ),`;
+      }
+    });
     const allSent = await dbQuery.queryAll(createQueryInbox);
 
     const valuesOutbox = [

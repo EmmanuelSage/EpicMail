@@ -26,11 +26,10 @@ const Group = {
   },
 
   async addMember(req, res) {
-    const usersString = (req.body.users);
-    const users = usersString.map(ele => parseInt(ele, 10));
-
-    const newMember = await db.addMember(req.params.groupid, users);
-
+    const groupUsersJson = req.body.users;
+    const groupUsers = [];
+    groupUsersJson.forEach(ele => groupUsers.push(ele));
+    const newMember = await db.addMember(req.params.groupid, groupUsers);
     return res.status(201).send({
       status: 201,
       data: [{
@@ -92,7 +91,7 @@ const Group = {
     const reqMessage = {
       subject: req.body.subject,
       message: req.body.message,
-      senderId: parseInt(req.user.id, 10),
+      senderId: req.user.id,
       groupId: req.params.id,
       parentMessageId: parseInt(req.body.parentMessageId, 10) || -1,
     };

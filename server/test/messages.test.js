@@ -33,7 +33,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
@@ -50,7 +50,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '999',
+          receiverId: 'sagesacsacsswills@gmail.com',
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -66,7 +66,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err, res) => {
@@ -85,7 +85,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: '',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err, res) => {
@@ -103,7 +103,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The weather',
           message: '',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com1',
           parentMessageId: '1',
         })
         .end((err, res) => {
@@ -142,7 +142,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -197,7 +197,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -227,7 +227,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '9',
+          receiverId: 'jeangry@gmail.com9',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -258,7 +258,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '9',
+          receiverId: 'jeangry@gmail.com',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -268,14 +268,14 @@ describe('Tests for messsages route', () => {
     it('Should return a specific message', (done) => {
       chai
         .request(app)
-        .get('/api/v1/messages/5')
+        .get('/api/v1/messages/3')
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
           done(err);
         });
     });
-    it('Should return error if specific message id iis incorrect', (done) => {
+    it('Should return error if specific message id is incorrect', (done) => {
       chai
         .request(app)
         .get('/api/v1/messages/50ade0')
@@ -311,7 +311,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com1',
           parentMessageId: '1',
         })
         .end((err) => {

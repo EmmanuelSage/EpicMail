@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import dbUser from '../models/User';
 
 dotenv.config();
 
@@ -16,6 +17,11 @@ const Helper = {
 
   isValidEmail(email) {
     return /^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/.test(email);
+  },
+
+  async verifyEmail(email) {
+    const userEmail = await dbUser.getEmail(email);
+    return userEmail;
   },
 
 

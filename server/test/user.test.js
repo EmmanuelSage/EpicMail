@@ -44,23 +44,6 @@ describe('Tests for users route', () => {
         });
     });
 
-    // it('Should return an error if password has less than six characters', (done) => {
-    //   chai
-    //     .request(app)
-    //     .post('/api/v1/auth/signup')
-    //     .send({
-    //       firstName: 'David',
-    //       lastName: 'Oluyale',
-    //       email: 'david@gmail.com',
-    //       password: 'david',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.equal(400);
-    //       done(err);
-    //     });
-    // });
-
     it('Should return an error if firstName is not provided', (done) => {
       chai
         .request(app)
@@ -145,26 +128,6 @@ describe('Tests for users route', () => {
           done(err);
         });
     });
-  });
-
-  // Create
-  describe('Create User Post route authentication ', () => {
-    // it('Should return an error if email is already registered', (done) => {
-    //   chai
-    //     .request(app)
-    //     .post('/api/v1/auth/signup')
-    //     .send({
-    //       firstName: 'David',
-    //       lastName: 'Oluyale',
-    //       email: 'sagewills@gmail.com',
-    //       password: 'david1',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.equal(400);
-    //       done(err);
-    //     });
-    // });
   });
 
   // Login Post Tests
@@ -326,8 +289,8 @@ describe('Tests for users route', () => {
           password: 'dddfres',
         })
         .end((err, res) => {
-          expect(res).to.have.status(400);
-          expect(res.body.status).to.be.equal(400);
+          expect(res).to.have.status(409);
+          expect(res.body.status).to.be.equal(409);
           done(err);
         });
     });
