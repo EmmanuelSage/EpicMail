@@ -33,11 +33,27 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body.status).to.be.equal(201);
+          done(err);
+        });
+    });
+
+    it('Should return error if one sends message to a receiver id not found', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/messages')
+        .set('x-access-token', authToken)
+        .send({
+          subject: 'The Weather',
+          message: 'Lagos is very hot this days, like what',
+          receiverId: 'sagesacsacsswills@gmail.com',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
           done(err);
         });
     });
@@ -50,7 +66,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err, res) => {
@@ -69,7 +85,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: '',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err, res) => {
@@ -87,7 +103,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The weather',
           message: '',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com1',
           parentMessageId: '1',
         })
         .end((err, res) => {
@@ -126,7 +142,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -156,6 +172,19 @@ describe('Tests for messsages route', () => {
           done(err);
         });
     });
+
+    it('Should return error if token is incorrect', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/messages')
+        .set('x-access-token', 'sdsdscdc')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body.status).to.be.equal(401);
+          expect(res.body.error).to.be.equal('Token is incorrect');
+          done(err);
+        });
+    });
   });
 
   // User can Get unread message tests
@@ -168,7 +197,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -198,7 +227,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '9',
+          receiverId: 'jeangry@gmail.com9',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -229,7 +258,7 @@ describe('Tests for messsages route', () => {
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '9',
+          receiverId: 'jeangry@gmail.com',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -239,10 +268,34 @@ describe('Tests for messsages route', () => {
     it('Should return a specific message', (done) => {
       chai
         .request(app)
-        .get('/api/v1/messages/5')
+        .get('/api/v1/messages/3')
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
+          done(err);
+        });
+    });
+    it('Should return error if specific message id is incorrect', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/messages/50ade0')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.be.equal('Please enter a valid message Id');
+          done(err);
+        });
+    });
+    it('Should return error if specific message cannot be found', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/messages/500')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('Message not found');
           done(err);
         });
     });
@@ -253,12 +306,12 @@ describe('Tests for messsages route', () => {
     before((done) => {
       chai
         .request(app)
-        .post('/api/v1/messages/1')
+        .post('/api/v1/messages')
         .set('x-access-token', authToken)
         .send({
           subject: 'The Weather',
           message: 'Lagos is very hot this days, like what',
-          receiverId: '1',
+          receiverId: 'sagewills@gmail.com1',
           parentMessageId: '1',
         })
         .end((err) => {
@@ -268,11 +321,35 @@ describe('Tests for messsages route', () => {
     it('Should delete a specific message', (done) => {
       chai
         .request(app)
-        .delete('/api/v1/messages/1')
+        .delete('/api/v1/messages/3')
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.status).to.be.equal(200);
+          done(err);
+        });
+    });
+    it('Should return error if id to delete a specific message is wrong', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/messages/adsa3')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.be.equal('Please enter a valid message Id');
+          done(err);
+        });
+    });
+    it('Should return error if id to delete a specific message is not found', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/messages/342')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('Message not found');
           done(err);
         });
     });

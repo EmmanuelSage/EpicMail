@@ -1,4 +1,5 @@
 import db from '../models/User';
+import helper from '../utilities/helper';
 
 const messagesValidator = {
   async verifyMessage(req, res, next) {
@@ -9,12 +10,12 @@ const messagesValidator = {
     if (!req.body.message) {
       errors.push({ status: 400, error: 'Please enter a message' });
     }
-    if (!req.body.receiverId || !Number(req.body.receiverId)) {
+    if (!req.body.receiverId || !helper.isValidEmail(req.body.receiverId)) {
       errors.push({ status: 400, error: 'Please enter a valid receiver Id' });
     }
     if (!errors.length >= 1) {
-      const receiverId = await db.findUserId(req.body.receiverId);
-      if (!receiverId) {
+      const receiverEmail = await db.findUserEmail(req.body.receiverId);
+      if (!receiverEmail) {
         errors.push({ status: 404, error: 'User with that receiver id was not found' });
       }
     }

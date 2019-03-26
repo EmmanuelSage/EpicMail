@@ -10,7 +10,7 @@ const Group = {
     const nameCheck = await db.checkgroupName(req.body.name, req.user.id);
 
     if (nameCheck === 'duplicate') {
-      return res.status(400).send({ status: 400, error: `Sorry Group name ${req.body.name} already exists ` });
+      return res.status(400).send({ status: 400, error: `Sorry Group name ${req.body.name} already exists.` });
     }
 
     const newGroup = await db.create(reqGroup);
@@ -26,11 +26,10 @@ const Group = {
   },
 
   async addMember(req, res) {
-    const usersString = (req.body.users);
-    const users = usersString.map(ele => parseInt(ele, 10));
-
-    const newMember = await db.addMember(req.params.groupid, users);
-
+    const groupUsersJson = req.body.users;
+    const groupUsers = [];
+    groupUsersJson.forEach(ele => groupUsers.push(ele));
+    const newMember = await db.addMember(req.params.groupid, groupUsers);
     return res.status(201).send({
       status: 201,
       data: [{
@@ -63,10 +62,17 @@ const Group = {
   async deleteGroup(req, res) {
     const currentUserId = req.user.id;
     const groupId = req.params.id;
+    const group = await db.checkgroupId(groupId, currentUserId);
+    if (group.length < 1) {
+      return res.status(404).send({
+        status: 404,
+        error: 'group not found',
+      });
+    }
     await db.deleteGroup(currentUserId, groupId);
     return res.status(200).send({
       status: 200,
-      data: [{ message: 'Group has been deleted' }],
+      data: { message: 'Group has been deleted' },
     });
   },
 
@@ -85,7 +91,7 @@ const Group = {
     const reqMessage = {
       subject: req.body.subject,
       message: req.body.message,
-      senderId: parseInt(req.user.id, 10),
+      senderId: req.user.id,
       groupId: req.params.id,
       parentMessageId: parseInt(req.body.parentMessageId, 10) || -1,
     };

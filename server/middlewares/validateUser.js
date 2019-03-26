@@ -9,31 +9,30 @@ const userValidator = {
     const password = req.body.password.trim();
     const errors = [];
     if (!Helper.isValidEmail(email) || !email) {
-      errors.push({ status: 400, error: 'Please enter a valid email address' });
+      errors.push({ error: 'Please enter a valid email address' });
     }
     if (!Helper.isValidName(firstName) || !firstName) {
-      errors.push({ status: 400, error: 'Please enter a valid firstName' });
+      errors.push({ error: 'Please enter a valid firstName' });
     }
     if (!Helper.isValidName(lastName) || !lastName) {
-      errors.push({ status: 400, error: 'Please enter a valid lastName' });
+      errors.push({ error: 'Please enter a valid lastName' });
     }
     if (!password) {
-      errors.push({ status: 400, error: 'Please enter a valid password' });
+      errors.push({ error: 'Please enter a valid password' });
     }
-    if (!errors.length >= 1) {
-      if (password.length < 6) {
-        errors.push({ status: 400, error: 'Please enter a password of at least six characters' });
-      }
-      const receiverEmail = await db.getEmail(email);
-      if (receiverEmail) {
-        errors.push({ status: 409, error: 'Email has already been registered' });
-      }
+    if (password.length < 6) {
+      errors.push({ error: 'Please enter a password of at least six characters' });
     }
     if (errors.length >= 1) {
       return res.status(400).send({
         status: 400,
         errors,
       });
+    }
+
+    const receiverEmail = await db.getEmail(email);
+    if (receiverEmail) {
+      return res.status(409).send({ status: 409, error: 'Email has already been registered' });
     }
 
     return next();

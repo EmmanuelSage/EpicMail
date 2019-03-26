@@ -84,9 +84,16 @@ const Group = {
   },
 
   async addMember(groupId, usersArray) {
-    const addUserQuery = `INSERT INTO
+    let addUserQuery = `INSERT INTO
     groupusers(groupid, groupusers, role)
-    values(${groupId}, unnest(array[${usersArray}]), 'User')`;
+    values`;
+    usersArray.forEach((ele, idx) => {
+      if (idx === usersArray.length - 1) {
+        addUserQuery += `(${groupId}, '${ele}', 'User' );`;
+      } else {
+        addUserQuery += `(${groupId}, '${ele}', 'User' ),`;
+      }
+    });
     await dbQuery.queryAll(addUserQuery);
 
     const findAllQuery = ` SELECT * FROM groups 
@@ -142,9 +149,16 @@ const Group = {
     allGroupUsers.forEach((ele) => {
       groupUsersarray.push(ele.groupusers);
     });
-    const createQueryInbox = `INSERT INTO
+    let createQueryInbox = `INSERT INTO
     inbox(status, parentMessageid, receiverid, messageid)
-    values('Unread', ${setId}, unnest(array[${groupUsersarray}]), ${lastMsgId})`;
+    values`;
+    groupUsersarray.forEach((ele, idx) => {
+      if (idx === groupUsersarray.length - 1) {
+        createQueryInbox += `('Unread', ${setId}, '${ele}', ${lastMsgId} );`;
+      } else {
+        createQueryInbox += `('Unread', ${setId}, '${ele}', ${lastMsgId} ),`;
+      }
+    });
     const allSent = await dbQuery.queryAll(createQueryInbox);
 
     const valuesOutbox = [
@@ -160,17 +174,20 @@ const Group = {
   },
 
   async checkgroupName(groupName, adminid) {
-    console.log(adminid);
     const findAllQuery = 'select name from groups where adminid = $1;';
     const rows = await dbQuery.queryAll(findAllQuery, [adminid]);
-    console.log(rows);
-
     const found = rows.some(ele => ele.name === groupName);
     if (found) {
       return 'duplicate';
     }
 
     return 'safe';
+  },
+
+  async checkgroupId(groupId, adminid) {
+    const findAllQuery = 'select * from groups where id = $1 AND adminid = $2;';
+    const rows = await dbQuery.queryAll(findAllQuery, [groupId, adminid]);
+    return rows;
   },
 };
 

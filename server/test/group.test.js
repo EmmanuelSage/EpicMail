@@ -54,21 +54,6 @@ describe('Tests for group route', () => {
         });
     });
 
-    it('should add a new user to a group', (done) => {
-      chai
-        .request(app)
-        .post('/api/v1/groups/1/users')
-        .set('x-access-token', authToken)
-        .send({
-          users: [1, 2, 3],
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(201);
-          expect(res.body.status).to.be.equal(201);
-          done(err);
-        });
-    });
-
     it('should update group name', (done) => {
       chai
         .request(app)
@@ -90,7 +75,7 @@ describe('Tests for group route', () => {
         .post('/api/v1/groups/1/users')
         .set('x-access-token', authToken)
         .send({
-          users: [2, 3, 4],
+          users: ['peterparker@gmail.com', 'clarkkent@gmail.com'],
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
@@ -101,7 +86,7 @@ describe('Tests for group route', () => {
     it('should delete a group member', (done) => {
       chai
         .request(app)
-        .delete('/api/v1/groups/1/users/1')
+        .delete('/api/v1/groups/1/users/peterparker@gmail.com')
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
@@ -160,7 +145,7 @@ describe('Tests for group route', () => {
         });
     });
 
-    it('should add a new user to a group', (done) => {
+    it('should return error if users to add to a group is empty', (done) => {
       chai
         .request(app)
         .post('/api/v1/groups/1/users')
@@ -175,7 +160,7 @@ describe('Tests for group route', () => {
         });
     });
 
-    it('should add a new user to a group', (done) => {
+    it('should return error if users to add to group are not found', (done) => {
       chai
         .request(app)
         .post('/api/v1/groups/1/users')

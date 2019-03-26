@@ -5,8 +5,8 @@ const Messages = {
     const reqMessage = {
       subject: req.body.subject,
       message: req.body.message,
-      senderId: parseInt(req.user.id, 10),
-      receiverId: parseInt(req.body.receiverId, 10),
+      senderId: req.user.id,
+      receiverId: req.body.receiverId,
       parentMessageId: parseInt(req.body.parentMessageId, 10) || -1,
     };
     const newMessage = await db.create(reqMessage);
@@ -56,7 +56,7 @@ const Messages = {
     if (!Number(paramsId)) {
       return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
     }
-    const specificMessage = await db.getSpecificMessage(currentUserId, req.params.id);
+    const specificMessage = await db.getSpecificMessage(currentUserId, paramsId);
     if (!specificMessage) {
       return res.status(404).send({
         status: 404,
