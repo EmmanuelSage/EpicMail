@@ -29,8 +29,8 @@ const messagesValidator = {
   },
 
   async verifyDraftMessage(req, res, next) {
-    if (!req.body.message) {
-      return res.status(400).send({ status: 400, error: 'Please enter a message' });
+    if (!req.body.message && !req.body.subject && !req.body.receiverId) {
+      return res.status(400).send({ status: 400, error: 'Please enter a subject, message or receiver id' });
     }
     return next();
   },

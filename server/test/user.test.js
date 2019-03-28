@@ -157,8 +157,8 @@ describe('Tests for users route', () => {
           password: 'david1',
         })
         .end((err, res) => {
-          expect(res).to.have.status(201);
-          expect(res.body.status).to.be.equal(201);
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.equal(200);
           expect(res.body.data[0]).to.have.property('token');
           done(err);
         });

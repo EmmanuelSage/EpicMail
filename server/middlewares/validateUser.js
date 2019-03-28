@@ -42,14 +42,14 @@ const userValidator = {
     if (!req.body.password) {
       return res.status(400).send({
         status: 400,
-        error: 'email or pasword is incorrect',
+        error: 'Email or password is incorrect',
       });
     }
 
     if (!req.body.email) {
       return res.status(400).send({
         status: 400,
-        error: 'email or pasword is incorrect',
+        error: 'Email or password is incorrect',
       });
     }
 
@@ -58,14 +58,14 @@ const userValidator = {
     if (!userEmail) {
       return res.status(400).send({
         status: 400,
-        error: 'email or pasword is incorrect',
+        error: 'Email or password is incorrect',
       });
     }
     const user = await db.getUserByEmail(req.body.email);
     if (!Helper.comparePassword(user.password, req.body.password)) {
       return res.status(400).send({
         status: 400,
-        error: 'email or pasword is incorrect',
+        error: 'Email or password is incorrect',
       });
     }
     req.user = user;
