@@ -27,6 +27,13 @@ const messagesValidator = {
     }
     return next();
   },
+
+  async verifyDraftMessage(req, res, next) {
+    if (!req.body.message) {
+      return res.status(400).send({ status: 400, error: 'Please enter a message' });
+    }
+    return next();
+  },
 };
 
 

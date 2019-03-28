@@ -88,6 +88,57 @@ const Messages = {
       data: [{ message: 'Message has been deleted' }],
     });
   },
+
+  async createDraft(req, res) {
+    const reqMessage = {
+      subject: req.body.subject,
+      message: req.body.message,
+      senderId: req.user.id,
+      receiverId: req.body.receiverId,
+      parentMessageId: parseInt(req.body.parentMessageId, 10) || -1,
+    };
+    const newMessage = await db.createDraftMessage(reqMessage);
+    return res.status(201).send({
+      status: 201,
+      data: {
+        id: newMessage[0].id,
+        createdon: newMessage[0].createdon,
+        subject: newMessage[0].subject,
+        message: newMessage[0].message,
+        parentmessageid: newMessage[0].parentmessageid,
+        status: newMessage[0].status,
+      },
+    });
+  },
+
+  async getUserDraftMessages(req, res) {
+    const currentUserId = req.user.id;
+    const data = await db.getDraftMessages(currentUserId);
+    return res.status(200).send({
+      status: 200,
+      data,
+    });
+  },
+
+  async deleteDraft(req, res) {
+    const currentUserId = req.user.id;
+    const paramsId = req.params.id;
+    if (!Number(paramsId)) {
+      return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
+    }
+    const specificMessage = await db.getSpecificDraft(currentUserId, req.params.id);
+    if (!specificMessage) {
+      return res.status(404).send({
+        status: 404,
+        error: 'Message not found',
+      });
+    }
+    db.deleteSpecificMessage(currentUserId, req.params.id);
+    return res.status(200).send({
+      status: 200,
+      data: [{ message: 'Message has been deleted' }],
+    });
+  },
 };
 
 export default Messages;

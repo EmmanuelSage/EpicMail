@@ -61,6 +61,9 @@ $ npm test
 | POST /groups/:groupid/users                      | Add a user to a group                    |
 | DELETE /groups/:groupid/users/:userid            | Delete a user from a group               |
 | POST /groups/:id/messages                        | Post a message to a group                |
+| POST /messages/drafts                            | Create a draft message                   |
+| GET /messages/drafts                             | Get a draft message                      |
+| DELETE /messages/drafts/:id                      | Delete a draft message                   |
 
 ## Author
 Emmanuel Oluyale

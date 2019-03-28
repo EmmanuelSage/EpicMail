@@ -52,7 +52,6 @@ const Messages = {
 
     await dbQuery.query(createQueryOutbox, valuesOutbox);
 
-    // return lastMsgIdreturn;
     const rows = await dbQuery.queryAll(returnMessageQuery, [data.senderId, lastMsgIdreturn.id]);
     return rows;
   },
@@ -107,6 +106,68 @@ const Messages = {
     const delOutboxQuery = `DELETE FROM outbox
     WHERE senderid = $1 AND messageid = $2;`;
     await dbQuery.query(delOutboxQuery, [userId, messageId]);
+    return rows;
+  },
+
+  async createDraftMessage(data) {
+    const createQuery = `INSERT INTO
+      messages(subject, message, createdOn, userId)
+      VALUES($1, $2, $3, $4)
+      returning *`;
+
+    const createQueryOutbox = `INSERT INTO
+    outbox(status, parentMessageId, senderId, messageId )
+      VALUES($1, $2, $3, $4)`;
+
+    const returnMessageQuery = `SELECT * FROM outbox 
+    INNER JOIN messages ON messages.id = outbox.messageid 
+     WHERE senderid = $1 AND messages.id = $2`;
+
+    const values = [
+      data.subject,
+      data.message,
+      moment(new Date()),
+      data.senderId,
+    ];
+    const lastMsgIdreturn = await dbQuery.query(createQuery, values);
+
+    const lastMsgId = lastMsgIdreturn.id;
+    let setId;
+
+    if (data.parentMessageId === -1) {
+      setId = lastMsgId;
+    } else {
+      setId = data.parentMessageId;
+    }
+
+    const valuesOutbox = [
+      'Draft',
+      setId,
+      data.senderId,
+      lastMsgId,
+    ];
+
+    await dbQuery.query(createQueryOutbox, valuesOutbox);
+
+    const rows = await dbQuery.queryAll(returnMessageQuery, [data.senderId, lastMsgIdreturn.id]);
+    return rows;
+  },
+
+  async getDraftMessages(userId) {
+    const findAllQuery = `SELECT messages.id, status, parentmessageid, 
+    subject, message, createdon, senderid FROM outbox 
+    INNER JOIN messages ON messages.id = outbox.messageid 
+     WHERE senderid = $1 AND status = $2`;
+    const rows = await dbQuery.queryAll(findAllQuery, [userId, 'Draft']);
+    return rows;
+  },
+
+  async getSpecificDraft(userId, messageId) {
+    const findAllQuery = `SELECT * FROM messages 
+        JOIN outbox ON outbox.messageid = messages.id
+        WHERE senderid = $1 AND messages.id = $2 AND status = 'Draft';`;
+
+    const rows = await dbQuery.query(findAllQuery, [userId, messageId]);
     return rows;
   },
 };
