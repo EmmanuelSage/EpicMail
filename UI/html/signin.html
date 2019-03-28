@@ -37,14 +37,14 @@
 
     <div class="form-container">
       <h1>Sign in</h1>
-
-      <form class="form" action="dashboard.html">
-        <input type="text" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
+      <div class='errorDiv'> <span id='errorMessage'></span> </div>
+      <form class="form" onsubmit="event.preventDefault(); signIn()">
+        <input type="text" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
         <div class="reset-password">
           <a href="resetpassword.html">Reset Password ?</a>
         </div>
-        <button type="submit" id="signin-button">Login</button>
+        <button type="submit" id="signin-button">Sign in</button>
       </form>
     </div>
 
@@ -63,5 +63,6 @@
   </div>
 
 </body>
+<script src="../js/auth.js"></script>
 
 </html>
