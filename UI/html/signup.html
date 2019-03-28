@@ -35,13 +35,13 @@
   <div class="animation-wrapper">
     <div class="form-container">
       <h1>Sign Up</h1>
-
-      <form class="form" action="signin.html">
-        <input type="text" placeholder="First Name" required>
-        <input type="text" placeholder="Last Name" required>
-        <input type="text" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <input type="password" placeholder="Confirm Password" required>
+      <div class='errorDiv'> <span id='errorMessage'></span> </div>
+      <form class="form" onsubmit="event.preventDefault(); signUp()">
+        <input type="text" id="firstName" placeholder="First Name" required>
+        <input type="text" id="lastName" placeholder="Last Name" required>
+        <input type="text" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
         <button type="submit" id="login-button">Sign Up</button>
       </form>
     </div>
@@ -61,5 +61,6 @@
   </div>
 
 </body>
+<script src="../js/auth.js"></script>
 
 </html>

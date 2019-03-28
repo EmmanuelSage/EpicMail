@@ -9,9 +9,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileCancelButton = document.getElementById('mobile-cancel-button');
   const groupDisableInput = document.getElementById('group-disable-input');
   const thread = document.getElementsByClassName('thread');
-  const hashlink = document.getElementById("hashlinkId");
   const saveAsDraft = document.getElementById('draft-save-button');
   const mainGrid = document.getElementById('mainGrid');
+  const logOut = document.getElementById('logOut');
+
+
+  const deleteCookie = (cookieName) => {
+    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
+
+  // const getSetCookie = (cookieSearchName) => {
+  //   const cookieName = `${cookieSearchName}=`;
+  //   const cookieArray = document.cookie.split(';');
+  //   let cookieValue = '';
+  //   cookieArray.forEach((ele) => {
+  //     while (ele.charAt(0) == ' ') {
+  //       ele = ele.substring(1);
+  //     }
+  //     if (ele.indexOf(cookieName) == 0) {
+  //       cookieValue = ele.substring(cookieName.length, ele.length);
+  //     }
+  //   });
+  //   return cookieValue;
+  // }
+
+  // const setToken = getSetCookie('token');
+
+  // const redirectIfTokenSet = () => {
+  //   if (!setToken) {
+  //     window.location.href = '../index.html';
+  //   }
+  // };
+
+  // redirectIfTokenSet();
 
   if (hamburger) {
     hamburger.addEventListener('click', () => {
@@ -55,6 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
       composeModal.style.display = 'none';
     }
   }
+  if (logOut) {
+    logOut.onclick = () => {
+      deleteCookie('token');
+      window.location.href = '../index.html';
+
+    }
+  }
 
   if (modalClose) {
     modalClose.onclick = () => {
@@ -81,13 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
   }
-
-  // for (let i = 0; i < hashlink.length; i++) {
-  //   hashlink[i].addEventListener('click', function () {
-
-  //     window.location.href = './index.html';
-  //   });
-  // }
 
   // media query event handler
   if (matchMedia) {
