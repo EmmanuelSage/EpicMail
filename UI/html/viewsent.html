@@ -77,9 +77,9 @@
 
         </div>
 
-        <div class="content-messsages">
+        <div id="view-inbox-message" class="content-messsages">
           <div class="view-message-thread"></div>
-          <button class="thread">Message from james</button>
+          <!-- <button class="thread">Message from james</button>
           <div class="panel">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
               dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -91,17 +91,7 @@
               ea commodo consequat. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia quod, nostrum
               libero dolore exercitationem delectus natus ex nobis autem atque fugit labore quidem ab error modi laborum
               accusamus sint alias est eos eum dolorem, illo minima odio. Laborum, modi aliquid.</p>
-          </div>
-
-          <button class="thread">Message from james sent</button>
-          <div class="panel">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia quod, nostrum
-              libero dolore exercitationem delectus natus ex nobis autem atque fugit labore quidem ab error modi laborum
-              accusamus sint alias est eos eum dolorem, illo minima odio. Laborum, modi aliquid.</p>
-          </div>
-
+          </div> -->
 
         </div>
 
@@ -116,7 +106,8 @@
       </div>
 
       <div class="compose-modal-body">
-        <form>
+
+        <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
           <div class="compose-modal-select">
             <span>Send Email to : </span>
             <select>
@@ -124,16 +115,23 @@
               <option>Group</option>
             </select>
           </div>
-          <input type="text" placeholder="To: " required>
-          <input type="text" placeholder="Subject: " required>
-          <textarea name="email-body id=" email-body-id" cols="50" rows="18"></textarea><br>
+          <span id="compose-error" class="compose-error-class"></span>
+          <input id="receiverIdInput" type="email" placeholder="To: ">
+          <input id="subjectId" type="text" placeholder="Subject: ">
+          <textarea id="messageId" cols="50" rows="18" required form="compose-form-id"></textarea><br>
           <button type="submit" id="compose-send-button">Send</button>
-          <button type="submit" id="draft-save-button">Save as draft</button>
+          <button type="button" form="compose-form-id" id="draft-save-button">Save as draft</button>
+
         </form>
       </div>
+
     </div>
   </div>
   <footer></footer>
+  <script src="../js/fetchMessages.js"></script>
+  <script>
+    viewSpecificInbox();
+  </script>
   <script src="../js/script.js"></script>
 </body>
 

@@ -67,9 +67,6 @@
 
         <div class="content-menu">
 
-          <!-- <a href="#" id="reload-messages">
-          <div>Reload</div>
-        </a> -->
           <span class="page-state">Current View: Drafts</span>
           <a id="hamburger-link" href="#">
             <div>Menu &equiv;</div>
@@ -77,98 +74,69 @@
 
         </div>
 
-        <div class="content-messages">
-          <ul>
-            <a href="viewdraft.html" class="show-messages-link">
-              <li>
-                <span class="bull-active"><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
+        <div id="content-messages-id" class="content-messages">
 
-                <span class="message-from">
-                  <h1> Jerry Springer </h1>
-                  <p><i> I already sent file</i>
-                  </p>
+          <!-- <div class="show-messages-link">
+            <span><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
 
-                  <span class="send-draft-message"> &#8883; Send draft
-                  </span>
-                  <span class="delete-draft-message"> &otimes; Delete
-                    draft </span>
+            <span class="message-from">
+              <h4> Jerry Springer lweewsas </h4>
+              <p><i> I already sent it today...</i>
+              </p>
+            </span>
+            <span>
+              <span class="send-draft-message"> &#8883; Send </span>
+              <span class="delete-draft-message"> &otimes; Delete </span>
+            </span>
 
-                </span>
-
-              </li>
-            </a>
-            <a href="viewdraft.html" class="show-messages-link">
-              <li>
-                <span class="bull-active"><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
-
-                <span class="message-from">
-                  <h1> Jerry Springer </h1>
-                  <p><i> I already sent file</i>
-                  </p>
-
-                  <span class="send-draft-message"> &#8883; Send draft
-                  </span>
-                  <span class="delete-draft-message"> &otimes; Delete
-                    draft </span>
-                </span>
-
-              </li>
-            </a>
-            <a href="viewdraft.html" class="show-messages-link">
-              <li>
-                <span class="bull-active"><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
-
-                <span class="message-from">
-                  <h1> Jerry Springer </h1>
-                  <p><i> I already sent file</i>
-                  </p>
-
-                  <span class="send-draft-message"> &#8883; Send draft
-                  </span><span class="delete-draft-message"> &otimes; Delete
-                    draft </span>
-                </span>
-
-              </li>
-            </a>
+          </div> -->
 
 
-          </ul>
+
         </div>
 
-      </section>
+  </div>
+  </section>
 
-    </main>
+  </main>
 
-    <div id="compose-modal-id" class="compose-modal">
-      <div class="compose-modal-header">
-        <h3 class="compose-modal-title">Compose a new email</h3>
-        <span id="modal-close-id" class="modal-close">&times;</span>
-      </div>
-
-      <div class="compose-modal-body">
-        <form>
-          <div class="compose-modal-select">
-            <span>Send Email to : </span>
-            <select>
-              <option>User</option>
-              <option>Group</option>
-            </select>
-          </div>
-          <input type="text" placeholder="To: " required>
-          <input type="text" placeholder="Subject: " required>
-          <textarea name="email-body id=" email-body-id" cols="50" rows="18"></textarea><br>
-          <button type="submit" id="compose-send-button">Send</button>
-          <button type="submit" id="draft-save-button">Save as draft</button>
-
-        </form>
-      </div>
-
+  <div id="compose-modal-id" class="compose-modal">
+    <div class="compose-modal-header">
+      <h3 class="compose-modal-title">Compose a new email</h3>
+      <span id="modal-close-id" class="modal-close">&times;</span>
     </div>
+
+    <div class="compose-modal-body">
+
+      <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
+        <div class="compose-modal-select">
+          <span>Send Email to : </span>
+          <select>
+            <option>User</option>
+            <option>Group</option>
+          </select>
+        </div>
+        <span id="compose-error" class="compose-error-class"></span>
+        <input id="receiverIdInput" type="email" placeholder="To: ">
+        <input id="subjectId" type="text" placeholder="Subject: ">
+        <textarea id="messageId" cols="50" rows="18" required form="compose-form-id"></textarea><br>
+        <button type="submit" id="compose-send-button">Send</button>
+        <button type="button" form="compose-form-id" id="draft-save-button">Save as draft</button>
+
+      </form>
+    </div>
+
+  </div>
 
 
   </div>
   <footer></footer>
+  <script src="../js/fetchMessages.js"></script>
+  <script>
+    getDraftMessages();
+  </script>
   <script src="../js/script.js"></script>
+
 </body>
 
 </html>

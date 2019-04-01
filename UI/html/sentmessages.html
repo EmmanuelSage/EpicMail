@@ -79,7 +79,7 @@
 
         <div class="content-messages">
           <ul>
-            <a href="viewsent.html" class="show-messages-link">
+            <!-- <a href="viewsent.html" class="show-messages-link">
               <li>
                 <span class="bull-active"><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
 
@@ -89,13 +89,11 @@
                   </p>
                 </span>
 
-                <!-- <a href="sentmessages.html" class="remove-link-style"> -->
                 <span id="hashlinkId" class="retract-message hashlink"> &#8709; Retract
                   message
                 </span>
-                <!-- </a> -->
               </li>
-            </a>
+            </a> -->
           </ul>
         </div>
 
@@ -110,7 +108,8 @@
       </div>
 
       <div class="compose-modal-body">
-        <form>
+
+        <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
           <div class="compose-modal-select">
             <span>Send Email to : </span>
             <select>
@@ -118,18 +117,25 @@
               <option>Group</option>
             </select>
           </div>
-          <input type="text" placeholder="To: " required>
-          <input type="text" placeholder="Subject: " required>
-          <textarea name="email-body id=" email-body-id" cols="50" rows="18"></textarea><br>
+          <span id="compose-error" class="compose-error-class"></span>
+          <input id="receiverIdInput" type="email" placeholder="To: ">
+          <input id="subjectId" type="text" placeholder="Subject: ">
+          <textarea id="messageId" cols="50" rows="18" required form="compose-form-id"></textarea><br>
           <button type="submit" id="compose-send-button">Send</button>
-          <button type="submit" id="draft-save-button">Save as draft</button>
+          <button type="button" form="compose-form-id" id="draft-save-button">Save as draft</button>
 
         </form>
       </div>
+
     </div>
   </div>
   <footer></footer>
+  <script src="../js/fetchMessages.js"></script>
+  <script>
+    getSentMessages();
+  </script>
   <script src="../js/script.js"></script>
+
 </body>
 
 </html>

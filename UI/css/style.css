@@ -49,8 +49,6 @@ header .current a{
   color:#fff;
   font-weight:bold;
   font-size: 1.8rem;
-  /* text-decoration: underline; */
-  /* text-decoration-color: #229c69; */
   border-bottom: 4px solid #53e3a6;
 }
 
@@ -432,7 +430,13 @@ form .reset-password{
   
 }
 
-.content-messages ul li{
+.content-messages{
+  margin-top: 1rem;
+  height: 50rem;
+  overflow: auto;
+}
+/* 
+.content-messages div span{
   background: rgba(255, 255, 255, 0.924);
   text-align: left;
   padding: 0.5rem;
@@ -441,17 +445,15 @@ form .reset-password{
   transition: all 0.15s;
   margin-bottom: 1rem;
 }
-.content-messages ul{
+.content-messages div{
   margin-top: 0.5rem;
 }
 
 
-.content-messages ul li:hover{
-  /* padding: 10px; */
+.content-messages div span:hover{
   box-shadow:2px 2px 10px 2px #97B1BF;
-  /* box-shadow: inset 0 -1px 0 0 rgba(100,121,143,0.122); */
   background: #53e3a6
-}
+} */
 
 /* menu edit */
 .compose{
@@ -712,35 +714,40 @@ margin-right: 4rem;
 .retract-message{
   color: #444;
   margin: 0.5rem;
+  transition: all 0.25s;
 }
 
 span.retract-message:hover{
   color: red;
   text-shadow: 0.4px 0.4px #fff;
   cursor: pointer;
+  border: 0.1rem solid grey;
 }
 
 .send-draft-message{
-  color: #444;
   margin: 0.5rem;
   color: rgb(3, 80, 3);
+  transition: all 0.25s;
 }
 
 span.send-draft-message:hover{
   color: green;
   cursor: pointer;
   text-shadow: 0.4px 0.4px #fff;
+  border: 0.1rem solid grey;
 }
 
 .delete-draft-message{
   color: rgb(148, 12, 12);
   margin: 0.5rem;
+  transition: all 0.25s;
 }
 
 span.delete-draft-message:hover{
   color: red;
   text-shadow: 0.4px 0.4px #fff;
   cursor: pointer;
+  border: 0.1rem solid grey;
 }
 
 
@@ -789,7 +796,7 @@ span.delete-draft-message:hover{
   .compose-modal{
     font-size: 1rem;
     width: 50em;
-    height: 64em;
+    height: 66em;
     position:fixed;
     bottom:4em;
     right:5em;
@@ -809,12 +816,13 @@ span.delete-draft-message:hover{
   display: none;
 }
 
-.content-messages ul{
-  margin-top: 2rem;
-}
 
 .options div{
   background: rgba(255,255,255,0.1);
+}
+
+.animation-wrapper{
+ height: 91vh;
 }
   
 }
@@ -878,12 +886,19 @@ margin-top: 2rem;
 /* redesign inbox page */
 .show-messages-link{
   text-decoration: none;
-  color: black;
-  
-}
-.show-messages-link li {
+  color: black;  
+  background: rgba(255, 255, 255, 0.924);
+  margin-bottom: 1rem;
+  width: 100%;
   position: relative;
-  margin-bottom: 10rem;
+  overflow: hidden;
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 3px solid #eee;
+  transition: all 0.15s;
+}
+div.show-messages-link:hover {
+  background:#53e3a6;
 }
 
 .message-from{
@@ -894,7 +909,7 @@ margin-top: 2rem;
   max-width: 50rem;
 }
 
-.message-from h1{
+.message-from h4{
   margin: 1rem;
 }
 .message-from p{
@@ -902,8 +917,8 @@ margin-top: 2rem;
 }
 
 .user-img{
-  width: 9rem;
-  height: 9rem;
+  width: 6rem;
+  height: 6rem;
   -webkit-clip-path: circle(50% at 50% 50%);
   clip-path: circle(50% at 50% 50%);
   margin: 0.4rem;
@@ -914,5 +929,14 @@ margin-top: 2rem;
   display: none;
   margin-top: 3rem;
   padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.4); 
+}
+
+.compose-error-class{
+  display: none;
+  font-size: 1.5em;
+  /* margin-top: 3rem; */
+  padding: 0.1em;
+  text-align: center;
   background-color: rgba(255, 255, 255, 0.4); 
 }
