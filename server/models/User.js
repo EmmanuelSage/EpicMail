@@ -29,13 +29,6 @@ const User = {
     return rows;
   },
 
-  // async findUserId(id) {
-  //   const createQuery = `SELECT
-  //   (SELECT id FROM users WHERE id = $1) AS id;`;
-  //   const rows = await dbQuery.query(createQuery, [id]);
-  //   return rows.id;
-  // },
-
   async findUserEmail(email) {
     const createQuery = `SELECT 
     (SELECT email FROM users WHERE email = $1) AS email;`;

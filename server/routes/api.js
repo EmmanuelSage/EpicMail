@@ -15,8 +15,8 @@ router.post('/messages', Auth.verifyToken, validateMessages.verifyMessage, messa
 router.get('/messages', Auth.verifyToken, messages.getUserReceivedMessages);
 router.get('/messages/unread', Auth.verifyToken, messages.getUserUnreadMessages);
 router.get('/messages/sent', Auth.verifyToken, messages.getUserSentMessages);
+router.get('/messages/drafts', Auth.verifyToken, messages.getUserDraftMessages);
 router.get('/messages/:id', Auth.verifyToken, messages.getUserSpecificMessage);
-router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
 router.post('/groups', Auth.verifyToken, Gvalidate.createGroup, group.create);
 router.get('/groups', Auth.verifyToken, group.getGroups);
 router.patch('/groups/:id/name', Auth.verifyToken, Gvalidate.updateName, group.updateName);
@@ -24,5 +24,9 @@ router.delete('/groups/:id', Auth.verifyToken, group.deleteGroup);
 router.post('/groups/:groupid/users', Auth.verifyToken, Gvalidate.addMember, group.addMember);
 router.delete('/groups/:groupid/users/:userid', Auth.verifyToken, group.deleteGroupMember);
 router.post('/groups/:id/messages', Auth.verifyToken, Gvalidate.sendMessageToGroup, group.SendMessageGroup);
+router.post('/messages/drafts', Auth.verifyToken, validateMessages.verifyDraftMessage, messages.createDraft);
+router.delete('/messages/drafts/:id', Auth.verifyToken, messages.deleteDraft);
+router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
+
 
 export default router;
