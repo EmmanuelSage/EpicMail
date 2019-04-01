@@ -67,6 +67,7 @@
 
         <div class="content-menu">
           <span class="page-state">Current View: Inbox</span>
+          <span id="view-unread"> Unread </span>
           <a id="hamburger-link" href="#">
             <div>Menu &equiv;</div>
           </a>
@@ -75,7 +76,7 @@
 
         <div class="content-messages">
           <ul>
-            <a href="viewinbox.html" class="show-messages-link">
+            <!-- <a href="viewinbox.html" class="show-messages-link">
               <li>
                 <span class="bull-active"><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
 
@@ -87,33 +88,20 @@
 
                 </span>
               </li>
-            </a>
-            <a href="viewinbox.html" class="show-messages-link">
+            </a> -->
+            <!-- <a href="viewinbox.html" class="show-messages-link">
               <li>
-
-
                 <span class="bull-active"><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
 
                 <span class="message-from">
-                  <h1> Luke Skywalker </h1>
-                  <p><i> May the force be with you.</i>
+                  <h1> Martin Luther </h1>
+                  <p><i> Send me the rover file i placed in the revolver
+                      of semantics.</i>
                   </p>
+
                 </span>
               </li>
-            </a>
-            <a href="viewinbox.html" class="show-messages-link">
-              <li>
-
-
-                <span class="bull-active"><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
-
-                <span class="message-from">
-                  <h1> Luke Skywalker </h1>
-                  <p><i> May the force be with you.</i>
-                  </p>
-                </span>
-              </li>
-            </a>
+            </a> -->
           </ul>
         </div>
 
@@ -128,7 +116,8 @@
       </div>
 
       <div class="compose-modal-body">
-        <form>
+
+        <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
           <div class="compose-modal-select">
             <span>Send Email to : </span>
             <select>
@@ -136,11 +125,12 @@
               <option>Group</option>
             </select>
           </div>
-          <input type="text" placeholder="To: " required>
-          <input type="text" placeholder="Subject: " required>
-          <textarea name="email-body id=" email-body-id" cols="50" rows="18"></textarea><br>
+          <span id="compose-error" class="compose-error-class"></span>
+          <input id="receiverIdInput" type="email" placeholder="To: ">
+          <input id="subjectId" type="text" placeholder="Subject: ">
+          <textarea id="messageId" cols="50" rows="18" required form="compose-form-id"></textarea><br>
           <button type="submit" id="compose-send-button">Send</button>
-          <button type="submit" id="draft-save-button">Save as draft</button>
+          <button type="button" form="compose-form-id" id="draft-save-button">Save as draft</button>
 
         </form>
       </div>
@@ -149,8 +139,11 @@
 
 
   </div>
-
+  <script src="../js/fetchMessages.js"></script>
   <script src="../js/script.js"></script>
+  <script>
+    getMessages();
+  </script>
 </body>
 
 </html>

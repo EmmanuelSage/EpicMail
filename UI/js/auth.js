@@ -116,7 +116,7 @@ const signIn = () => {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      if (data.status === 201) {
+      if (data.status === 200) {
         console.log(data.data[0].token)
         setCookie('token', data.data[0].token, 1);
         errorMessage.innerHTML = '';

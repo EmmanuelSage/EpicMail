@@ -137,12 +137,21 @@
       </div>
 
       <div class="compose-modal-body">
-        <form>
-          <input type="text" placeholder="To: " required>
-          <input type="text" placeholder="Subject: " required>
-          <textarea name="email-body id=" email-body-id" cols="50" rows="18"></textarea><br>
+
+        <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
+          <div class="compose-modal-select">
+            <span>Send Email to : </span>
+            <select>
+              <option>User</option>
+              <option>Group</option>
+            </select>
+          </div>
+          <span id="compose-error" class="compose-error-class"></span>
+          <input id="receiverIdInput" type="email" placeholder="To: ">
+          <input id="subjectId" type="text" placeholder="Subject: ">
+          <textarea id="messageId" cols="50" rows="18" required form="compose-form-id"></textarea><br>
           <button type="submit" id="compose-send-button">Send</button>
-          <button type="submit" id="draft-save-button">Save as draft</button>
+          <button type="button" form="compose-form-id" id="draft-save-button">Save as draft</button>
 
         </form>
       </div>
@@ -153,6 +162,7 @@
 
   </div>
   <footer></footer>
+  <script src="../js/fetchMessages.js"></script>
   <script src="../js/script.js"></script>
 </body>
 
