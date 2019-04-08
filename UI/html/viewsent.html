@@ -99,6 +99,7 @@
 
     </main>
 
+
     <div id="compose-modal-id" class="compose-modal">
       <div class="compose-modal-header">
         <h3 class="compose-modal-title">Compose a new email</h3>
@@ -110,9 +111,10 @@
         <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
           <div class="compose-modal-select">
             <span>Send Email to : </span>
-            <select>
+            <select id="compose-modal-select-option">
               <option>User</option>
-              <option>Group</option>
+              <optgroup id="select-optgroup-modal-id" label="Group">
+              </optgroup>
             </select>
           </div>
           <span id="compose-error" class="compose-error-class"></span>
@@ -126,11 +128,15 @@
       </div>
 
     </div>
+
+
   </div>
   <footer></footer>
   <script src="../js/fetchMessages.js"></script>
+  <script src="../js/fetchGetAllGroups.js"></script>
   <script>
     viewSpecificInbox();
+    fetchGetGroups();
   </script>
   <script src="../js/script.js"></script>
 </body>

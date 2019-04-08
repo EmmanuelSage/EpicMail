@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const composeModal = document.getElementById('compose-modal-id');
   const modalClose = document.getElementById('modal-close-id');
   const mobileCancelButton = document.getElementById('mobile-cancel-button');
-  const groupDisableInput = document.getElementById('group-disable-input');
+  // const groupDisableInput = document.getElementById('group-disable-input');
   const thread = document.getElementsByClassName('thread');
   const saveAsDraft = document.getElementById('draft-save-button');
   const mainGrid = document.getElementById('mainGrid');
@@ -22,16 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const displayState = getComputedStyle(dashMenu, null).display;
       if (displayState !== 'block') {
         dashMenu.style.display = 'block';
-        if (groupDisableInput) {
-          groupDisableInput.style.display = 'none';
-        }
+        // if (groupDisableInput) {
+        //   groupDisableInput.style.display = 'none';
+        // }
 
       }
       else {
         dashMenu.style.display = 'none';
-        if (groupDisableInput) {
-          groupDisableInput.style.display = 'inline-block';
-        }
+        // if (groupDisableInput) {
+        //   groupDisableInput.style.display = 'inline-block';
+        // }
 
       }
 
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeMobileMenu) {
     closeMobileMenu.addEventListener('click', () => {
       dashMenu.style.display = 'none';
-      if (groupDisableInput) {
-        groupDisableInput.style.display = 'none';
-      }
+      // if (groupDisableInput) {
+      //   groupDisableInput.style.display = 'none';
+      // }
 
     });
   }
