@@ -269,5 +269,86 @@ describe('Tests for group route', () => {
           done(err);
         });
     });
+
+    it('should return error if email to add users to group does not exist', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/users')
+        .set('x-access-token', authToken)
+        .send({
+          users: ['pesdsdsdsdsd@gmail.com', 'clarkkent@gmail.com'],
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
+    it('should return error if email to add, already belongs to group', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/groups/1/users')
+        .set('x-access-token', authToken)
+        .send({
+          users: ['clarkkent@gmail.com'],
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
+    it('should return error if user to delete does not exist', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/groups/1/users/sagewills@gmail.com')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('User was not found in group');
+          done(err);
+        });
+    });
+
+    it('should get a specific group', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/groups/1')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.equal(200);
+          done(err);
+        });
+    });
+
+    it('should return error if get a specific group id is invalid', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/groups/abs')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.be.equal('Please enter a valid group Id');
+          done(err);
+        });
+    });
+
+    it('should return error if get a specific group is not found', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/groups/15')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('Group not found');
+          done(err);
+        });
+    });
   });
 });

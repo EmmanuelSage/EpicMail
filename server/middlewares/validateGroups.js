@@ -10,19 +10,36 @@ const GroupValidations = {
   },
 
   async addMember(req, res, next) {
+    const groupId = req.params.groupid;
     const usersArray = req.body.users;
     const errors = [];
+    const groupUsersArray = [];
+
+    const verifyArray = await helper.verifyGroupUser(groupId);
+    verifyArray.forEach(ele => groupUsersArray.push(ele.groupusers));
+
     if (!Array.isArray(usersArray)) {
       return res.status(400).send({ status: 400, error: 'Please pass an Array' });
     }
     if (usersArray.length < 1) {
       return res.status(400).send({ status: 400, error: 'Please enter a receiver id in Array' });
     }
-    usersArray.forEach((ele) => {
-      if (!helper.isValidEmail(ele) || !helper.verifyEmail(ele)) {
-        errors.push(`Email ${ele} is not valid`);
+
+    await helper.asyncForEach(usersArray, async (ele) => {
+      const verifiedEmail = await helper.verifyEmail(ele);
+
+      if (!helper.isValidEmail(ele)) {
+        errors.push(`Email ${ele} is not a valid email`);
+      } else if (!verifiedEmail) {
+        errors.push(`Email ${ele} does not exist`);
+      }
+
+      if (groupUsersArray.indexOf(ele) !== -1) {
+        errors.push(`Email ${ele} is already a group member`);
       }
     });
+
+
     if (errors.length >= 1) {
       return res.status(400).send({
         status: 400,
@@ -73,6 +90,24 @@ const GroupValidations = {
         errors,
       });
     }
+    return next();
+  },
+
+  async deleteGroup(req, res, next) {
+    const groupId = req.params.groupid;
+    const userId = req.params.userid;
+    const groupUsersArray = [];
+
+    const verifyArray = await helper.verifyGroupUser(groupId);
+    verifyArray.forEach(ele => groupUsersArray.push(ele.groupusers));
+
+    if (groupUsersArray.indexOf(userId) === -1) {
+      return res.status(404).send({
+        status: 404,
+        error: 'User was not found in group',
+      });
+    }
+
     return next();
   },
 };

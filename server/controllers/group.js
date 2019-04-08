@@ -102,6 +102,25 @@ const Group = {
     });
   },
 
+  async getSpecificGroup(req, res) {
+    const currentUserId = req.user.id;
+    const paramsId = req.params.id;
+    if (!Number(paramsId)) {
+      return res.status(400).send({ status: 400, error: 'Please enter a valid group Id' });
+    }
+    const specificGroup = await db.getSpecificGroup(currentUserId, paramsId);
+    if (!specificGroup) {
+      return res.status(404).send({
+        status: 404,
+        error: 'Group not found',
+      });
+    }
+    return res.status(200).send({
+      status: 200,
+      data: specificGroup,
+    });
+  },
+
 };
 
 export default Group;
