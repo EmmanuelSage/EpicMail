@@ -189,6 +189,21 @@ const Group = {
     const rows = await dbQuery.queryAll(findAllQuery, [groupId, adminid]);
     return rows;
   },
+
+  async getSpecificGroup(userId, groupId) {
+    const findAdmin = `SELECT groupusers FROM groupusers 
+    WHERE role = 'Admin' AND groupid = $1;`;
+    const getGroupDetails = `SELECT * FROM groupusers 
+    WHERE groupid = $1;`;
+    const rows = await dbQuery.query(findAdmin, [groupId]);
+
+    if (rows && rows.groupusers === userId) {
+      const groupMembers = await dbQuery.queryAll(getGroupDetails, [groupId]);
+      return groupMembers;
+    }
+    return false;
+  },
+
 };
 
 export default Group;

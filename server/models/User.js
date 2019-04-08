@@ -23,6 +23,13 @@ const User = {
     return rows.email;
   },
 
+  async checkGroupUserEmail(groupid) {
+    const createQuery = `SELECT groupusers.groupusers FROM groupusers 
+    WHERE groupid = $1 And role = 'User';`;
+    const rows = await dbQuery.queryAll(createQuery, [groupid]);
+    return rows;
+  },
+
   async getUserByEmail(email) {
     const createQuery = 'SELECT * FROM users WHERE email = $1;';
     const rows = await dbQuery.query(createQuery, [email]);

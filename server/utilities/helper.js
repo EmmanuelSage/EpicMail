@@ -21,7 +21,15 @@ const Helper = {
 
   async verifyEmail(email) {
     const userEmail = await dbUser.getEmail(email);
-    return userEmail;
+    if (userEmail) {
+      return true;
+    }
+    return false;
+  },
+
+  async verifyGroupUser(groupId) {
+    const groupUserEmail = await dbUser.checkGroupUserEmail(groupId);
+    return groupUserEmail;
   },
 
 
@@ -29,9 +37,15 @@ const Helper = {
     return /^[a-zA-Z]+$/.test(name);
   },
 
+  async asyncForEach(array, callback) {
+    for (let i = 0; i < array.length; i += 1) {
+      await callback(array[i], i, array); // eslint-disable-line no-await-in-loop
+    }
+  },
+
   generateToken(id) {
     const token = jwt.sign({ userId: id },
-      process.env.SECRET, { expiresIn: '1d' });
+      process.env.SECRET, { expiresIn: '2d' });
     return token;
   },
 };
