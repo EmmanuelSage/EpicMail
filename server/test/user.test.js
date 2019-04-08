@@ -294,5 +294,67 @@ describe('Tests for users route', () => {
           done(err);
         });
     });
+
+    it('should send email for reset password if registered', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/resetemail')
+        .send({
+          email: 'david@gmail.com',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.equal(200);
+          expect(res.body.data.message).to.be.equal('Email has been sent to david@gmail.com');
+          done(err);
+        });
+    });
+
+    it('should return error for email for reset password if not registered', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/resetemail')
+        .send({
+          email: 'davdsdsdid@gmail.com',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('User not found');
+          done(err);
+        });
+    });
+
+    it('should return error for reset password if password is not provided', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/resetpassword')
+        .set('x-access-token', authToken)
+        .send({
+          password: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          expect(res.body.error).to.be.equal('Password is required');
+          done(err);
+        });
+    });
+
+    it('should return reset password if password is provided', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/auth/resetpassword')
+        .set('x-access-token', authToken)
+        .send({
+          password: 'david23',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res.body.status).to.be.equal(201);
+          expect(res.body.data.message).to.be.equal('Password has been changed');
+          done(err);
+        });
+    });
   });
 });

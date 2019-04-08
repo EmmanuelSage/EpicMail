@@ -48,6 +48,12 @@ const User = {
     const rows = await dbQuery.query(createQuery, [id]);
     return rows;
   },
+
+  async resetPassword(email, hashPassword) {
+    const updatePasswordQuery = 'UPDATE users SET password=$1 WHERE email=$2 returning *';
+    const row = await dbQuery.query(updatePasswordQuery, [hashPassword, email]);
+    return row;
+  },
 };
 
 export default User;
