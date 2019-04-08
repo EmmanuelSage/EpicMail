@@ -11,6 +11,8 @@ const router = express.Router();
 
 router.post('/auth/signup', userValidator.verifyUser, user.create);
 router.post('/auth/login', userValidator.verifyLogin, user.login);
+router.post('/auth/resetemail', user.resetemail);
+router.post('/auth/resetpassword', Auth.verifyToken, user.resetpassword);
 router.post('/messages', Auth.verifyToken, validateMessages.verifyMessage, messages.create);
 router.get('/messages', Auth.verifyToken, messages.getUserReceivedMessages);
 router.get('/messages/unread', Auth.verifyToken, messages.getUserUnreadMessages);

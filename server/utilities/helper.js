@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import nodeMailer from 'nodemailer';
 import dbUser from '../models/User';
 
 dotenv.config();
@@ -47,6 +48,30 @@ const Helper = {
     const token = jwt.sign({ userId: id },
       process.env.SECRET, { expiresIn: '2d' });
     return token;
+  },
+
+  sendEmail(userDetails, token) {
+    const emailSettings = {
+      from: 'EPICMAIL',
+      to: userDetails.email,
+      subject: 'Reset EpicMail password',
+      html: `<h2> Hello ${userDetails.firstname} ${userDetails.lastname}, </h2>
+         <p> you are receiving this mail because you requested for a password reset on the EpicMail application
+         click
+        <a href='https://emmanuelsage.github.io/EpicMail/UI/html/resetpassword.html?x-access-token=${token}'>Reset password </a>
+        to reset your EpicMail password </p>
+      `,
+    };
+
+    const transporter = nodeMailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    transporter.sendMail(emailSettings);
   },
 };
 
