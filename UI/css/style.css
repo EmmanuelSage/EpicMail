@@ -337,15 +337,15 @@ form button {
   -moz-appearance: none;
        appearance: none;
 outline: 0;
-margin-top: 10px;
+margin-top: 1rem;
 background-color: #fff;
 border: 0;
-padding: 10px 15px;
+padding: 1rem 1.5rem;
 color: #229c69;
-border-radius: 10px;
-width: 250px;
+border-radius: 1rem;
+width: 25rem;
 cursor: pointer;
-font-size: 18px;
+font-size: 1.8rem;
 transition-duration: 0.25s;
 }
 
@@ -516,20 +516,19 @@ color: #fff;
 .create-group{
   background: rgba(255,255,255,0.1);
 }
-.create-group form{
+.create-group{
 display: flex;
 flex-flow: row wrap;
 margin: 20px;
 }
-.create-group form button{
+.create-group button{
 display: inline-block;
-margin: 2rem;
-margin: auto;
+margin: 1rem;
 }
-.create-group form input{
+.create-group input{
   display: inline-block;
-  margin: 2rem;
-  width: 60%;
+  margin: 1rem;
+  width: 100%;
 }
 
 /* center align */
@@ -547,18 +546,22 @@ margin: auto;
   display: block;
   position: relative;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 2.2rem;
 }
 
 .select-user-checkbox label{
   margin: 3rem 1rem;
 }
 
+.center-group{
+  text-align: center;
+
+}
 .select-style{
-  margin-left: 10px;
-  margin-bottom: 15px;
-  width: 30%;
-  height:25px;
+  margin-left: 1rem;
+  margin-bottom: 1.5rem;
+  width: 50%;
+  height:2.5rem;
   background: none;
   outline: 0;
   border: 1px solid #e0e0e0;
@@ -566,8 +569,51 @@ margin: auto;
   color: #444;
 }
 
+/* Group error */
+.group-error{
+  display: none;
+  margin-top: 1rem;
+  background-color: rgba(255, 255, 255, 0.4); 
+  font-size: 2rem;
+  display: block;
+  text-align: center;
+  width: 100%;
+}
 
 
+.display-none{
+  display:none;
+}
+
+#compose-send-to-group-button{
+  display:none;
+}
+
+select optgroup{
+  color:#000;
+  font-style:normal;
+  font-weight:normal;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd; 
+  margin: 0 auto;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.8rem;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+.overflow-center{
+  overflow-x:auto;
+  text-align: center;
+}
 
 /* compose modal */
 

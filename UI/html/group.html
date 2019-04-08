@@ -76,56 +76,78 @@
         </div>
 
 
-        <div class="create-group" id="create-group-id">
-          <form class="form">
-            <input type="text" id="group-disable-input" placeholder="Name of Group" required>
-            <button type="submit" id="login-button">Create Group</button>
-          </form>
-        </div>
+        <div class="create-group add-user-style" id="create-group-id">
+          <div id='group-error-message-id' class='group-error'></div>
+          <form id="group-option-form">
+            <!-- <input type="text" id="group-disable-input" placeholder="Name of Group" required> -->
+            <!-- <div class="center-group">
+              <select class="select-style">
+                <option>Co-workers group</option>
+                <option>The club</option>
+                <option>Time Travellers</option>
+                <option>Next Generation</option>
+                <option>Software Dev</option>
+              </select> 
+            </div> -->
+            <!-- <div class="center-group"> -->
 
-        <div class="create-group add-user-style" id="add-user-id">
-          <div>
-            <span>Select group to add users to : </span>
-            <select class="select-style">
-              <option>Co-workers group</option>
-              <option>The club</option>
+            <span>Select a group : </span>
+            <select id="select-group-id" class="select-style">
+              <option hidden disabled selected value>Loading.....</option>
+              <!-- <option hidden disabled selected value> -- select a group -- </option>
+              <option value="1">Co-workers group</option>
+              <option value="2">The club</option>
               <option>Time Travellers</option>
               <option>Next Generation</option>
-              <option>Software Dev</option>
+              <option>Software Dev</option> -->
+            </select><br>
+            <!-- </div> -->
+            <button id="create-group-button-id">Create Group</button>
+            <button id="rename-group-id">Rename Group</button>
+            <button id="delete-group-id">Delete Group</button>
+            <button id="add-users-group-id">Add Users </button>
+            <button id="group-details-button-id">Group details </button>
+            <button id="delete-users-group-id">Delete Users </button>
+          </form>
+
+          <form class="display-none" id="create-group-form">
+            <input type="text" id="create-group-name-id" placeholder="Name of Group" required><br>
+            <button id="fetch-create-group-id">Create Group</button>
+          </form>
+
+          <form class="display-none" id="rename-group-form">
+            <input type="text" id="rename-group-name-id" placeholder="Name of Group" required><br>
+            <button id="fetch-rename-group-id">Rename Group</button>
+          </form>
+
+          <form class="display-none" id="delete-group-form">
+            <!-- <input type="text" id="delete-group-name-id" placeholder="Name of Group" required> -->
+            <span id="delete-group-name-id"></span>
+            <button id="fetch-delete-group-id">Delete Group</button>
+          </form>
+
+          <form class="display-none" id="add-users-group-form">
+            <input type="email" id="add-users-group-name-id" placeholder="User email to add" required><br>
+            <span id="add-name-group-span">Click Add to add set users <br></span><br>
+            <button type="button" id="fetch-add-users-group-id">Add Users to Group</button>
+            <button id="add-email-group">Add</button>
+          </form>
+
+          <form class="display-none" id="group-details-group-form">
+            <!-- <span id="group-details-group-span"></span> -->
+            <div class="overflow-center">
+              <table id="group-details-group-span">
+              </table>
+            </div>
+          </form>
+
+          <form class="display-none" id="delete-users-group-form">
+            <span id="delete-users-span"></span>
+            <select id="delete-users-select" class="select-style">
+              <option hidden disabled selected value>Loading.....</option>
             </select>
-          </div>
-          <h3> Select users to add to group</h3>
-          <div class="select-user-checkbox">
-            <label class="">James
-              <input type="checkbox" checked="checked">
-              <span class="checkmark"></span>
-            </label>
-            <label class="">Mary
-              <input type="checkbox">
-              <span class=""></span>
-            </label>
-            <label class="">Samuel
-              <input type="checkbox">
-              <span class=""></span>
-            </label>
-            <label class="">David
-              <input type="checkbox">
-              <span class=""></span>
-            </label>
-            <label class="">Joel
-              <input type="checkbox">
-              <span class=""></span>
-            </label>
-            <label class="">Kal-el
-              <input type="checkbox">
-              <span class=""></span>
-            </label>
-
-          </div>
-          <form> <button type="submit">Add</button> </form>
-
-        </div>
-
+            <button id="fetch-delete-users-button">Delete User</button>
+          </form>
 
       </section>
 
@@ -141,9 +163,10 @@
         <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
           <div class="compose-modal-select">
             <span>Send Email to : </span>
-            <select>
+            <select id="compose-modal-select-option">
               <option>User</option>
-              <option>Group</option>
+              <optgroup id="select-optgroup-modal-id" label="Group">
+              </optgroup>
             </select>
           </div>
           <span id="compose-error" class="compose-error-class"></span>
@@ -162,7 +185,12 @@
 
   </div>
   <footer></footer>
+  <script src="../js/groupFetch.js"></script>
   <script src="../js/fetchMessages.js"></script>
+  <script src="../js/fetchGetAllGroups.js"></script>
+  <script>
+    fetchGetGroups();
+  </script>
   <script src="../js/script.js"></script>
 </body>
 

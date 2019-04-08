@@ -16,71 +16,6 @@ const getMessageCookie = (cookieSearchName) => {
 
 const messageToken = getMessageCookie('token');
 
-const postMessages = () => {
-  // console.log('message sent')
-  const receiverId = document.getElementById('receiverIdInput');
-  const subject = document.getElementById('subjectId');
-  const message = document.getElementById('messageId');
-  const composeModal = document.getElementById('compose-modal-id');
-  const composeError = document.getElementById('compose-error');
-  if (!receiverId.value) {
-    receiverId.required = true;
-    receiverId.focus();
-    return;
-  }
-  if (!subject.value) {
-    subject.required = true;
-    subject.focus();
-    return;
-  }
-  if (!message.value) {
-    message.required = true;
-    message.focus();
-    return;
-  }
-  const userDetails = {
-    subject: subject.value,
-    message: message.value,
-    receiverId: receiverId.value,
-  };
-
-  fetch(`${domain}messages`, {
-    method: 'POST',
-    body: JSON.stringify(userDetails),
-    headers: {
-      'Content-Type': 'application/json',
-      'x-access-token': messageToken,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      if (data.status === 201) {
-        composeModal.style.display = 'none';
-        window.location.href = './sentmessages.html';
-      }
-      else if (data.status === 400) {
-        console.log('all errors');
-        let errors = '';
-        data.errors.forEach((ele) => {
-          console.log(ele.error);
-          errors += `${ele.error} <br>`;
-        });
-        composeError.style.display = 'block';
-        composeError.innerHTML = errors;
-      }
-
-    })
-    .catch((err) => {
-      console.log(JSON.stringify(err));
-    })
-
-  console.log(receiverId.value);
-  console.log(subject.value);
-  console.log(message.value);
-}
-
-
 
 const deleteMessage = (id) => {
 
@@ -232,6 +167,7 @@ const getMessages = () => {
     })
 };
 
+
 const getSentMessages = () => {
 
   // const redirectId = showMessagesLink[i].getAttribute("qsLinkId");
@@ -280,10 +216,13 @@ const postDraft = () => {
   const message = document.getElementById('messageId');
   const composeModal = document.getElementById('compose-modal-id');
   const composeError = document.getElementById('compose-error');
+  const draftSaveButton = document.getElementById('draft-save-button');
 
   if (!receiverId.value && !subject.value && !message.value) {
     message.required = true;
     message.focus();
+    composeError.style.display = 'block';
+    composeError.innerHTML = 'Please Enter Your message';
     console.log('Kicked out')
     return;
   }
@@ -292,6 +231,8 @@ const postDraft = () => {
     message: message.value,
     receiverId: receiverId.value,
   };
+
+  draftSaveButton.innerHTML = "<img width = '15px' height= '15px' src = '../img/loading.png'>";
 
   fetch(`${domain}messages/drafts`, {
     method: 'POST',
@@ -529,5 +470,3 @@ const viewSpecificInbox = () => {
       console.log(JSON.stringify(err));
     })
 };
-
-

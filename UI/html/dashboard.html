@@ -120,9 +120,10 @@
         <form onsubmit="event.preventDefault(); postMessages()" id="compose-form-id">
           <div class="compose-modal-select">
             <span>Send Email to : </span>
-            <select>
+            <select id="compose-modal-select-option">
               <option>User</option>
-              <option>Group</option>
+              <optgroup id="select-optgroup-modal-id" label="Group">
+              </optgroup>
             </select>
           </div>
           <span id="compose-error" class="compose-error-class"></span>
@@ -138,11 +139,14 @@
     </div>
 
 
+
   </div>
   <script src="../js/fetchMessages.js"></script>
+  <script src="../js/fetchGetAllGroups.js"></script>
   <script src="../js/script.js"></script>
   <script>
     getMessages();
+    fetchGetGroups();
   </script>
 </body>
 
