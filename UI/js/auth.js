@@ -38,10 +38,13 @@ const signUp = () => {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
+  const errorMessageDiv = document.getElementById('errorDivId');
   const errorMessage = document.getElementById('errorMessage');
   const loginButton = document.getElementById('login-button');
+  // const loginButton = document.getElementById('signin-button');
 
   if (password !== confirmPassword) {
+    errorMessageDiv.style.display = 'block';
     errorMessage.innerHTML = 'Password must equal Confirm Pasword <br>';
     return;
   }
@@ -63,7 +66,7 @@ const signUp = () => {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      console.log(data.errors);
+      console.log(data.error);
       if (data.status === 201) {
         console.log(data.data[0].token)
         setCookie('token', data.data[0].token, 1);
@@ -82,10 +85,16 @@ const signUp = () => {
         loginButton.innerHTML = "Sign Up";
       }
       else if (data.status === 409) {
-        console.log('all errors');
+        console.log('all sdserrors');
         loginButton.innerHTML = "Sign Up";
+        console.log('after login');
+        console.log(errorMessageDiv);
         errorMessageDiv.style.display = 'block';
+        console.log('after errror div');
+
         errorMessage.innerHTML = data.error;
+        console.log('after errror message');
+        // console.log(data.error);
       }
     })
     .catch((err) => {
