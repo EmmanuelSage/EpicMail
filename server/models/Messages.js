@@ -109,6 +109,13 @@ const Messages = {
     return rows;
   },
 
+  async retractMessage(userId, messageId) {
+    const findQuery = `DELETE FROM messages
+    WHERE userid = $1 AND id = $2;`;
+    const rows = await dbQuery.query(findQuery, [userId, messageId]);
+    return rows;
+  },
+
   async createDraftMessage(data) {
     const createQuery = `INSERT INTO
       messages(subject, message, createdOn, userId)

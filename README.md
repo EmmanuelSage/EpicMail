@@ -65,8 +65,9 @@ $ npm test
 | GET /messages/drafts                             | Get a draft message                      |
 | DELETE /messages/drafts/:id                      | Delete a draft message                   |
 | DELETE /groups/:id                               | Get a specific group                     |
-| DELETE /auth/resetemail/                         | Send email for reset password            |
-| DELETE /auth/resetpassword/                      | Reset a user's password                  |
+| POST /auth/resetemail/                           | Send email for reset password            |
+| POST /auth/resetpassword/                        | Reset a user's password                  |
+| DELETE /messages/retract/:id                     | Retracts a message                       |
 
 ## Author
 Emmanuel Oluyale

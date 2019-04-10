@@ -29,6 +29,7 @@ router.delete('/groups/:groupid/users/:userid', Auth.verifyToken, Gvalidate.dele
 router.post('/groups/:id/messages', Auth.verifyToken, Gvalidate.sendMessageToGroup, group.SendMessageGroup);
 router.post('/messages/drafts', Auth.verifyToken, validateMessages.verifyDraftMessage, messages.createDraft);
 router.delete('/messages/drafts/:id', Auth.verifyToken, messages.deleteDraft);
+router.delete('/messages/retract/:id', Auth.verifyToken, messages.retractMessage);
 router.delete('/messages/:id', Auth.verifyToken, messages.deleteUserSpecificMessage);
 
 

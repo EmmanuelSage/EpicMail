@@ -85,7 +85,7 @@ const Messages = {
     db.deleteSpecificMessage(currentUserId, req.params.id);
     return res.status(200).send({
       status: 200,
-      data: [{ message: 'Message has been deleted' }],
+      data: { message: 'Message has been deleted' },
     });
   },
 
@@ -136,7 +136,27 @@ const Messages = {
     db.deleteSpecificMessage(currentUserId, req.params.id);
     return res.status(200).send({
       status: 200,
-      data: [{ message: 'Message has been deleted' }],
+      data: { message: 'Message has been deleted' },
+    });
+  },
+
+  async retractMessage(req, res) {
+    const currentUserId = req.user.id;
+    const paramsId = req.params.id;
+    if (!Number(paramsId)) {
+      return res.status(400).send({ status: 400, error: 'Please enter a valid message Id' });
+    }
+    const specificMessage = await db.getSpecificMessage(currentUserId, req.params.id);
+    if (!specificMessage) {
+      return res.status(404).send({
+        status: 404,
+        error: 'Message not found',
+      });
+    }
+    db.retractMessage(currentUserId, req.params.id);
+    return res.status(200).send({
+      status: 200,
+      data: { message: 'Message has been Retracted' },
     });
   },
 };

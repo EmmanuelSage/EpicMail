@@ -242,7 +242,6 @@ describe('Tests for messsages route', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.status).to.be.equal(200);
-          // expect(res.body.data[0].status).to.be.equal('Sent');
           done(err);
         });
     });
@@ -449,6 +448,44 @@ describe('Tests for messsages route', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
+    it('Should return error if id for retract message is not a number', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/messages/retract/asd')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.equal(400);
+          done(err);
+        });
+    });
+
+    it('Should return error if message to retract is not found', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/messages/retract/423')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.equal(404);
+          expect(res.body.error).to.be.equal('Message not found');
+          done(err);
+        });
+    });
+
+    it('Should retract a message', (done) => {
+      chai
+        .request(app)
+        .delete('/api/v1/messages/retract/4')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.equal(200);
+          expect(res.body.data.message).to.be.equal('Message has been Retracted');
           done(err);
         });
     });
