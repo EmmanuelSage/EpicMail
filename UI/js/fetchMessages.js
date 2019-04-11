@@ -39,6 +39,28 @@ const deleteMessage = (id) => {
 };
 
 
+const retractMessage = (id) => {
+
+  console.log(id);
+
+  fetch(`${domain}messages/retract/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': messageToken,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      window.location.href = './sentmessages.html';
+    })
+    .catch((err) => {
+      console.log(JSON.stringify(err));
+    })
+};
+
+
 
 const getUnreadMessages = () => {
 
@@ -132,8 +154,7 @@ const getMessages = () => {
         <span><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
 
         <span class="message-from">
-          <h1> ${ele.senderid} </h1>
-          <p><i> ${ele.subject}</i></p>
+          <p><b>from : ${ele.senderid}</b> <br> <i> ${ele.subject}</i></p>
         </span>
 
         <span class="delete-draft-message"> &otimes; Delete </span>
@@ -187,20 +208,52 @@ const getSentMessages = () => {
       const sortData = data.sort((a, b) => b.id - a.id);
       sortData.forEach((ele) => {
         console.log(ele);
-        contentMessagesUl.innerHTML += `<a href="viewsent.html?id=${ele.id}">
-        <div id="show-messages-id" class="show-messages-link">
+        contentMessagesUl.innerHTML += `
+        <div qsLinkId="${ele.id}" id="show-messages-id" class="show-messages-link">
         <span><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
 
         <span class="message-from">
-          <h4> ${ele.senderid} </h4>
           <h4> ${ele.subject} </h4>
         </span>
         <span id="hashlinkId" class="retract-message hashlink"> &#8709; Retract
             message
           </span>
+          <span class="delete-draft-message"> &otimes; Delete </span>          
       </div>
-      </a>
       `;
+        const retractMessageLink = document.getElementsByClassName('retract-message');
+        const showMessagesLink = document.getElementsByClassName('show-messages-link');
+        const showMessagesLinkArray = Array.from(showMessagesLink);
+        const deleteInboxMessage = document.getElementsByClassName('delete-draft-message');
+
+        showMessagesLinkArray.forEach((ele) => {
+          ele.onclick = () => {
+            const attrValue = ele.getAttribute("qsLinkId");
+            console.log(attrValue);
+            window.location.href = `./viewsent.html?id=${attrValue}`;
+          }
+        });
+
+        for (let i = 0; i < retractMessageLink.length; i++) {
+          retractMessageLink[i].onclick = () => {
+            event.stopPropagation();
+            console.log('Retract clicked');
+            const attrValue = showMessagesLink[i].getAttribute("qsLinkId");
+            console.log(attrValue);
+            retractMessage(attrValue);
+            event.stopPropagation();
+          }
+        }
+
+        for (let i = 0; i < deleteInboxMessage.length; i++) {
+          deleteInboxMessage[i].onclick = () => {
+            console.log('Delete clicked');
+            const attrValue = showMessagesLink[i].getAttribute("qsLinkId");
+            console.log(attrValue);
+            deleteMessage(attrValue);
+            event.stopPropagation();
+          }
+        }
       });
     })
     .catch((err) => {
@@ -349,8 +402,8 @@ const getDraftMessages = () => {
         <span><img class='user-img' src='../img/User-1.jpg' alt='Users image' /></span>
 
         <span class="message-from">
-          <h4 class="draft${ele.id}">${tempSub}</h4>
-          <h4 class="draft${ele.id}" data-long-message="${longMessage}">${shortMessage}</h4>
+          <p><b class="draft${ele.id}">${tempSub}</b><br>
+          <b class="draft${ele.id}" data-long-message="${longMessage}">${shortMessage}</b><p>
         </span>
         
           <span id="send-draft-id"class="send-draft-message"> &#8883; Send </span>
@@ -373,7 +426,7 @@ const getDraftMessages = () => {
               console.log('Div clicked');
               const attrValue = showMessagesLink[i].getAttribute("qsLinkId");
               console.log(attrValue);
-              const draftMgs = document.querySelectorAll(`#show-messages-id h4.draft${attrValue}`);
+              const draftMgs = document.querySelectorAll(`#show-messages-id b.draft${attrValue}`);
               console.log(draftMgs);
 
               const messageAttrValue = draftMgs[1].getAttribute("data-long-message");
@@ -392,7 +445,7 @@ const getDraftMessages = () => {
               console.log('Send clicked');
               const attrValue = showMessagesLink[i].getAttribute("qsLinkId");
               console.log(attrValue);
-              const draftMgs = document.querySelectorAll(`#show-messages-id h4.draft${attrValue}`);
+              const draftMgs = document.querySelectorAll(`#show-messages-id b.draft${attrValue}`);
               console.log(draftMgs);
 
               const messageAttrValue = draftMgs[1].getAttribute("data-long-message");
