@@ -356,5 +356,17 @@ describe('Tests for users route', () => {
           done(err);
         });
     });
+
+    it('should return user details', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/auth/user')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.equal(200);
+          done(err);
+        });
+    });
   });
 });
