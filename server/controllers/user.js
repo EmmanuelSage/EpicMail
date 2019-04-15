@@ -110,6 +110,7 @@ const User = {
       },
     });
   },
+
   /* istanbul ignore next */
   async uploadImage(req, res) {
     let userImage;
@@ -148,7 +149,6 @@ const User = {
       data: userDetails,
     });
   },
-
 
 };
 

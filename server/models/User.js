@@ -3,9 +3,9 @@ import dbQuery from '../services/query.test';
 const User = {
   async create(data) {
     const createQuery = `INSERT INTO
-      users(email, firstName, lastName, password, image)
-      VALUES($1, $2, $3, $4, $5)
-      returning *`;
+    users(email, firstName, lastName, password, image)
+    VALUES($1, $2, $3, $4, $5)
+    returning *`;
     const values = [
       data.email,
       data.firstName,
