@@ -1,5 +1,32 @@
+import multer from 'multer';
+import fileSys from 'fs';
+import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
 import db from '../models/User';
 import Helper from '../utilities/helper';
+
+dotenv.config();
+
+/* istanbul ignore next */
+const storage = multer.diskStorage({
+  filename: (req, file, callback) => {
+    callback(null, `${file.originalname}-${req.user.id}`);
+  },
+});
+/* istanbul ignore next */
+const imageFilter = (req, file, cb) => {
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+    return cb(new Error('Only image files are allowed!'), false);
+  }
+  cb(null, true);
+  return {};
+};
+/* istanbul ignore next */
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const User = {
   async create(req, res) {
@@ -10,6 +37,8 @@ const User = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       password: hashPassword,
+      /* istanbul ignore next */
+      image: 'https://res.cloudinary.com/emmanuelsage/image/upload/v1555262398/EpicMail/2019-04-14T17:19:53.321Z-defaultuser.jpg-xyemmanuel%40gmail.com.jpg',
     };
 
     const newUser = await db.create(reqUser);
@@ -81,6 +110,46 @@ const User = {
       },
     });
   },
+  /* istanbul ignore next */
+  async uploadImage(req, res) {
+    let userImage;
+    const upload = multer({ storage, fileFilter: imageFilter }).single('image');
+    upload(req, res, () => {
+      const isoDate = new Date().toISOString();
+      cloudinary.v2.uploader.upload(req.file.path, { public_id: `EpicMail/${isoDate}-${req.file.filename}`, tags: 'EpicMail' }, async (error, image) => {
+        if (error) {
+          return res.status(500).send({
+            status: 500,
+            error: 'Something went wrong with the upload',
+          });
+        }
+        fileSys.unlinkSync(req.file.path);
+        userImage = image.secure_url;
+        const userDetails = {
+          id: req.user.id,
+          image: userImage,
+        };
+        await db.updateImage(userDetails);
+        return res.status(201).send({
+          status: 201,
+          data: {
+            message: 'Image upload was successfull',
+          },
+        });
+      });
+    });
+  },
+
+  async getUser(req, res) {
+    const email = req.user.id;
+    const userDetails = await db.getUserByEmail(email);
+    return res.status(200).send({
+      status: 200,
+      data: userDetails,
+    });
+  },
+
+
 };
 
 export default User;

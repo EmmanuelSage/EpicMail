@@ -3,14 +3,15 @@ import dbQuery from '../services/query.test';
 const User = {
   async create(data) {
     const createQuery = `INSERT INTO
-      users(email, firstName, lastName, password)
-      VALUES($1, $2, $3, $4)
+      users(email, firstName, lastName, password, image)
+      VALUES($1, $2, $3, $4, $5)
       returning *`;
     const values = [
       data.email,
       data.firstName,
       data.lastName,
       data.password,
+      data.image,
     ];
     const rows = await dbQuery.query(createQuery, values);
     return rows;
@@ -52,6 +53,15 @@ const User = {
   async resetPassword(email, hashPassword) {
     const updatePasswordQuery = 'UPDATE users SET password=$1 WHERE email=$2 returning *';
     const row = await dbQuery.query(updatePasswordQuery, [hashPassword, email]);
+    return row;
+  },
+
+  /* istanbul ignore next */
+  async updateImage(user) {
+    const updateQuery = `UPDATE users
+    SET image = $1
+    WHERE email = $2`;
+    const row = await dbQuery.query(updateQuery, [user.image, user.id]);
     return row;
   },
 };
