@@ -970,6 +970,13 @@ div.show-messages-link:hover {
   margin: 0.4rem;
   margin-left: 1.5rem;
 }
+.user-img-profile{
+  width: 4rem;
+  height: 4rem;
+  -webkit-clip-path: circle(50% at 50% 50%);
+  clip-path: circle(50% at 50% 50%);
+  margin-left: auto;
+}
 
 .errorDiv{
   display: none;
