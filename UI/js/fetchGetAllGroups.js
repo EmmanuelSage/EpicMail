@@ -2,7 +2,6 @@
 const selectOptGroupModalId = document.getElementById('select-optgroup-modal-id');
 const composeModalSelectOption = document.getElementById('compose-modal-select-option');
 const sendToUserButton = document.getElementById('compose-send-button');
-// const sendToGroupButton = document.getElementById('compose-send-to-group-button');
 
 const receiverId = document.getElementById('receiverIdInput');
 const subject = document.getElementById('subjectId');
@@ -13,7 +12,33 @@ const composeError = document.getElementById('compose-error');
 let groupId;
 
 
+const setUserImage = () => {
+
+  const profilePix = document.getElementById("user-profile-pix");
+  fetch(`${domain}auth/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': messageToken,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        console.log(data.data);
+        console.log('image:');
+        console.log(data.data.image);
+        profilePix.src = data.data.image;
+
+      }
+    })
+    .catch((err) => {
+      console.log(JSON.stringify(err));
+    })
+}
 const fetchGetGroups = () => {
+  setUserImage();
   const groupSelect = document.getElementById("select-group-id");
   fetch(`${domain}groups`, {
     method: 'GET',
